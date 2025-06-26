@@ -19,10 +19,11 @@ export const routes: Routes = [
                     import('./features/products/product-list/product-list.component').then(m => m.ProductListComponent)},
             
             
-            {path: '**', component: PageNotFoundComponent}
+
         ]
     },
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
   
+              {path: '**', component: PageNotFoundComponent}
 ];

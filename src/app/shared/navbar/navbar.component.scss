@@ -1,11 +1,13 @@
+@import '../styles/colors.scss';
 .navbar {
+    width: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #1e1e2f;
+  background-color: $primary-dark;
   color: #fff;
   padding: 0.75rem 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(145, 130, 130, 0.1);
 
   .navbar-logo {
     img {
