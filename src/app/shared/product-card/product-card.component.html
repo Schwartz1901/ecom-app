@@ -1,0 +1,24 @@
+
+<mat-card class="product-card-wrap" appearance="outlined" >
+    <a class="image-link" [routerLink]="'/products/' + product.id">
+        <div class="image-container">
+                <img mat-card-image [src]="product.imageUrl" 
+                [alt]="product.imageAlt"
+                >
+        </div>
+    </a>
+    <div class="overlay-content">
+        <mat-card-content class="product-info">
+            <p class="tag">{{product.tag}}</p>
+            <p class="name">{{product.price}}</p>
+            <p class="price">{{product.name}}</p>
+        </mat-card-content>
+        <mat-card-actions class="product-action">
+            <button class="add-to-cart-button">Add To Cart</button>
+            <button class="favorite-button"><mat-icon>favorite</mat-icon></button>
+        </mat-card-actions>
+    </div>
+
+        
+</mat-card>
+

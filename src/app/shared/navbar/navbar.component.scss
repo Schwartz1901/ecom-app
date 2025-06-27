@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: space-between;
   background-color: $primary-dark;
-  color: #fff;
+  color: $text-light;
   padding: 0.75rem 2rem;
   box-shadow: 0 2px 4px rgba(145, 130, 130, 0.1);
 
@@ -25,16 +25,16 @@
     li {
       a {
         text-decoration: none;
-        color: #fff;
+        color: $text-light;
         font-weight: 500;
         transition: color 0.3s ease;
 
         &:hover {
-          color: #00d8ff;
+          color: $secondary-color;
         }
 
         &.active {
-          border-bottom: 2px solid #00d8ff;
+          border-bottom: 2px solid $accent-color;
         }
       }
     }

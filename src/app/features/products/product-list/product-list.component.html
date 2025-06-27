@@ -4,3 +4,10 @@
     <button class="btn">button 3</button>
     <button class="btn">button 4</button>
 </div>
+
+<div class="main-view">
+    @for (product of products; track product.id) {
+    <app-product-card [product]="product" />
+  }
+    
+</div>

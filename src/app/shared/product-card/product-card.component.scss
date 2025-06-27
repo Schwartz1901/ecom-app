@@ -1,0 +1,94 @@
+@use '../../shared/styles/colors.scss' as *;
+
+
+.product-card-wrap{
+    width: clamp(180px, 25vw, 280px); // ✅ Responsive width
+    height: clamp(300px, 35vw, 400px); // ✅ Responsive height
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.image-link{
+    display: block;
+    flex: 1;
+    height: 100%;
+    text-decoration: none;
+    .image-container{
+        height: 80%;
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        cursor: pointer;
+        }
+
+    }
+    }
+    .overlay-content{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 20%;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none; // disables click-through blocking by default
+    .product-info,
+    .product-action {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        transition: opacity 0.3s ease-in-out;
+    }
+    .product-info{
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: flex-start;
+        padding:2px;
+        opacity: 1;
+        pointer-events: auto;
+
+        .tag{
+            margin:0px;
+            font-size: 12px;
+        }
+        .name{
+            margin:0px;
+            font-size: 12px;
+        }
+        .price{
+            margin:0px;
+            font-size: 12px;
+        }
+        
+    }
+    .product-action {
+        opacity: 0;
+        pointer-events: none;
+    }
+    }
+    :hover .overlay-content {
+    pointer-events: auto;
+
+    .product-info {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .product-action {
+        opacity: 1;
+        pointer-events: auto; // ✅ Now clickable
+    }
+}
+
+
+

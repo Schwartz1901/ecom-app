@@ -17,13 +17,15 @@ export const routes: Routes = [
             {path: 'products', 
                 loadComponent: () => 
                     import('./features/products/product-list/product-list.component').then(m => m.ProductListComponent)},
-            
+            {path: 'products/:id', 
+                loadComponent: () => 
+                    import('./features/products/product-detail/product-detail.component').then(m=>m.ProductDetailComponent)},
             
 
+            {path: 'login', component: LoginComponent},
+            {path: 'register', component: RegisterComponent},
+            
+            {path: '**', component: PageNotFoundComponent}
         ]
     },
-    {path: 'login', component: LoginComponent},
-    {path: 'register', component: RegisterComponent},
-  
-              {path: '**', component: PageNotFoundComponent}
 ];

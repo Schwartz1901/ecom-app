@@ -12,6 +12,13 @@
     <li><a routerLink="/about" routerLinkActive = "active">About</a></li>
   </ul>
   <div class="navbar-actions">
-    <!-- Add login/logout buttons or user-related actions here -->
+    @if(false) {
+
+    } @else {
+      <button routerLink="/login">Login</button>
+      <button routerLink="register">Register</button>
+    
+    }
+    
   </div>
 </nav>

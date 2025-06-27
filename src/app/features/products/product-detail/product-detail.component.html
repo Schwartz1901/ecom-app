@@ -1,1 +1,18 @@
-<p>product-detail works!</p>
+@if (product) {
+  <div class="product-detail">
+    <div class="left">
+        <h2>{{ product.name }}</h2>
+        <div class = "image-wrapper">
+            <img [src]="product.imageUrl" [alt]="product.imageAlt" />
+        </div>
+    </div>
+    <div class="right">
+
+        <p class="tag">{{ product.tag }}</p>
+        <p class="price">{{ product.price }}</p>
+        <button mat-flat-button color="primary">Add to Cart</button>
+    </div>
+  </div>
+} @else {
+  <app-page-not-found></app-page-not-found>
+}
