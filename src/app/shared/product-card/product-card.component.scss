@@ -1,36 +1,142 @@
 @use '../../shared/styles/colors.scss' as *;
 
 
-.product-card-wrap{
-    width: clamp(180px, 25vw, 280px); // ✅ Responsive width
-    height: clamp(300px, 35vw, 400px); // ✅ Responsive height
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-.image-link{
+// .product-card-wrap{
+//     width: clamp(180px, 25vw, 280px); // ✅ Responsive width
+//     height: clamp(300px, 35vw, 400px); // ✅ Responsive height
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: space-between;
+// }
+// .image-link{
+//     display: block;
+//     flex: 1;
+//     height: 100%;
+//     text-decoration: none;
+//     .image-container{
+//         height: 80%;
+//         width: 100%;
+//         overflow: hidden;
+//         display: flex;
+//         align-items: center;
+//         justify-content: center;
+        
+//         img {
+//         width: 100%;
+//         height: 100%;
+//         object-fit: cover;
+//         cursor: pointer;
+//         }
+
+//     }
+//     }
+//     .overlay-content{
+//     position: absolute;
+//     bottom: 0;
+//     width: 100%;
+//     height: 20%;
+//     background: rgba(255, 255, 255, 0.9);
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     pointer-events: none; // disables click-through blocking by default
+//     .product-info,
+//     .product-action {
+//         position: absolute;
+//         width: 100%;
+//         text-align: center;
+//         transition: opacity 0.3s ease-in-out;
+//     }
+//     .product-info{
+
+//         display: flex;
+//         flex-direction: column;
+//         justify-content: space-around;
+//         align-items: flex-start;
+//         padding:2px;
+//         opacity: 1;
+//         pointer-events: auto;
+
+//         .tag{
+//             margin:0px;
+//             font-size: 12px;
+//         }
+//         .name{
+//             margin:0px;
+//             font-size: 12px;
+//         }
+//         .price{
+//             margin:0px;
+//             font-size: 12px;
+//         }
+        
+//     }
+//     .product-action {
+//         opacity: 0;
+//         pointer-events: none;
+//     }
+//     }
+//     :hover .overlay-content {
+//     pointer-events: auto;
+
+//     .product-info {
+//         opacity: 0;
+//         pointer-events: none;
+//     }
+
+//     .product-action {
+//         opacity: 1;
+//         pointer-events: auto; // ✅ Now clickable
+//     }
+// }
+
+
+.product-card-wrap {
+  width: clamp(180px, 25vw, 280px);
+  height: clamp(300px, 35vw, 400px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  border: 1px solid $border-color;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: $bg-light;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  .image-link {
     display: block;
-    flex: 1;
     height: 100%;
     text-decoration: none;
-    .image-container{
-        height: 80%;
-        width: 100%;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        
-        img {
+
+    .image-container {
+      height: 80%;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         cursor: pointer;
-        }
+        transition: transform 0.3s ease;
 
+        &:hover {
+          transform: scale(1.05);
+        }
+      }
     }
-    }
-    .overlay-content{
+  }
+
+  .overlay-content {
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -39,56 +145,90 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    pointer-events: none; // disables click-through blocking by default
+    pointer-events: none; // default disable click-through
+
     .product-info,
     .product-action {
-        position: absolute;
-        width: 100%;
-        text-align: center;
-        transition: opacity 0.3s ease-in-out;
+      position: absolute;
+      width: 100%;
+      padding: 0.5rem;
+      text-align: center;
+      transition: opacity 0.3s ease;
     }
-    .product-info{
 
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: flex-start;
-        padding:2px;
-        opacity: 1;
-        pointer-events: auto;
+    .product-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: flex-start;
+      opacity: 1;
+      pointer-events: auto;
 
-        .tag{
-            margin:0px;
-            font-size: 12px;
-        }
-        .name{
-            margin:0px;
-            font-size: 12px;
-        }
-        .price{
-            margin:0px;
-            font-size: 12px;
-        }
-        
+      .tag,
+      .name,
+      .price {
+        margin: 0;
+        font-size: 0.75rem;
+        color: $text-color;
+      }
+
+      .price {
+        font-weight: 600;
+        color: $accent-color;
+      }
     }
+
     .product-action {
-        opacity: 0;
-        pointer-events: none;
+      opacity: 0;
+      pointer-events: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+
+      .add-to-cart-button {
+        background-color: $accent-color;
+        color: $text-light;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+          background-color: darken($accent-color, 10%);
+        }
+      }
+
+      .favorite-button {
+        background: transparent;
+        border: none;
+        color: $primary-color;
+        font-size: 1.25rem;
+        cursor: pointer;
+
+        &:hover {
+          color: $accent-color;
+        }
+      }
     }
-    }
-    :hover .overlay-content {
+  }
+
+  // === Hover Swap Logic ===
+  &:hover .overlay-content {
     pointer-events: auto;
 
     .product-info {
-        opacity: 0;
-        pointer-events: none;
+      opacity: 0;
+      pointer-events: none;
     }
 
     .product-action {
-        opacity: 1;
-        pointer-events: auto; // ✅ Now clickable
+      opacity: 1;
+      pointer-events: auto;
     }
+  }
 }
-
 
 

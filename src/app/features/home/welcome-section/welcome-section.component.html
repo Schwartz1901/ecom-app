@@ -1,0 +1,22 @@
+<section class="welcome-section">
+  <h2>Welcome to The Herbalist</h2>
+  <p>
+    Whether you're here for restful sleep, natural energy, or a soothing cup of tea, our carefully curated remedies bring together centuries of herbal wisdom and modern-day purity. At The Herbalist, we don’t just sell herbs — we share a way of living.
+  <mat-tab-group animationDuration="500ms" mat-stretch-tabs>
+    @for (herb of herbs; track herb.name) {
+    <mat-tab>
+      <ng-template mat-tab-label>
+        {{ herb.name }}
+      </ng-template>
+      <mat-card class="herb-card">
+        <img mat-card-image [src]="herb.imageUrl" [alt]="herb.name" />
+        <mat-card-title>{{ herb.name }}</mat-card-title>
+        <mat-card-content>
+          <p>{{ herb.benefit }}</p>
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+  }
+  </mat-tab-group>
+  </p>
+</section>

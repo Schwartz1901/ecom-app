@@ -1,48 +1,108 @@
 @import '../styles/colors.scss';
-.navbar {
-    width: auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: $primary-dark;
-  color: $text-light;
-  padding: 0.75rem 2rem;
-  box-shadow: 0 2px 4px rgba(145, 130, 130, 0.1);
 
-  .navbar-logo {
-    img {
-      height: 40px;
-    }
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: transparent;
+  padding: 1rem ;
+  border-bottom: 1px solid $border-color;
+  font-family: $font-family;
+  position: fixed;
+  width: 100vw;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  // &::before {
+  //   content: '';
+  //   position: absolute;
+  //   inset: 0;
+  //   background: rgba(255, 255, 255, 0.2);  // or dark: rgba(0,0,0,0.3)
+  //   backdrop-filter: blur(8px);
+  //   z-index: -1;
+  // }
+  // Logo
+  .navbar-logo img {
+    height: 40px;
+    width: auto;
+    scale: 5;
   }
 
+  // Navigation Links
   .navbar-links {
     list-style: none;
     display: flex;
-    gap: 1.5rem;
+    gap: 2rem;
     margin: 0;
     padding: 0;
 
     li {
       a {
+        color: $primary-color;
         text-decoration: none;
-        color: $text-light;
         font-weight: 500;
-        transition: color 0.3s ease;
+        font-size: 1rem;
+        transition: color 0.3s ease, border-bottom 0.3s ease;
+        border-bottom: 2px solid transparent;
+        padding-bottom: 2px;
+        font-family: $font-family;
 
         &:hover {
-          color: $secondary-color;
+          color: $primary-dark;
+          border-bottom: 2px solid $primary-dark;
         }
 
         &.active {
+          color: $accent-color;
           border-bottom: 2px solid $accent-color;
+          font-weight: 600;
         }
       }
     }
   }
 
+  // Action Buttons
   .navbar-actions {
     display: flex;
     gap: 1rem;
-    // Add login/logout buttons styling later
+
+    button {
+       background: transparent;
+      color: $text-light;
+      border: 2px solid $primary-color;
+      padding: 0.5rem 1.2rem;
+      font-weight: bold;
+      font-family: $font-family;
+      transition: background 0.3s ease, color 0.3s ease, transform 0.2s;
+
+      &:hover {
+        background: $primary-color;
+        color: $text-light;
+        transform: scale(1.05);
+        box-shadow: 0 0 10px rgba(144, 168, 133, 0.5); // subtle green glow
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(144, 168, 133, 0.4);
+      }
+    }
   }
+
+  // Responsive (optional)
+  // @media (max-width: 768px) {
+  //   flex-direction: column;
+  //   align-items: flex-start;
+  //   gap: 1rem;
+
+  //   .navbar-links {
+  //     flex-direction: column;
+  //     gap: 1rem;
+  //   }
+
+  //   .navbar-actions {
+  //     width: 100%;
+  //     justify-content: flex-start;
+  //   }
+  // }
 }

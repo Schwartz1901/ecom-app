@@ -1,10 +1,35 @@
-$primary-color: #111111;     // Near black
-$primary-dark:  #000000;
-$secondary-color: #6c757d;   // Muted gray
-$accent-color:   #ff3c00;    // Punch red-orange
+// $primary-color: #111111;     // Near black
+// $primary-dark:  #000000;
+// $secondary-color: #6c757d;   // Muted gray
+// $accent-color:   #ff3c00;    // Punch red-orange
 
-$bg-light:       #ffffff;
-$bg-dark:        #181818;
-$text-color:     #222;
-$text-light:     #f1f1f1;
-$text-muted:     #999999;
+// $bg-light:       #ffffff;
+// $bg-dark:        #181818;
+// $text-color:     #222;
+// $text-light:     #f1f1f1;
+// $text-muted:     #999999;
+
+
+// === Core Colors ===
+$primary-color:     #6E8B57;   // Forest Herb – main leafy tone
+$primary-dark:      #1B2A18;   // Herbal Black – dominant dark background
+$secondary-color:   #A5C9A1;   // Soft Mint – for gentle contrast & highlights
+$accent-color:      #C1FF72;   // Lively Lime – for CTAs and hover pop
+
+// === Backgrounds ===
+$bg-dark:           #000800;   // Absolute dark base (site background)
+$bg-light:          #1E261E;   // Slightly lifted section bg (cards, hero overlay)
+
+// === Text Colors ===
+$text-color:        #FFFFFF;   // For all main text
+$text-light:        #F0F5EF;   // Muted white for secondary text
+$text-muted:        #8CA68C;   // Soft sage-gray for labels/descriptions
+
+// === Borders & Effects ===
+$border-color:      #2C3A2C;   // Subtle border
+$hover-color:       #90B57C;   // Bright herb hover glow
+
+// === Typography ===
+$font-family:       'Courier New', Courier, monospace;
+$font-size-base:    16px;
+$font-size-heading: 2rem;
