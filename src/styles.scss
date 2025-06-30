@@ -1,12 +1,58 @@
 /* You can add global styles to this file, and also import other style files */
-body {
+:root{
+  --body-font: 'Courier New', Courier, monospace;
+
+  --big-font: 3rem;
+  --h1-font: 2.6rem;
+  --h2-font: 2.4rem;
+  --h3-font: 2rem;
+  --h4-font: 1.6rem;
+  --normal-font: 1.2rem;
+  --small-font: 0.8rem;
+  --smaller-font: 0.4rem;
+
+  /* Font Weight ***/
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semi-bold: 600;
+
+  --primary-color: #6E8B57;               /* Main olive green */
+  --primary-color-hover: #5A7347;         /* Darker shade for hover */
+  --text-color: #FFFFFF;                  /* Main text (white) */
+  --text-color-light: #F0F5EF;            /* Lighter text for subtle UI elements */
+  --border-color: #D9E2D1;                /* Soft green-gray border */
+  --white-color: #FFFFFF;                 /* Pure white */
+  --section-bg: #F7FAF5;    
+
+  /* z-index */
+  --z-overlay: 10;
+  --z-fixed: 100;
+
+  /* transition */
+  --tran-0-2: ;
+  --tran-0-3: ;
+  --tran-0-5: ;
+}
+
+* {
   margin: 0;
   padding: 0;
-  overflow-x: hidden; // Prevent horizontal scroll
-  
+  box-sizing: border-box;
+
+}
+
+
+body, button, input {
+  font-family: var(--body-font);
+  font-size: var(--normal-font);
+  font-weight: var(--font-regular);
+  color: var(--text-color)
+}
+
+body{
+  overflow-x: hidden;
+  background-color: var(--white-color);
 }
 
 
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
