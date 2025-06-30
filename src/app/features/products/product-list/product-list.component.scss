@@ -1,13 +1,20 @@
 
 
+.product-list{
+  
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+  margin-right: 2rem;
+  
 
-
-// Main product grid
-.main-view {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 3.8rem;
-  padding: 2rem;
-
-  // Optional: Add fade-in or animation later
+  // Main product grid
+  .main-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    row-gap: 0.6rem;
+    column-gap: 0.6rem;
+    padding-top: 0.6rem;
+  
+    // Optional: Add fade-in or animation later
+  }
 }

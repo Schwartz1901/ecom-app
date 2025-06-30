@@ -1,5 +1,7 @@
 <div class="product-list">
-  
+  <!-- <div class="toolbar">
+    <app-searchbar></app-searchbar>
+  </div> -->
   <div class="main-view">
       @for (product of products; track product.id) {
       <app-product-card [product]="product" />

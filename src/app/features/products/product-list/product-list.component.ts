@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ProductCardComponent } from "../../../shared/product-card/product-card.component";
 import { ProductService } from '../../../services/product.service';
 import { Product } from '../../../models/product.model';
+import { SearchbarComponent } from '../searchbar/searchbar.component';
 @Component({
   selector: 'app-product-list',
   imports: [ProductCardComponent],

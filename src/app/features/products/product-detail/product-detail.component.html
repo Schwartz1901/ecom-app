@@ -8,8 +8,12 @@
     </div>
     <div class="right">
 
-        <p class="tag">{{ product.tag }}</p>
-        <p class="price">{{ product.price }}</p>
+        <p class="tag">{{ product.catagory.join(', ') }}</p>
+        @if(product.isDiscount) {
+                    <div class="product-price"><small>{{product.price}}</small>{{product.discountPrice}}</div>
+                } @else {
+                    <div class="product-price">{{product.price}}</div>
+                }
         <p class="description">{{ product.description }}</p>
         <button mat-flat-button color="primary">Add to Cart</button>
     </div>

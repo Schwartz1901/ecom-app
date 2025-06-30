@@ -1,11 +1,10 @@
-@use '../../../shared/styles/colors.scss' as *;
 
 
 .hero{
   position: relative;
   height: 100vh;
   width: 100vw;
-  background-image: url('/herbal.jpg'); // ✅ Use your actual image
+  background-image: url('/herbal.jpg'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -15,6 +14,7 @@
   text-align: center;
   overflow: hidden;
   padding: 2rem;
+  
 
  &::before {
      content: '';
@@ -43,15 +43,16 @@
     .store-name {
       font-size: var(--h1-font);
       font-weight: var(--font-semi-bold);
-      color: var(--primary-color);
-         
+      color: var(--accent-color);
     }
 
     .store-description {
       font-size: var(--normal-font);
     }
 
-    
+    button{
+      align-self: center;
+    }
   }
     
 }

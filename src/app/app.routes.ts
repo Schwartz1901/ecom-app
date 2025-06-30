@@ -4,6 +4,7 @@ import { RegisterComponent } from './features/auth/register/register.component';
 
 import { LayoutComponent } from './layout/layout.component';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
+import { ProductLayoutComponent } from './features/products/product-layout/product-layout.component';
 
 export const routes: Routes = [
     {
@@ -11,15 +12,37 @@ export const routes: Routes = [
         component: LayoutComponent,
         children: [
             {path: '', redirectTo: 'home', pathMatch: 'full'},
-            {path: 'home', 
+            {
+                path: 'home', 
                 loadComponent: () => 
-                    import('./features/home/home.component').then(m => m.HomeComponent)},
-            {path: 'products', 
-                loadComponent: () => 
-                    import('./features/products/product-list/product-list.component').then(m => m.ProductListComponent)},
-            {path: 'products/:id', 
-                loadComponent: () => 
-                    import('./features/products/product-detail/product-detail.component').then(m=>m.ProductDetailComponent)},
+                    import('./features/home/home.component').then(m => m.HomeComponent)
+            },
+            // {
+            //     path: 'products', 
+            //     loadComponent: () => 
+            //         import('./features/products/product-list/product-list.component').then(m => m.ProductListComponent)
+                
+            // },
+            {
+                path: 'products',
+                component:ProductLayoutComponent,
+                children: [
+                    {
+                        path: '',
+                        loadComponent: () => 
+                            import('./features/products/product-list/product-list.component').then(m => m.ProductListComponent)
+                    },
+                    {
+                        path: ':id'    ,
+                        loadComponent: () =>import('./features/products/product-detail/product-detail.component').then(m => m.ProductDetailComponent)
+                    }
+                ]
+            },
+            // {
+            //     path: 'products/:id', 
+            //     loadComponent: () => 
+            //         import('./features/products/product-detail/product-detail.component').then(m=>m.ProductDetailComponent)
+            // },
             
 
             {path: 'login', component: LoginComponent},

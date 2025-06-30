@@ -11,7 +11,7 @@
   font-family: var(--body-font);
   position: fixed;
   width: 100vw;
-  height:64px;
+  height:8vh;
   z-index: 10;
   top: 0;
   left: 0;
@@ -35,7 +35,7 @@
 
     li {
       a {
-        color: var(--primary-color);
+        color: var(--text-color);
         text-decoration: none;
         font-weight: var(--font-regular);
         font-size: var(--normal-font);
@@ -45,8 +45,8 @@
         font-family: var(--body-font);
 
         &:hover {
-          color: var(--white-color);
-          border-bottom: 2px solid var(--border-color);
+          color: var(--primary-color-hover);
+          border-bottom: 2px solid var(--primary-hover-color);
         }
 
         &.active {
