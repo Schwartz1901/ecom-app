@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { MatTabGroup, MatTab } from '@angular/material/tabs';
-import { MatCard, MatCardTitle, MatCardContent } from '@angular/material/card';
+
+
 @Component({
+
   selector: 'app-welcome-section',
-  imports: [MatTabGroup, MatTab, MatCard, MatCardTitle, MatCardContent,],
+  imports: [],
+ 
   templateUrl: './welcome-section.component.html',
   styleUrl: './welcome-section.component.scss'
 })
@@ -31,4 +33,6 @@ export class WelcomeSectionComponent {
 
     }
   ];
+
+
 }

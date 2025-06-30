@@ -1,13 +1,9 @@
-<div class="tool-bar">
-    <button class="btn">button 1</button>
-    <button class="btn">button 2</button>
-    <button class="btn">button 3</button>
-    <button class="btn">button 4</button>
-</div>
-
-<div class="main-view">
-    @for (product of products; track product.id) {
-    <app-product-card [product]="product" />
-  }
-    
+<div class="product-list">
+  
+  <div class="main-view">
+      @for (product of products; track product.id) {
+      <app-product-card [product]="product" />
+    }
+     
+  </div>
 </div>

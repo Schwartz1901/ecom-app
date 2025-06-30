@@ -1,4 +1,4 @@
-@use '../../shared/styles/colors.scss' as *;
+
 
 section {
   height: 100vh;                // Full viewport height
@@ -10,7 +10,7 @@ section {
   padding: 2rem;
   box-sizing: border-box;
   scroll-snap-align: start;    // (Optional) for smooth section scrolling
-  background-color: $bg-dark; // Use a light background for contrast
+  background-color: var(--section-bg); // Use a light background for contrast
 }
 
 // Optional: Fullscreen scrolling experience
@@ -20,25 +20,4 @@ section {
   height: 100vh;
 }
 
-
-
-.featured-products{
-  // background-color: $bg-dark;
-    h2{
-    color: $text-light;
-  }
-}
-
-.categories{
-  // background-color: $bg-light;
-  .h2{
-    color: $text-color;
-  }
-}
-.promo-banner{
-  // background-color: $bg-dark;
-  h2{
-    color: $text-light;
-  }
-}
 

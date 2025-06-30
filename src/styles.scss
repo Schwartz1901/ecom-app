@@ -18,12 +18,14 @@
 
   --primary-color: #6E8B57;               /* Main olive green */
   --primary-color-hover: #5A7347;         /* Darker shade for hover */
+  --accent-color:      #C1FF72;
   --text-color: #FFFFFF;                  /* Main text (white) */
   --text-color-light: #F0F5EF;            /* Lighter text for subtle UI elements */
   --border-color: #D9E2D1;                /* Soft green-gray border */
   --white-color: #FFFFFF;                 /* Pure white */
   --section-bg: #F7FAF5;    
-
+  --dark-bg: #000800;
+  --neutral-bg: #5e665e;
   /* z-index */
   --z-overlay: 10;
   --z-fixed: 100;
@@ -48,10 +50,39 @@ body, button, input {
   font-weight: var(--font-regular);
   color: var(--text-color)
 }
+button {
+
+      background: transparent;
+      color: var(--text-color-light);
+      border: 2px solid var(--primary-color);
+      padding: 0.5rem 1.2rem;
+      font-weight: bold;
+      font-family: var(--body-font);
+      font-size: var(--small-font);
+      transition: background 0.3s ease, color 0.3s ease, transform 0.2s;
+      width: 100px;
+
+      &:hover {
+        background: var(--primary-color);
+        color: var(--text-color-light);
+        transform: scale(1.05);
+        box-shadow: 0 0 10px rgba(144, 168, 133, 0.5); // subtle green glow
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(144, 168, 133, 0.4);
+      }
+    }
 
 body{
   overflow-x: hidden;
-  background-color: var(--white-color);
+  background-color: var(--dark-bg);
+  padding-top:64px;
+}
+
+section{
+  padding: 7rem 2rem;
 }
 
 

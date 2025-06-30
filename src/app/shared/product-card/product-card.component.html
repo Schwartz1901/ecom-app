@@ -1,5 +1,5 @@
 
-<mat-card class="product-card-wrap" appearance="outlined" >
+<!-- <mat-card class="product-card-wrap" appearance="outlined" >
     <a class="image-link" [routerLink]="'/products/' + product.id">
         <div class="image-container">
                 <img mat-card-image [src]="product.imageUrl" 
@@ -21,4 +21,31 @@
 
         
 </mat-card>
+ -->
+
+ 	<div class="product-card">
+		<div class="badge">Hot</div>
+		<div class="product-tumb">
+			<img src={{product.imageUrl}} alt={{product.imageAlt}} loading="lazy">
+		</div>
+		<div class="product-details">
+			<span class="product-catagory">
+            {{product.catagory.join(',')}}
+            </span>
+			<h4><a [routerLink]="'/products/' + product.id">{{product.name}}</a></h4>
+			<p>{{product.description}}</p>
+			<div class="product-bottom-details">
+                @if(product.isDiscount) {
+                    <div class="product-price"><small>{{product.price}}</small>{{product.discountPrice}}</div>
+                } @else {
+                    <div class="product-price">{{product.price}}</div>
+                }
+				
+				<div class="product-links">
+					<a href=""><mat-icon>add_shopping_cart</mat-icon></a>
+					<a href=""><mat-icon>favorite</mat-icon></a>
+				</div>
+			</div>
+		</div>
+	</div>
 

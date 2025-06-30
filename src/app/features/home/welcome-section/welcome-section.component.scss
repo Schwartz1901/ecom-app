@@ -1,37 +1,9 @@
-@use '../../../shared/styles/colors.scss' as *;
+
 .welcome-section {
   padding: 4rem 2rem;
   text-align: center;
-  background-color: $bg-dark;
 
-  h2 {
-    margin-bottom: 1rem;
-    color: $primary-dark;
-  }
 
-  p {
-    color: $secondary-color;
-    margin-bottom: 2rem;
-  }
 
-  .herb-card {
-    max-width: 400px;
-    margin: 2rem auto;
-    background-color: $bg-dark;
-    color: $text-light;
-
-    img {
-      height: 200px;
-      object-fit: cover;
-    }
-
-    mat-card-title {
-      color: $primary-color;
-      margin-top: 1rem;
-    }
-
-    mat-card-content {
-      font-size: 1rem;
-    }
-  }
+ 
 }
