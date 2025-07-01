@@ -43,7 +43,10 @@ export const routes: Routes = [
             //     loadComponent: () => 
             //         import('./features/products/product-detail/product-detail.component').then(m=>m.ProductDetailComponent)
             // },
-            
+            {
+                path: 'user/:username',
+                loadComponent: () => import('./features/user/profile/profile.component').then(m=>m.ProfileComponent),
+            },
 
             {path: 'login', component: LoginComponent},
             {path: 'register', component: RegisterComponent},

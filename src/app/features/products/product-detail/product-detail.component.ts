@@ -12,16 +12,27 @@ import { PageNotFoundComponent } from '../../../components/page-not-found/page-n
   styleUrl: './product-detail.component.scss'
 })
 export class ProductDetailComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private productService = inject(ProductService);
 
-  constructor(
-    private route: ActivatedRoute,
-    private productService: ProductService
-  )  {}
-
-product?: Product;
+  product?: Product;
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.product = this.productService.getProductById(id);
   }
 }
+// export class ProductDetailComponent implements OnInit {
+
+//   constructor(
+//     private route: ActivatedRoute,
+//     private productService: ProductService
+//   )  {}
+
+// product?: Product;
+
+//   ngOnInit(): void {
+//     const id = Number(this.route.snapshot.paramMap.get('id'));
+//     this.product = this.productService.getProductById(id);
+//   }
+// }

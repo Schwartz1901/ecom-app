@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, WritableSignal } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
+import { signal } from '@angular/core';
 
 export interface User{
   email: string;
@@ -12,6 +13,9 @@ export interface User{
   providedIn: 'root'
 })
 export class UserService {
+  
+  private currentUser = signal<User | null>(null);
+
   private mockUsers: User[] = [
     {
       email: 'user1@mail.com',
@@ -24,7 +28,8 @@ export class UserService {
     const user = this.mockUsers.find(u => u.email === email && u.password === password);
     if (user) {
       user.isLoggedIn = true;
-      return of('Login Successful');
+      this.currentUser.set(user);
+      return of("Login Successful");
     } else {
       return throwError(() => new Error('Invalid Email or Password!'));
     }
@@ -40,8 +45,28 @@ export class UserService {
         password: password,
         username: email,
         isLoggedIn: true});
-
+      
       return of('Register successful');
     }
   }
+
+  getUser(username: string | null): WritableSignal<User | null> {
+    const user = this.mockUsers.find(u => u.username === username);
+    if (user) {
+      this.currentUser.set(user);
+    }
+    return this.currentUser;
+  }
+
+  getCurrentUser() {
+    return this.currentUser;
+    
+  }
+
+  logout() {
+    this.currentUser.set(null);
+    return of("Logout!");
+  }
+  
+
 }

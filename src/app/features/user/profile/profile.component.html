@@ -1,1 +1,45 @@
-<p>profile works!</p>
+@if(user()) {
+
+    <div class="profile-wrapper">
+        <div class="left-container">
+            <div class="avatar-container">
+                <div class="avatar-image">
+                    <img src="/tea.png" alt="avatar">
+                </div>
+                <div class="name">
+                    <p>{{user()?.username}}</p>
+                </div>
+            </div>
+            <div class="connections">
+                <p>Connections</p>
+            </div>
+        </div>
+        <div class="right-container">
+            <div class="upper">
+                <div class="info-container">
+                    <div class="input-block">
+                        <label for="name" class="input-label">Name</label>
+                        <span class="name">{{user()?.username}}</span>
+                    </div>
+                    <div class="input-block">
+                        <label for="email" class="input-label">Email</label>
+                        <span class="email">{{user()?.email}}</span>
+                    </div>
+                    <div class="input-block">
+                        <label for="address" class="input-label">Address</label>
+                        <input type="text" name="address" id="address" placeholder="Address">
+                    </div>
+    
+                </div>
+                <div class="favorite-list">
+                    <p>This is favorite list</p>
+                </div>
+            </div>
+            <div class="history">
+                <p>This is orders history</p>
+            </div>
+        </div>
+    </div>
+} @else {
+    <app-page-not-found></app-page-not-found>
+}

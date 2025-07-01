@@ -26,7 +26,7 @@ export class RegisterComponent {
       this.errorMessage = "Password mismatch!";
     } else {
       this.userService.register(this.email, this.password).subscribe({
-        next: () => this.router.navigate(['home']),
+        next: () => this.router.navigate(['login']),
         error: err => this.errorMessage = err.message,
       });
     }

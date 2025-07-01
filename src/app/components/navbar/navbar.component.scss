@@ -4,14 +4,15 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.8)  ;
+  // background-color: rgba(17, 221, 10, 0.8)  ;
+  background-color: var(--dark-bg);
   padding: 0.5rem ;
   backdrop-filter: blur(10px);
   // border-bottom: 1px solid var(--border-color);
   font-family: var(--body-font);
   position: fixed;
   width: 100vw;
-  height:8vh;
+  height:10vh;
   z-index: 10;
   top: 0;
   left: 0;
@@ -60,8 +61,96 @@
 
   // Action Buttons
   .navbar-actions {
-    display: flex;
+    display:flex;
     gap: 1rem;
+    max-width: 300px;
+    height: 90%;
+    justify-content: center;
+    align-items: center;
+    .user-actions-wrapper{
+      display:flex;
+      width: 100%;
+      height:100%;
+      justify-content: center;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+      .shopping-cart{
+        color: var(--text-color-light);
+        
+        &:hover{
+          color: var(--accent-color);
+          scale: 1.05;
+        }
+      }
+      .notification-icon{
+        color: var(--text-color-light);
+        
+        &:hover{
+          color: var(--accent-color);
+          scale: 1.05;
+        }
+      }
+      .avatar-container{
+        // background-color: var(--primary-color-);
+        display:flex;
+        flex-direction:column;
+        justify-content:flex-start;
+        align-items: center;
+        position:relative;
+        .avatar-span{
+          display: flex;
+          justify-content: space-evenly;
+          align-items: center;
+          padding-left:1rem;
+          padding-right:1rem;
+
+          img{
+            width: 40px;         // or any size
+            height: 40px;
+            border-radius: 50%;  // 👈 makes it circular
+            object-fit: cover;   // ensures the image fills the circle
+            border: 2px solid white;
+          }
+          .name{
+            color: var(--text-color-light);
+            padding-left: 1rem;
+            
+          }
+        }
+        .dropdown{
+           display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          background: white;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          min-width: 120px;
+          z-index: 10;
+          .logout-button{
+            background-color: red;
+            width: 100%;
+            &:hover{
+              background-color:rgb(161, 4, 4);
+            }
+          }
+          a{
+            color: var(--text-color);
+            display: block;
+            padding: 8px 12px;
+            text-decoration: none;
+            &:hover{
+              background-color:#9c9999;   
+            }
+            
+          }
+        }
+        &:hover .dropdown{
+          display:block;
+        }
+      }
+    }
     
   }
 

@@ -13,12 +13,32 @@
     <li><a routerLink="/about" routerLinkActive = "active">About</a></li>
   </ul>
   <div class="navbar-actions">
-    @if(false) {
+    @if(user()) {
+      <div class="user-actions-wrapper"> 
+        <mat-icon class="shopping-cart">add_shopping_cart</mat-icon>
+        <mat-icon class="notification-icon">notifications</mat-icon>
+        <div class="avatar-container">
+          <span class="avatar-span">
+            
+            <div class="avatar-image">
+              <img src="/tea.png" alt="avt">
+            </div>
+            <a class="name" [routerLink]="'/user/' + user()?.username">{{user()?.username}}</a>
+          </span>
+          <div class="dropdown">
+            <a [routerLink]="'/user/' + user()?.username">Profile</a>
+            <a>Favorites</a>
+            <a>Billings</a>
+            <a>Notifications</a>
+            <button class="logout-button" (click)="logout()">Logout</button>
+          </div>
+        </div>
+        
 
+      </div>
     } @else {
       <button routerLink="/login">Login</button>
       <button routerLink="/register">Register</button>
-    
     }
     
   </div>
