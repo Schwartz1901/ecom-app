@@ -1,1 +1,22 @@
-<p>login works!</p>
+<div class="login-warpper">
+    <div class="login-container">
+        <h1 class="login-title">LOGIN</h1>
+        <p class="login-desc">Welcome to The Herbalist.</p>
+        <div class="input-block">
+            <label for="email" class="input-label">Email</label>
+            <input type="email" name="email" id="email" placeholder="Email">
+        </div>
+        <div class="input-block">
+            <label for="password" class="input-label">Password</label>
+            <input type="password" name="password" id="password" placeholder="Password">
+        </div>
+        <div class="button-group">
+            <div class="upper-group">
+                <p class="forgot-password">Forgot your <a routerLink="#">password?</a></p>
+                <a class="register" routerLink="/register">Create new account!</a>
+            </div>
+            
+            <button class="login-button" (click)="login()">Login</button>
+        </div>
+    </div>
+</div>

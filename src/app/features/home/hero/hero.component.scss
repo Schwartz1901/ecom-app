@@ -30,7 +30,7 @@
     left: 0;
     right: 0;
     height: 10%;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), var(--dark-bg) 30%  );
+    // background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), var(--dark-bg) 30%  );
     z-index: 2;
   }
   .hero-content-wrapper {
@@ -43,11 +43,12 @@
     .store-name {
       font-size: var(--h1-font);
       font-weight: var(--font-semi-bold);
-      color: var(--accent-color);
+      color: var(--primary-color);
     }
 
     .store-description {
       font-size: var(--normal-font);
+      color: var(--text-color-light);
     }
 
     button{
