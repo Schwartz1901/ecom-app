@@ -1,0 +1,93 @@
+.login-warpper{
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-image: url('/herbal.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.192); // white overlay
+        z-index: 1;
+  }
+  
+    .login-container{
+        display: flex;
+        max-width: 560px;
+        width: 100%;
+        border-radius: 10px;
+        overflow: hidden;
+        // position: absolute;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        background: #fff;
+        z-index: 2;
+    
+        .login-title{
+            margin: 0;
+            font-size: var(--h1-font) ;
+        }
+        .login-desc{
+            font-size: var(--normal-font);
+            color: var(--primary-color);
+            padding-bottom: 1rem;
+        }
+        .input-block{
+            display: flex;
+            flex-direction: column;
+            padding: 10px 10px 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            width: 80%;
+            input {
+                outline: 0;
+                border: 0;
+                padding: 4px 0 0;
+                font-size: 14px;
+              
+    
+                &::placeholder {
+                color: #ccc;
+                opacity: 1;
+                }
+            }
+            &:focus-within {
+                border-color: var(--primary-color-hover);
+    
+                .input-label {
+                    color: rgba(#469108, 0.8);
+                }
+            }
+        }
+        .button-group{
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width:80%;
+            
+            .login-text{
+                font-size: var(--small-font);
+                color: var(--primary-color);
+                padding: 2px;
+            }
+            .login-button{
+                width: 60%;
+                margin-bottom: 1.5rem;
+                margin-top: 0.5rem;
+                background-color: var(--primary-color);
+                border-radius: 10px;
+                font-size: var(--normal-font);
+            }
+            
+        }
+    }
+}

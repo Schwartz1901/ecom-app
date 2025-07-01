@@ -4,7 +4,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { Input } from '@angular/core';
-import { Product } from '../../models/product.model';
+import { Product } from '../../shared/models/product.model';
 @Component({
   selector: 'app-product-card',
   imports: [MatCardModule, MatButtonModule, MatIconModule,RouterLink],
@@ -13,5 +13,5 @@ import { Product } from '../../models/product.model';
 })
 export class ProductCardComponent {
   @Input() product!: Product;
-  
+
 }

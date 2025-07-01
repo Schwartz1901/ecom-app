@@ -4,11 +4,11 @@
         <p class="login-desc">Welcome to The Herbalist.</p>
         <div class="input-block">
             <label for="email" class="input-label">Email</label>
-            <input type="email" name="email" id="email" placeholder="Email">
+            <input [(ngModel)]="email" type="email" name="email" id="email" placeholder="Email">
         </div>
         <div class="input-block">
             <label for="password" class="input-label">Password</label>
-            <input type="password" name="password" id="password" placeholder="Password">
+            <input [(ngModel)]="password" type="password" name="password" id="password" placeholder="Password">
         </div>
         <div class="button-group">
             <div class="upper-group">
@@ -17,6 +17,9 @@
             </div>
             
             <button class="login-button" (click)="login()">Login</button>
+            @if(errorMessage) {
+                <div class="error-message">{{ errorMessage }}</div>
+            }
         </div>
     </div>
 </div>

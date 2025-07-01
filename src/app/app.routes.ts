@@ -3,7 +3,7 @@ import { LoginComponent } from './features/auth/login/login.component';
 import { RegisterComponent } from './features/auth/register/register.component';
 
 import { LayoutComponent } from './layout/layout.component';
-import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ProductLayoutComponent } from './features/products/product-layout/product-layout.component';
 
 export const routes: Routes = [

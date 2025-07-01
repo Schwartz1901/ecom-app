@@ -1,1 +1,27 @@
-<p>register works!</p>
+<div class="login-warpper">
+    <div class="login-container">
+        <h1 class="login-title">REGISTER</h1>
+        <p class="login-desc">Create your Account.</p>
+        <div class="input-block">
+            <label for="email" class="input-label">Email</label>
+            <input [(ngModel)]="email" type="email" name="email" id="email" placeholder="Email">
+        </div>
+        <div class="input-block">
+            <label for="password" class="input-label">Password</label>
+            <input [(ngModel)]="password" type="password" name="password" id="password" placeholder="Password">
+        </div>
+        <div class="input-block">
+            <label for="password" class="input-label">Confirm Passowrd</label>
+            <input [(ngModel)]="confirmPassword" type="password" name="password" id="password" placeholder="Confirm Password">
+        </div>
+        <div class="button-group">
+
+                <p class="login-text">Already have an account? <a routerLink="/login">Login?</a></p>       
+            
+            <button class="login-button" (click)="register()">Register</button>
+            @if(errorMessage) {
+                <div class="error-message">{{ errorMessage }}</div>
+            }
+        </div>
+    </div>
+</div>

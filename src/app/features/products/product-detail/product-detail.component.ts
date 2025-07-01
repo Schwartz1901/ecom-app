@@ -1,9 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Product } from '../../../models/product.model';
-import { ProductService } from '../../../services/product.service';
-import { PageNotFoundComponent } from '../../../shared/page-not-found/page-not-found.component';
+import { Product } from '../../../shared/models/product.model';
+import { ProductService } from '../../../shared/services/product.service';
+import { PageNotFoundComponent } from '../../../components/page-not-found/page-not-found.component';
 
 @Component({
   selector: 'app-product-detail',
