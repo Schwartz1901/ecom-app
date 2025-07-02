@@ -1,5 +1,20 @@
-.searchbar-container{
-    margin-left: 2rem;
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
+.product-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+app-sidebar {
+    width: 20vw;
+  min-width: 200px;
+  max-width: 280px;
+  background-color: yellowgreen;
+  color: white;
+  padding: 20px;
+}
+
+.router-container {
+//   margin-left: 20vw; // Same as sidebar width
+  width: calc(100% - 20vw);
+  padding: 30px;
+  background: #f9f9f9;
 }

@@ -2,10 +2,13 @@
 
 .product-card {
     width: auto;
-  
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow:hidden;
     position: relative;
     box-shadow: 0 2px 7px #dfdfdf;
-
+    height:300px;
     background: var(--white-color);
     
     .badge {
@@ -20,6 +23,7 @@
     padding: 3px 10px;
   }
   .product-tumb {
+ 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -30,6 +34,7 @@
         max-width: 100%;
         max-height: 100%;
     }
+    
   }
 
   .product-details {
@@ -46,22 +51,31 @@
     h4 a:hover {
       color: var(--accent-color);
     }
-    p {
+    .description {
       font-size: var(--small-font);
       line-height: 22px;
       margin-bottom: 10px;
       color: var(--primary-color);
+      flex-grow: 1;
+      line-height: 1.2;
+      display: -webkit-box;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
     }
   
     .product-catagory {
       display: block;
-      font-size: 12px;
+      font-size: var(--small-font);
       font-weight: var(--font-bold);
       text-transform: uppercase;
-      color: var(--primary-color);
+      color: var(--primary-color-dark);
       margin-bottom: 18px;
     }
     .product-bottom-details {
+      margin-top: auto;
       overflow: hidden;
       border-top: 1px solid #eee;
       padding-top: 20px;

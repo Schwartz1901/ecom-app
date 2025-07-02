@@ -7,7 +7,7 @@
         </div>
     </div>
     <div class="right">
-
+      
         <p class="tag">{{ product.catagory.join(', ') }}</p>
         @if(product.isDiscount) {
                     <div class="product-price"><small>{{product.price}}</small>{{product.discountPrice}}</div>
@@ -16,6 +16,11 @@
                 }
         <p class="description">{{ product.description }}</p>
         <button mat-flat-button color="primary">Add to Cart</button>
+        <div class="amount-button">
+            <button><mat-icon>add</mat-icon></button>
+            <input type="text" name="amount" id="amount" placeholder="0">
+            <button><mat-icon>remove</mat-icon></button>
+        </div>
     </div>
   </div>
 } @else {

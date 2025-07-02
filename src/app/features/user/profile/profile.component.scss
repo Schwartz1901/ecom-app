@@ -7,14 +7,18 @@
     gap:2vh;
     .left-container{
         width: 20vw;
-        height: 60vh;
-        background-color: #d8dbdf;
+        height: 50vh;
+        background-color: white;
         display:flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        border: 2px solid black;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); // soft shadow
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
         border-radius: 10px;
+        &:hover{
+            scale: 1.05;
+        }
         .avatar-image{
             padding-top:4px;
             
@@ -35,11 +39,21 @@
         }
         .name{
             display:flex;
-            flex-direction: row;
+            flex-direction: column;
             justify-content: center;
-            font-size: var(--regular-font);
-            font-weight: var(--font-bold);
-            color: var(--primary-color-dark);
+            align-items: center;
+            .name-text{
+                font-size: var(--regular-font);
+                font-weight: var(--font-bold);
+                color: var(--primary-color-dark);
+            }
+            .sub-name{
+                font-size: var(--small-font);
+                color: var(--text-color-muted);
+            }
+            .quote{
+                font-size: var(--small-font);
+            }
         }
     }
     .right-container{
@@ -54,7 +68,7 @@
             justify-content: space-between;
             flex-direction: row;
             align-items: flex-start;
-            height:30vh;
+            height: 50vh;
             padding: 0.5rem;
             
             .info-container{
@@ -62,7 +76,7 @@
                 flex-direction: column;
                 justify-content: flex-start;
                 align-items: flex-start;
-                width:30%;
+                width:40%;
                 gap: 0.5rem;
                 .input-block{
                     display:flex;
@@ -96,7 +110,7 @@
             }
             .favorite-list{
                 background-color:white;
-                width:60%;
+                width:50%;
                 height: 100%;
                 border-radius: 10px;
                 

@@ -33,7 +33,7 @@
             {{product.catagory.join(',')}}
             </span>
 			<h4><a [routerLink]="'/products/' + product.id">{{product.name}}</a></h4>
-			<p>{{product.description}}</p>
+			<!-- <p class="description">{{product.description}}</p> -->
 			<div class="product-bottom-details">
                 @if(product.isDiscount) {
                     <div class="product-price"><small>{{product.price}}</small>{{product.discountPrice}}</div>

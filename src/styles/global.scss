@@ -27,6 +27,7 @@
 
   --text-color: #{$text-color};
   --text-color-light: #{$text-color-light};
+  --text-color-muted: #{$muted-text-color};
   --border-color: #D9E2D1; // static or define new SCSS var
   --white-color: #ffffff;
   --section-bg: #F7FAF5;
@@ -61,7 +62,7 @@ body, button, input {
 }
 button {
 
-      background: transparent;
+      background: var(--primary-color);
       color: var(--text-color-light);
       border: 2px solid var(--primary-color);
       border-radius: 10px;

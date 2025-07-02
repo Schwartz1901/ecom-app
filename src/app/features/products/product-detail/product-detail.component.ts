@@ -4,10 +4,11 @@ import { Subscription } from 'rxjs';
 import { Product } from '../../../shared/models/product.model';
 import { ProductService } from '../../../shared/services/product.service';
 import { PageNotFoundComponent } from '../../../components/page-not-found/page-not-found.component';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [PageNotFoundComponent],
+  imports: [PageNotFoundComponent, MatIcon],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss'
 })

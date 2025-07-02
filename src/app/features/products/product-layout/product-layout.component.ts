@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { SearchbarComponent } from "../searchbar/searchbar.component";
+
 import { RouterOutlet } from '@angular/router';
+import { SidebarComponent } from "./sidebar/sidebar.component";
 
 @Component({
   selector: 'app-product-layout',
-  imports: [SearchbarComponent, RouterOutlet],
+  imports: [RouterOutlet, SidebarComponent],
   templateUrl: './product-layout.component.html',
   styleUrl: './product-layout.component.scss'
 })

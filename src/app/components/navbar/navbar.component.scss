@@ -131,6 +131,7 @@
           .logout-button{
             background-color: red;
             width: 100%;
+            border:none;
             &:hover{
               background-color:rgb(161, 4, 4);
             }

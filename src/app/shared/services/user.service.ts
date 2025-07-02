@@ -50,13 +50,13 @@ export class UserService {
     }
   }
 
-  getUser(username: string | null): WritableSignal<User | null> {
-    const user = this.mockUsers.find(u => u.username === username);
-    if (user) {
-      this.currentUser.set(user);
-    }
-    return this.currentUser;
-  }
+  // getUser(username: string | null): WritableSignal<User | null> {
+  //   const user = this.mockUsers.find(u => u.username === username);
+  //   if (user) {
+  //     this.currentUser.set(user);
+  //   }
+  //   return this.currentUser;
+  // }
 
   getCurrentUser() {
     return this.currentUser;

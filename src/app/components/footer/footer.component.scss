@@ -1,13 +1,10 @@
 .footer{
-    display:flex;
-    flex-direction: row;
-    justify-content: space-around;
-    height: 20vh;
-    width: 100vw;
-    font-size: var(--small-font);
-    font-weight: var(--font-regular);
-    background-color: black;
-    margin-top:10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: auto;
+    
     .logo{
         padding-left:3rem;
         img{
