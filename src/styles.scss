@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@use 'variables' as *;
 :root{
   --body-font: 'Courier New', Courier, monospace;
 
@@ -18,7 +19,7 @@
   --font-bold:700;
 
 
-  --primary-color: #469108;               /* Main olive green */
+  --primary-color: #{$primary-color};               /* Main olive green */
   --primary-color-hover: #09ec60;         /* Darker shade for hover */
   --secondary-color: #9ddb9d;
   --accent-color:      #c6c913;

@@ -1,0 +1,99 @@
+@use 'variables' as *;
+:root{
+
+  // === Font Settings ===
+  --body-font: #{$font-family-base};
+
+   --big-font: #{$font-size-big};
+  --h1-font: #{$font-size-h1};
+  --h2-font: #{$font-size-h2};
+  --h3-font: #{$font-size-h3};
+  --h4-font: #{$font-size-h4};
+  --normal-font: #{$font-size-base};
+  --small-font: #{$font-size-small};
+  --smaller-font: #{$font-size-smaller};
+
+  --font-regular: #{$font-weight-normal};
+  --font-medium: #{$font-weight-medium};
+  --font-semi-bold: #{$font-weight-semi-bold};
+  --font-bold: #{$font-weight-bold};
+
+  // === Color Palette ===
+  --primary-color: #{$primary-color};
+  --primary-color-dark:#{$primary-color-dark};
+  --primary-color-hover: #{$secondary-color}; // custom hover, or make a SCSS darken() version
+  --secondary-color: #{$secondary-color};
+  --accent-color: #{$accent-color};
+
+  --text-color: #{$text-color};
+  --text-color-light: #{$text-color-light};
+  --border-color: #D9E2D1; // static or define new SCSS var
+  --white-color: #ffffff;
+  --section-bg: #F7FAF5;
+  --dark-bg: #000800;
+  --neutral-bg: #9ddb9d;
+
+  // === Z-index ===
+  --z-overlay: 10;
+  --z-fixed: 100;
+
+  // === Transition Durations (you can define them if needed) ===
+  --tran-0-2: 0.2s ease;
+  --tran-0-3: 0.3s ease;
+  --tran-0-5: 0.5s ease;
+
+
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+}
+
+
+body, button, input {
+  font-family: var(--body-font);
+  font-size: var(--normal-font);
+  font-weight: var(--font-regular);
+  color: var(--text-color)
+}
+button {
+
+      background: transparent;
+      color: var(--text-color-light);
+      border: 2px solid var(--primary-color);
+      border-radius: 10px;
+      padding: 0.5rem 1.2rem;
+      font-weight: bold;
+      font-family: var(--body-font);
+      font-size: var(--regular-font);
+      transition: background 0.3s ease, color 0.3s ease, transform 0.2s;
+      width: auto;
+
+      &:hover {
+        background: var(--primary-color-hover);
+        color: var(--text-color-light);
+        transform: scale(1.05);
+        box-shadow: 0 0 10px rgba(144, 168, 133, 0.5); // subtle green glow
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(144, 168, 133, 0.4);
+      }
+    }
+
+body{
+  overflow-x: hidden;
+  background-color: var(--white-color);
+  padding-top:10vh;
+}
+
+section{
+  padding: 7rem 2rem;
+}
+
+
+
