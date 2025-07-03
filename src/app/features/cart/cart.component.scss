@@ -1,0 +1,38 @@
+.cart-wrapper{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 20px;
+    .cart-container{
+        display:flex;
+        justify-content: flex-start;
+        flex-direction: column;
+        width: 50vw;
+        height:auto;
+        min-height:40vh;
+        max-height: 75wh;
+        background-color: gray;
+        border-radius: 10px;
+        .orders{
+            display:flex;
+            justify-content:space-between;
+            align-items: center;
+            gap: 4px;
+            
+            width:100%;
+            height:auto;
+            gap: 5px;
+            app-order{
+                display:flex;
+                justify-content: space-around;
+                align-items: center;
+                width:100%;
+                border:none;
+                
+                
+            }
+        }
+    
+    }
+}

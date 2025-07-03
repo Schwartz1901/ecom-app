@@ -3,6 +3,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { signal } from '@angular/core';
 
 export interface User{
+  userId: string;
   email: string;
   password: string;
   username: string;
@@ -18,6 +19,7 @@ export class UserService {
 
   private mockUsers: User[] = [
     {
+      userId:'1',
       email: 'user1@mail.com',
       password: '123456',
       username: 'testuser1',
@@ -41,6 +43,7 @@ export class UserService {
       return throwError(()=> new Error('User is already existed!'));
     } else {
       this.mockUsers.push({
+        userId: (Math.floor(Math.random() * (10 - 1)) + 1).toString(),
         email: email,
         password: password,
         username: email,

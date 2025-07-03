@@ -17,12 +17,12 @@ export const routes: Routes = [
                 loadComponent: () => 
                     import('./features/home/home.component').then(m => m.HomeComponent)
             },
-            // {
-            //     path: 'products', 
-            //     loadComponent: () => 
-            //         import('./features/products/product-list/product-list.component').then(m => m.ProductListComponent)
+            {
+                path: 'cart', 
+                loadComponent: () => 
+                    import('./features/cart/cart.component').then(m => m.CartComponent)
                 
-            // },
+            },
             {
                 path: 'products',
                 component:ProductLayoutComponent,
