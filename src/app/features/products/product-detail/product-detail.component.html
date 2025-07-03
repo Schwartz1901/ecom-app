@@ -5,21 +5,30 @@
         <div class = "image-wrapper">
             <img [src]="product.imageUrl" [alt]="product.imageAlt" />
         </div>
+        <div class="comment-section">
+           <p>This is comment section</p> 
+        </div>
     </div>
     <div class="right">
       
         <p class="tag">{{ product.catagory.join(', ') }}</p>
         @if(product.isDiscount) {
-                    <div class="product-price"><small>{{product.price}}</small>{{product.discountPrice}}</div>
-                } @else {
-                    <div class="product-price">{{product.price}}</div>
-                }
+            <div class="product-price"><small>{{product.price}}</small>{{product.discountPrice}}</div>
+        } @else {
+            <div class="product-price">{{product.price}}</div>
+        }
         <p class="description">{{ product.description }}</p>
-        <button mat-flat-button color="primary">Add to Cart</button>
-        <div class="amount-button">
+        <div class="cart-action">
+
+          <div class="amount-button">
             <button><mat-icon>add</mat-icon></button>
-            <input type="text" name="amount" id="amount" placeholder="0">
+            <input type="number" name="amount" id="amount" placeholder="0">
             <button><mat-icon>remove</mat-icon></button>
+          </div>
+          <button mat-flat-button color="primary" class="add-to-cart-button">Add to Cart</button>
+        </div>
+        <div class="related-product">
+          <p>This is related product</p>
         </div>
     </div>
   </div>

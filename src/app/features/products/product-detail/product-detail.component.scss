@@ -77,6 +77,22 @@
       color: var(--text-color);
       margin: 0.5rem 0 1rem 0;
     }
+    .cart-action{
+      display:flex;
+      justify-content: space-around;
+      flex-direction: row;
+      align-items: center;
+      gap:5px;
+      input{
+        border-radius: 10px;
+        
+      }
+      .amount-button{
+        display: flex;
+        gap: 5px;
+      }
+      
+    }
 
     // button {
     //   width: fit-content;
