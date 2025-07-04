@@ -12,18 +12,20 @@
         height:auto;
         min-height:40vh;
         max-height: 75wh;
-        background-color: gray;
+        padding: 5px;
         border-radius: 10px;
+        border: 1px solid black;
         .orders{
             display:flex;
             justify-content:space-between;
             align-items: center;
             gap: 4px;
+            flex-direction: column;
             
             width:100%;
             height:auto;
             gap: 5px;
-            app-order{
+            app-cart-item{
                 display:flex;
                 justify-content: space-around;
                 align-items: center;
@@ -33,6 +35,13 @@
                 
             }
         }
-    
+        .total{
+            margin-top: auto; // pushes this block to the bottom
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; // or flex-end to right-align
+            gap: 0.5rem;
+        }
+
     }
 }

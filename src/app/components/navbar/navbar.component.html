@@ -15,7 +15,7 @@
   <div class="navbar-actions">
     @if(user()) {
       <div class="user-actions-wrapper"> 
-        <mat-icon class="shopping-cart">add_shopping_cart</mat-icon>
+        <mat-icon class="shopping-cart" routerLink="/cart">add_shopping_cart</mat-icon>
         <mat-icon class="notification-icon">notifications</mat-icon>
         <div class="avatar-container">
           <span class="avatar-span">
@@ -23,10 +23,10 @@
             <div class="avatar-image">
               <img src="/tea.png" alt="avt">
             </div>
-            <a class="name" [routerLink]="'/user/' + user()?.username">{{user()?.username}}</a>
+            <a class="name" [routerLink]="'/user/' + user()?.userId">{{user()?.username}}</a>
           </span>
           <div class="dropdown">
-            <a [routerLink]="'/user/' + user()?.username">Profile</a>
+            <a [routerLink]="'/user/' + user()?.userId">Profile</a>
             <a>Favorites</a>
             <a>Billings</a>
             <a>Notifications</a>

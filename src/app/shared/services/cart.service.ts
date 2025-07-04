@@ -1,36 +1,68 @@
-import { inject, Injectable } from '@angular/core';
-import { UserService } from './user.service';
-import { Product } from '../models/product.model';
-import { signal } from '@angular/core';
+import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 
-export interface Cart{
-  userId: string;
-  productList: Product[];
-}
+import { Cart, CartItem } from '../models/cart.model';
+import { Product } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {  
-  private userService = inject(UserService);
-  private currentUser = this.userService.getCurrentUser();
-  
-  private cart = signal<Cart>({
+  private cart : WritableSignal<Cart> = signal<Cart>({
+    userId: 'guest',
+    items: [],
+  });
 
-    userId: this.currentUser()?.userId ?? 'guest',
-    productList: [],
-  })
+  getCart = () => this.cart();
+  getCartSignal = () => this.cart;
 
-  
+  addItem(item: CartItem) {
+    const current = this.cart();
+     const index = current.items.findIndex(i => i.productId === item.productId);
 
-  getCart(userId: string) {
-    const userIdCart: Cart = {
-      userId: '',
-      productList: [],
+    if (index >= 0) {
+      // Update quantity
+      current.items[index].quantity += item.quantity;
+    } else {
+      current.items.push(item);
+    }
+
+     this.cart.set({ ...current });
+  }
+  removeItem(productId: string) {
+    const current = this.cart();
+    const filtered = current.items.filter(item => item.productId !== productId);
+    this.cart.set({...current, items: filtered})
+  }
+
+  updateQuantity(productId: string, quantity: number) {
+    const current = this.cart();
+    const index = current.items.findIndex(i => i.productId === productId);
+    if (index >= 0) {
+      current.items[index].quantity = quantity;
+      this.cart.set({...current});
     }
   }
-  setCart(userId: string, product: Product) {
-    this.cart().productList.push(product);
+
+  clearCart() {
+    const current = this.cart();
+    this.cart.set({...current, items: []});
   }
+  getItemSubtotal(item: CartItem): number {
+    return item.price * item.quantity;
+  }
+  getTotalPrice(): number {
+    return this.cart().items.reduce((total, item) => total + item.price * item.quantity, 0);
+  }
+
+  addFromProduct(product: Product, quantity: number = 1) {
+    const item: CartItem = {
+      productId:(product.id).toString(),
+      productName: product.name,
+      price: Number(product.price),
+      quantity: quantity,
+      imageUrl: product.imageUrl
+    };
+    this.addItem(item);
+}
   constructor() { }
 }

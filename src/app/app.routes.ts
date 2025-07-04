@@ -18,9 +18,19 @@ export const routes: Routes = [
                     import('./features/home/home.component').then(m => m.HomeComponent)
             },
             {
-                path: 'cart', 
-                loadComponent: () => 
-                    import('./features/cart/cart.component').then(m => m.CartComponent)
+                path: 'cart',
+                children: [
+                    {
+                        path: '',
+                        loadComponent: () => 
+                            import('./features/cart/cart.component').then(m => m.CartComponent)
+
+                    },
+                    {
+                        path: 'checkout',
+                        loadComponent: () => import('./features/cart/checkout/checkout.component').then(m => m.CheckoutComponent)
+                    }
+                ] 
                 
             },
             {
@@ -44,7 +54,7 @@ export const routes: Routes = [
             //         import('./features/products/product-detail/product-detail.component').then(m=>m.ProductDetailComponent)
             // },
             {
-                path: 'user/:username',
+                path: 'user/:userId',
                 loadComponent: () => import('./features/user/profile/profile.component').then(m=>m.ProfileComponent),
             },
 

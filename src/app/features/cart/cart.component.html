@@ -1,13 +1,21 @@
 <div class="cart-wrapper">
-    <div class="cart-container">
-        <div class="orders">
-            <app-order></app-order>
+    
+        <div class="cart-container">
+            <div class="orders">
+                @if(cart$().items.length === 0) {
+                    <p>Your cart is empty</p>
+                } @else {
+                   @for (item of cart$().items; track item.productId) {
+                        <app-cart-item [item]="item"></app-cart-item>
+                    }
+                }
+            </div>
+            <div class="total">
+                <h3 class="total-price">Total price: {{ cartService.getTotalPrice()}}</h3>
+            </div>
+            <div class="checkout-button">
+                <button routerLink="/cart/checkout">Checkout</button>
+            </div>
         </div>
-        <div class="total">
-
-        </div>
-        <div class="checkout-button">
-
-        </div>
-    </div>
+    
 </div>
