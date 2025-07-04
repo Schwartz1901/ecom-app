@@ -21,11 +21,17 @@
         <div class="cart-action">
 
           <div class="amount-button">
-            <button><mat-icon>add</mat-icon></button>
-            <input type="number" name="amount" id="amount" placeholder="0">
-            <button><mat-icon>remove</mat-icon></button>
+            <button (click)="decrease()" class="adjust-button">-</button>
+            <input
+              type="number"
+              [(ngModel)]="quantity"
+              [min]="1"
+              [max]="99"
+              (ngModelChange)="onQuantityChange()"
+            />
+            <button (click)="increase()" class="adjust-button">+</button>
           </div>
-          <button mat-flat-button color="primary" class="add-to-cart-button">Add to Cart</button>
+          <button mat-flat-button color="primary" class="add-to-cart-button" (click)="addToCart()">Add to Cart</button>
         </div>
         <div class="related-product">
           <p>This is related product</p>

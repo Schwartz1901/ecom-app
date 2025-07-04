@@ -90,6 +90,22 @@
       .amount-button{
         display: flex;
         gap: 5px;
+        .adjust-button{
+          display: flex;
+          height:40px;
+          width: 40px;
+          align-items: center;
+          justify-content: center;
+           line-height: 0;
+          
+        }
+        input{
+           width: 60px;
+            text-align: center;
+            padding: 0.5rem;
+            border-radius: 6px;
+            border: 1px solid black;
+        }
       }
       
     }

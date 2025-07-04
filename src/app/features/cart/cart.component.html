@@ -1,5 +1,4 @@
 <div class="cart-wrapper">
-    
         <div class="cart-container">
             <div class="orders">
                 @if(cart$().items.length === 0) {
@@ -11,11 +10,11 @@
                 }
             </div>
             <div class="total">
-                <h3 class="total-price">Total price: {{ cartService.getTotalPrice()}}</h3>
+                <h3 class="total-price">Total price: {{ cartService.getTotalPrice() }}</h3>
             </div>
-            <div class="checkout-button">
-                <button routerLink="/cart/checkout">Checkout</button>
-            </div>
+           
         </div>
-    
+        <div class="checkout-container">
+            <app-checkout></app-checkout>
+        </div>
 </div>

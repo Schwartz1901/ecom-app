@@ -1,9 +1,10 @@
 .cart-wrapper{
     display:flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
+    align-items: flex-start;
     flex-direction: column;
     margin: 20px;
+    flex-direction: row;
     .cart-container{
         display:flex;
         justify-content: flex-start;
@@ -43,5 +44,13 @@
             gap: 0.5rem;
         }
 
+    }
+    .checkout-container{
+        
+        height: auto;
+        width: 45%;
+        padding-left: 10px;
+        align-items: flex-start;
+        
     }
 }

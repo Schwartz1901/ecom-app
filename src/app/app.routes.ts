@@ -19,19 +19,8 @@ export const routes: Routes = [
             },
             {
                 path: 'cart',
-                children: [
-                    {
-                        path: '',
-                        loadComponent: () => 
-                            import('./features/cart/cart.component').then(m => m.CartComponent)
-
-                    },
-                    {
-                        path: 'checkout',
-                        loadComponent: () => import('./features/cart/checkout/checkout.component').then(m => m.CheckoutComponent)
-                    }
-                ] 
-                
+                loadComponent: () => 
+                    import('./features/cart/cart.component').then(m => m.CartComponent)
             },
             {
                 path: 'products',
