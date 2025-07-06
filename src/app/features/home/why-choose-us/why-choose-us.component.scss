@@ -1,0 +1,61 @@
+.why-choose-us {
+  padding: 4rem 2rem;
+  background-color: #f9f9f9;
+  text-align: center;
+
+  h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    color: var(--primary-color, #2e7d32);
+  }
+
+  .reasons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    justify-items: center;
+  }
+
+  .reason {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    max-width: 300px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    img {
+      height: 60px;
+      margin-bottom: 1rem;
+    }
+
+    h4 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-dark, #333);
+    }
+
+    p {
+      font-size: 0.95rem;
+      color: var(--text-muted, #666);
+    }
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  @media (max-width: 600px) {
+    padding: 3rem 1rem;
+
+    .reason {
+      padding: 1.5rem;
+    }
+
+    h2 {
+      font-size: 1.6rem;
+    }
+  }
+}

@@ -2,8 +2,66 @@
 .welcome-section {
   padding: 4rem 2rem;
   text-align: center;
+  // background-color: var(--primary-color);
+  height:100%;
+  .section-header {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .product-type{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+    .img-card{
+      position: relative;
+      width: auto;
+      height: auto;
+      overflow: hidden;
+      border-radius: 10px;
+      cursor: pointer;
+      img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.3s ease;
+      }
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.5); // dark overlay
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.3s ease;
+        text-align: center;
+        padding: 1rem;
+      }
+      &:hover {
+        img {
+          transform: scale(1.05);
+        }
 
+        .overlay {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    }
+  }
 
-
- 
+  
 }

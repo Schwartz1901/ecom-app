@@ -1,0 +1,21 @@
+<section class="featured-products">
+  <h2 class="section-title">Bestsellers This Week</h2>
+  <p class="section-subtitle">
+    These favorites are loved by our customers — and your body.
+  </p>
+
+  <div class="product-grid">
+    @for (product of products(); track product.name) {
+      <div class="product-card">
+        <div class="image-wrapper">
+          <img [src]="product.imageUrl" [alt]="product.name" />
+          <div class="overlay">
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.description }}</p>
+            <a [routerLink]="['/products', product.id]" class="view-button">View Product</a>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</section>
