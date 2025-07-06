@@ -1,41 +1,43 @@
 @if (product) {
   <div class="product-detail">
     <div class="left">
-        <h2>{{ product.name }}</h2>
-        <div class = "image-wrapper">
-            <img [src]="product.imageUrl" [alt]="product.imageAlt" />
-        </div>
-        <div class="comment-section">
-           <p>This is comment section</p> 
-        </div>
+      <div class="image-wrapper">
+        <img [src]="product.imageUrl" [alt]="product.imageAlt" />
+      </div>
+      <div class="comment-section">
+        <h3>Customer Reviews</h3>
+        <p>This is comment section</p>
+      </div>
     </div>
-    <div class="right">
-      
-        <p class="tag">{{ product.catagory.join(', ') }}</p>
-        @if(product.isDiscount) {
-            <div class="product-price"><small>{{product.price}}</small>{{product.discountPrice}}</div>
-        } @else {
-            <div class="product-price">{{product.price}}</div>
-        }
-        <p class="description">{{ product.description }}</p>
-        <div class="cart-action">
 
-          <div class="amount-button">
-            <button (click)="decrease()" class="adjust-button">-</button>
-            <input
-              type="number"
-              [(ngModel)]="quantity"
-              [min]="1"
-              [max]="99"
-              (ngModelChange)="onQuantityChange()"
-            />
-            <button (click)="increase()" class="adjust-button">+</button>
-          </div>
-          <button mat-flat-button color="primary" class="add-to-cart-button" (click)="addToCart()">Add to Cart</button>
+    <div class="right">
+      <h2 class="product-name">{{ product.name }}</h2>
+      <p class="tag">{{ product.catagory.join(', ') }}</p>
+
+      @if(product.isDiscount) {
+        <div class="product-price">
+          <span class="old-price">{{ product.price | currency }}</span>
+          <span class="discount-price">{{ product.discountPrice | currency }}</span>
         </div>
-        <div class="related-product">
-          <p>This is related product</p>
+      } @else {
+        <div class="product-price">{{ product.price | currency }}</div>
+      }
+
+      <p class="description">{{ product.description }}</p>
+
+      <div class="cart-action">
+        <div class="amount-button">
+          <button (click)="decrease()">-</button>
+          <input type="number" [(ngModel)]="quantity" [min]="1" [max]="99" />
+          <button (click)="increase()">+</button>
         </div>
+        <button class="add-to-cart" (click)="addToCart()">Add to Cart</button>
+      </div>
+
+      <div class="related-product">
+        <h3>Related Products</h3>
+        <p>This is related product</p>
+      </div>
     </div>
   </div>
 } @else {

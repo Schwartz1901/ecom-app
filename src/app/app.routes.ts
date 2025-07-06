@@ -4,7 +4,7 @@ import { RegisterComponent } from './features/auth/register/register.component';
 
 import { LayoutComponent } from './layout/layout.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { ProductLayoutComponent } from './features/products/product-layout/product-layout.component';
+
 
 export const routes: Routes = [
     {
@@ -24,7 +24,6 @@ export const routes: Routes = [
             },
             {
                 path: 'products',
-                component:ProductLayoutComponent,
                 children: [
                     {
                         path: '',

@@ -2,8 +2,8 @@ export interface Product {
   id: number;
   catagory: string[];
   name: string;
-  price: string;
-  discountPrice: string;
+  price: number ;
+  discountPrice: number ;
   isDiscount: boolean;
   imageUrl: string;
   imageAlt: string;
