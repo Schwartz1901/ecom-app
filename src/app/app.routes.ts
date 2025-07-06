@@ -37,11 +37,11 @@ export const routes: Routes = [
                     }
                 ]
             },
-            // {
-            //     path: 'products/:id', 
-            //     loadComponent: () => 
-            //         import('./features/products/product-detail/product-detail.component').then(m=>m.ProductDetailComponent)
-            // },
+            {
+                path: 'about', 
+                loadComponent: () => 
+                    import('./features/about/about.component').then(m=>m.AboutComponent)
+            },
             {
                 path: 'user/:userId',
                 loadComponent: () => import('./features/user/profile/profile.component').then(m=>m.ProfileComponent),
