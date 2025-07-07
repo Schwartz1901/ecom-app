@@ -26,9 +26,29 @@
     </div>
 
     <div class="product-grid">
-      @for (product of filteredProducts(); track product.id) {
+      @for (product of paginatedProducts(); track product.id) {
         <app-product-card [product]="product" />
       }
     </div>
+    @if (totalPages > 1) {
+      <div class="pagination-controls">
+        <button (click)="goToPage(currentPage() - 1)" [disabled]="currentPage() === 1">
+          Previous
+        </button>
+
+        @for (i of totalPageArray(); track i) {
+          <button 
+            (click)="goToPage(i)" 
+            [class.active]="currentPage() === i">
+            {{ i }}
+          </button>
+        }
+
+        <button (click)="goToPage(currentPage() + 1)" [disabled]="currentPage() === totalPages">
+          Next
+        </button>
+      </div>
+    }
+
   </section>
 </div>

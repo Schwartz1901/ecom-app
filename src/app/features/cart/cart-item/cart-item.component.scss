@@ -12,15 +12,15 @@
     .product-image{
         width: 150px;
         margin: 5px;    
-   
+        height: 95%;
 
         .image{
             width: 100px;
 
-            height: auto;          // Preserve aspect ratio
-            object-fit: contain;   // Fit within the box without cropping
+            height:95%;          
+            object-fit: contain;   
             display: block;
-            margin: 0 auto;        // Center it (optional) 
+            margin: 0 auto;         
             border: 1px solid black;
             border-radius:5px;
         }

@@ -28,7 +28,7 @@ export class CartComponent {
   }
 
   getTotal() {
-    return this.cartService.getTotalPrice().toFixed(2);
+    return this.cartService.getTotalPrice();
   }
   
 }

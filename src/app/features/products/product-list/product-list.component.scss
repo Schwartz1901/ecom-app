@@ -85,6 +85,30 @@
       gap: 1.5rem;
     }
   }
+    .pagination-controls {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+
+    button {
+      padding: 0.5rem 1rem;
+      border: none;
+
+      cursor: pointer;
+
+      &.active {
+        font-weight: bold;
+        background-color: var(--accent-color);
+        color: white;
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+  }
 }
 @media (max-width: 768px) {
   .product-layout {

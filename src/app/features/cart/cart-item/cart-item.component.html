@@ -17,7 +17,7 @@
             />
         </div>
         <div class="total-price">
-            <p>Subtotal: {{ getSubtotal() }}</p>>
+            <p>Subtotal: {{ getSubtotal().toFixed(2) }}</p>>
         </div>
         <button (click)="removeItem()">Remove</button>
     </div>
