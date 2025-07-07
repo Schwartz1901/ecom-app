@@ -1,0 +1,37 @@
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  background-color: #f9f9f9;
+
+  h1 {
+    font-size: 6rem;
+    color: var(--primary-color);
+    margin: 0;
+  }
+
+  p {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+    color: #555;
+  }
+
+  .back-home {
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    background-color:var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: var(--primary-color-hover);
+    }
+  }
+}

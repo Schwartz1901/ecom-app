@@ -4,18 +4,27 @@
     These favorites are loved by our customers — and your body.
   </p>
 
-  <div class="product-grid">
-    @for (product of products(); track product.name) {
-      <div class="product-card">
-        <div class="image-wrapper">
-          <img [src]="product.imageUrl" [alt]="product.name" />
-          <div class="overlay">
-            <h3>{{ product.name }}</h3>
-            <p>{{ product.description }}</p>
-            <a [routerLink]="['/products', product.id]" class="view-button">View Product</a>
+  <div class="carousel-wrapper">
+    <button class="nav left" (click)="prev()">‹</button>
+    <div class="carousel">
+      <div
+        class="carousel-track"
+        [style.transform]="'translateX(-' + currentSlide * 100 + '%)'"
+      >
+        @for (product of products(); track product.name) {
+          <div class="product-card">
+            <div class="image-wrapper">
+              <img [src]="product.imageUrl" [alt]="product.name" />
+              <div class="overlay">
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description }}</p>
+                <a [routerLink]="['/products', product.id]" class="view-button">View Product</a>
+              </div>
+            </div>
           </div>
-        </div>
+        }
       </div>
-    }
+    </div>
+    <button class="nav right" (click)="next()">›</button>
   </div>
 </section>

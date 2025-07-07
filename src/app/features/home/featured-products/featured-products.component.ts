@@ -13,4 +13,17 @@ import { ProductService } from '../../../shared/services/product.service';
 export class FeaturedProductsComponent {
   private productService = inject(ProductService);
   products = signal(this.productService.getProducts());
+  currentSlide = 0;
+
+  prev(): void {
+    if (this.currentSlide > 0) {
+      this.currentSlide--;
+    }
+  }
+
+  next(): void {
+    if (this.currentSlide < this.products().length/4 - 1) {
+      this.currentSlide++;
+    }
+  }
 }
