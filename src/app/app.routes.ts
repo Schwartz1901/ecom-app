@@ -4,9 +4,11 @@ import { RegisterComponent } from './features/auth/register/register.component';
 
 import { LayoutComponent } from './layout/layout.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { AdminComponent } from './features/admin/admin.component';
 
 
 export const routes: Routes = [
+
     {
         path: '',
         component: LayoutComponent,
@@ -48,8 +50,24 @@ export const routes: Routes = [
 
             {path: 'login', component: LoginComponent},
             {path: 'register', component: RegisterComponent},
-            
+            {
+                path:'admin',
+                component: AdminComponent,
+                children: [
+                    // {path: '', redirectTo:'dashboard', pathMatch: 'full'},
+                    {
+                        path: 'dashboard',
+                        loadComponent: () => import('./features/admin/dashboard/dashboard.component').then(m=>m.DashboardComponent),
+                    },
+                    {
+                        path: 'admin-products',
+                        loadComponent: () => import('./features/admin/admin-products/admin-products.component').then(m=>m.AdminProductsComponent),
+                    },
+                    {path: '**', component: PageNotFoundComponent}
+                ]
+            },
             {path: '**', component: PageNotFoundComponent}
         ]
     },
+    
 ];
