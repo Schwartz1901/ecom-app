@@ -1,0 +1,138 @@
+<div class="wrapper">
+    <div class="title">
+        <h1>Week 1: Setup dev environment, Angular and Typescript</h1>
+        <div class="summary-section">
+            <p>
+                In Week 1, the focus is on setting up and familiarizing with the essential development environment. 
+            </p>
+        </div>
+    </div>
+    <hr class="divider">
+    <div class="main-content">
+        <section class="env">
+            
+            <h2>Environments:</h2>
+            <ul>
+                <li><a href="https://visualstudio.microsoft.com/">Visual Studio</a></li>
+                <li><a href="https://visualstudio.microsoft.com/">Visual Studio Code</a></li>
+                <li><a href="https://nodejs.org/en/">Node.js</a> ver 22.16.0</li>
+                <li><a href="https://v19.angular.dev/overview">Angular CLI</a> ver 19.2.15</li>
+                <app-script-widget 
+                    title="Install Angular CLI"
+                    [content]="'npm install -g @angular/cli@19'"
+                />
+                <li><a href="https://git-scm.com/book/en/v2">Git & Git CLI</a></li>
+                <li><a href="https://www.typescriptlang.org/">Typescript</a> Documents</li>
+            </ul>
+            <hr class="divider">
+        </section>
+        <section class="angular">
+            <h2><a href="https://v19.angular.dev/">Angular 19</a></h2>
+            <h4>Component-based structure: </h4>
+            <p>Components are the main building blocks of Angular applications. Each component represents a part of a larger web page.</p>
+            <p>Every Angular component has a few main parts:</p>
+
+            <ul>
+                <li>
+                <strong>&#64;Component decorator</strong> – Contains metadata and configuration used by Angular.
+                </li>
+                <li>
+                <strong>HTML template</strong> – Defines the view and controls what renders into the DOM.
+                </li>
+                <li>
+                <strong>CSS selector</strong> – Specifies how the component is referenced in HTML (e.g., <code>&lt;app-example&gt;</code>).
+                </li>
+                <li>
+                <strong>TypeScript class</strong> – Contains logic and behavior such as handling user input or making API requests.
+                </li>
+            </ul>
+            <app-script-widget
+            title="user-profile.ts"
+            [content]='userProfileCode'
+            />
+            <p>Component's HTML and SCSS can be difined in seperate files using 'templateUrl' and 'styleUrl'</p>
+            <app-script-widget 
+            title="user-profile.ts"
+            [content]='userProfileCode2'
+            />
+            <p>To use components, we have to import them in the component's TypeScript file</p>
+            <app-script-widget 
+            title="user-profile.ts"
+            [content]='userProfileCode3'
+            />
+            <h2><a href="https://v19.angular.dev/essentials/signals">Signal</a></h2>
+            <p>Reactivity - Use for creating and managing states</p>
+            <h3>Example:</h3>
+            <div class="signal-exp">
+                <p>This is the signal {{ count() }}</p>
+                <button (click)="increment()">Increase</button>
+            </div>
+            <app-script-widget 
+                title=".html"
+                [content]="signalHtmlCode"
+            />
+            <app-script-widget 
+                title=".ts"
+                [content]="signalTsCode"
+            />
+            <p>Angular tracks where signals are read and when they're updated. The framework uses this information to do additional work, such as updating the DOM with new state. This ability to respond to changing signal values over time is known as reactivity.</p>
+            <h2>Computed </h2>
+            <p>Is a signal produces value based on other signal. computed is <strong>Read-only</strong></p>
+            <div class="computed-exp">
+                <h3>Example</h3>
+                <p>Base value: {{ count() }}</p>
+                <p>Doubled: {{ doubled() }}</p>
+                <button (click)="increment()">Increase</button>
+            </div>
+            <app-script-widget 
+                title=".html"
+                [content]="computedHtmlCode"
+            />
+            <app-script-widget 
+                title=".ts"
+                [content]="computedTsCode"
+            />
+
+            <h2><a href="https://v19.angular.dev/essentials/templates">Dynamic Templates</a></h2>
+            <h3>Data binding</h3>
+            <ul>
+                <li><strong>Interpolation:</strong> <code>{{ sample }}</code> – Displays component data in the template.</li>
+                <li><strong>Property Binding:</strong> <code>[src]="imageUrl"</code> – Binds DOM properties to component values.</li>
+                <li><strong>Event Binding:</strong> <code>(click)="handleClick()"</code> – Responds to user events.</li>
+                <li><strong>Two-way Binding:</strong> <code>[(ngModel)]="username"</code> – Keeps input and model in sync.</li>
+            </ul>
+            <div class="data-binding-example">
+                <h2>Angular Data Binding Example</h2>
+
+                    <!-- Interpolation -->
+                    <p>Hello, {{ username }}!</p>
+                    <app-script-widget 
+                        title="Interpolation"
+                        [content]="interpolationHtml"
+                    />
+
+                    <!-- Property Binding -->
+                    <img [src]="imageUrl" alt="Angular Logo" width="100" />
+                    <app-script-widget 
+                        title="Property Binding"
+                        [content]="propertyBindingHtml"
+                    />
+                    <!-- Event Binding -->
+                    <button (click)="changeName()">Change Name</button>
+                    <p>Notice the button will trigger update event to change the name into 'Signal Master'</p>
+                    <app-script-widget 
+                        title="Event Binding"
+                        [content]="eventBindingHtml"
+                    />
+                    <!-- Two-way Binding -->
+                    <input [(ngModel)]="username" placeholder="Enter your name" />
+                    <p>Hello, {{ username }}!</p>
+                    <p>Notice that the name will be updated while changing the input</p>
+                    <app-script-widget 
+                        title="Two-way Binding"
+                        [content] = "twoWayBindingHtml"
+                    />
+            </div>
+        </section>
+    </div>
+</div>

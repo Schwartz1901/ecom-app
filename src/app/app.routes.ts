@@ -4,9 +4,29 @@ import { RegisterComponent } from './features/auth/register/register.component';
 
 import { LayoutComponent } from './layout/layout.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { DocumentsComponent } from './documents/documents.component'
 
 
 export const routes: Routes = [
+    {
+        path: 'documents',
+        component: DocumentsComponent,
+        children:[
+            {path: '', redirectTo: '1', pathMatch:'full'},
+            {
+                path:'1',
+                loadComponent: () => import('./documents/week1/week1.component').then(m=>m.Week1Component)
+            },
+            {
+                path:'2',
+                loadComponent: () => import('./documents/week2/week2.component').then(m=>m.Week2Component)
+            },
+            {
+                path:'3',
+                loadComponent: () => import('./documents/week3/week3.component').then(m=>m.Week3Component)
+            },
+        ]
+    },
     {
         path: '',
         component: LayoutComponent,
@@ -52,4 +72,5 @@ export const routes: Routes = [
             {path: '**', component: PageNotFoundComponent}
         ]
     },
+    
 ];
