@@ -1,0 +1,36 @@
+<div class="admin-products">
+  <div class="header">
+    <h2>Product Management</h2>
+    <button class="add-btn" (click)="onAdd()">+ Add Product</button>
+  </div>
+
+  <table class="product-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+     @for (product of products; track product.id) {
+        <tr>
+          <td>{{ product.id }}</td>
+          <td><img [src]="product.imageUrl" alt="product" /></td>
+          <td>{{ product.name }}</td>
+          <td>${{ product.price | number: '1.2-2' }}</td>
+          <!-- <td>{{ product.stock }}</td> -->
+          <td>0</td>
+          <td>
+            <button class="edit-btn" (click)="onEdit(product.id)">Edit</button>
+            <button class="delete-btn" (click)="onDelete(product.id)">Delete</button>
+          </td>
+        </tr>
+      }
+
+    </tbody>
+  </table>
+</div>
