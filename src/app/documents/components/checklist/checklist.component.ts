@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface Task {
@@ -14,7 +14,7 @@ interface Task {
   styleUrl: './checklist.component.scss',
 })
 export class ChecklistComponent {
-  private storageKey = 'editable-checklist';
+   @Input() storageKey: string = 'default-checklist';
   tasks = signal<Task[]>([]);
 
   ngOnInit() {

@@ -1,6 +1,7 @@
 ul {
   list-style: none;
-  padding: 0;
+  padding-left: 5px;
+  padding-right:5px;
 }
 
 li {
@@ -10,6 +11,11 @@ li {
 
   input[type='text'] {
     flex: 1;
+    border:none;
+    &.done {
+        text-decoration: line-through;
+        color: gray;
+    }
   }
 
   button {

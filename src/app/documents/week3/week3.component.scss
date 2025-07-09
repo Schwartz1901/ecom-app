@@ -23,6 +23,40 @@
         width: 100%;
     }
     .main-content {
-
+        margin: 5px;
+        section{
+            padding: 0;
+            margin: 0;
+            ul{
+                list-style-type: disc;
+                padding-left: 1.5rem;
+            }
+        }
+        .asp-net-core{
+            .app-structure{
+                
+                padding: 5px;
+            }
+            .app-structure ul {
+                list-style-type: none;
+                font-family: monospace;
+                line-height: 1.6;
+            }
+                .app-structure li {
+                margin-left: 1rem;
+                position: relative;
+            }
+                .app-structure li::before {
+                content: "📁 ";
+                position: absolute;
+                left: -1.2rem;
+            }
+                .app-structure li:has(ul)::before {
+                content: "📂 ";
+            }
+                .app-structure li:not(:has(ul))::before {
+                content: "📄 ";
+            }
+        }
     }
 }

@@ -8,6 +8,7 @@
         type="text"
         [value]="task.text"
         (input)="updateText(i, $any($event.target).value)"
+        [class.done]="task.done"
         placeholder="Enter task"
       />
       <button (click)="remove(i)">🗑</button>

@@ -10,10 +10,153 @@
     <hr class="divider">
     <div class="goals">
         <h2>Goals:</h2>
-        <app-checklist ></app-checklist>
+        <app-checklist [storageKey]="'week3'"></app-checklist>
     </div>
     <hr class="divider">
     <div class="main-content">
+        <section class="dotnet">
+            <h2><a href="https://learn.microsoft.com/en-us/dotnet/core/introduction">.NET basics</a></h2>
+            <p>Components of .NET:</p>
+            <ul>
+                <li><strong>Runtime</strong> -- executes applicaiton code</li>
+                <li><strong>Libraries</strong> -- provides utility functions</li>
+                <li><strong>Compiler</strong> -- compiles source code into (runtime) executable code</li>
+                <li>SDK and other tools</li>
+                <li>App stacks -- like ASP.NET core or Window Forms that enable writing apps</li>
+            </ul>
+            <h3>.NET is cross-platform</h3>
+            <p>Write code once and run on any OS system.</p>
+            <p>.NET core runtime available on any OS. The compiler turn the source code into <strong>Intermediate Language (IL)</strong>. IL intepreted at Runtime specific to OS</p>
+            <ul>
+                <li>'clr.dll' on Windows</li>
+                <li>'libcoreclr.so' on Linux</li>
+                <li>'libcoreclr.dylib' on MacOS</li>
+            </ul>
+            <p>We can also build a version of .NET included with Runtime. So even the target OS has no .NET, app still works</p>
+            <app-script-widget 
+                title="From Windows build target Linux"
+                content="`dotnet publish -c Release -r linux-x64 --self-contained true`"
+            />
+            
+        </section>
+        <section class="asp-net-core">
+            <h2><a href="https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-9.0&preserve-view=true">ASP.NET Core</a></h2>
+            <p>Note: Using latest version: ASP.NET 9.0</p>
+            <p>ASP.NET Core is a cross-platform, high-performance framework for building modern web applications.</p>
+            <div class="app-structure">
+                <h4>ASP.NET Core app structure</h4>
+                <ul>
+                    <li><strong>MyWebApi/</strong>
+                    <ul>
+                        <li><strong>Controllers/</strong>
+                        <ul>
+                            <li>WeatherForecastController.cs</li>
+                            <li>ProductController.cs</li>
+                        </ul>
+                        </li>
+                        <li><strong>Models/</strong> <em>(you create this)</em>
+                        <ul>
+                            <li>Product.cs</li>
+                        </ul>
+                        </li>
+                        <li><strong>Services/</strong> <em>(you create this)</em>
+                        <ul>
+                            <li>ProductService.cs</li>
+                        </ul>
+                        </li>
+                        <li><strong>Interfaces/</strong> <em>(you create this)</em>
+                        <ul>
+                            <li>IProductService.cs</li>
+                        </ul>
+                        </li>
+                        <li>Program.cs</li>
+                        <li>appsettings.json</li>
+                        <li><strong>Properties/</strong>
+                        <ul>
+                            <li>launchSettings.json</li>
+                        </ul>
+                        </li>
+                        <li>MyWebApi.csproj</li>
+                    </ul>
+                    </li>
+                </ul>
+                <h3>Program.cs</h3>
+                <p>App entry point. This is where we the application start, also where we register services and config middleware</p>
+                <app-script-widget 
+                    title="Program.cs"
+                    [content]="programCsHtml"
+                />
+                <h3>Controllers</h3>
+                <p>This is where API endpoints live</p>
+                <p><strong>A Controller</strong> is a C# class that handles incoming HttpRequest</p>
+                <app-script-widget 
+                    title="WeatherController.cs"
+                    [content]="weatherControllerCsHtml"
+                />
+                <h3>appsetting.json</h3>
+                <p>This is where we store configuration like Jwt, ConnectionString</p>
+                <app-script-widget 
+                    title="appsetting.json"
+                    [content]="appsettingJsonHtml"
+                />
+                <p>Reading the configuration by using:</p>
+                <app-script-widget 
+                    [content]="readingAppsetting"
+                />
 
+                <h3>launchSettings.json</h3>
+                <p>defines URLs and profiles for launch</p>
+                <app-script-widget 
+                    title="launchSettings.json"
+                    [content]="launchSettingsJsonHtml"
+                />
+                <h3>MyWebApi.csproj</h3>
+                <p>The project file, defines target .NET version, NuGet package references and output type</p>
+                <h3>Models</h3>
+                <p>Data classes (Entities), define the structure of data</p>
+                <app-script-widget 
+                    title="ProductEntity.cs"
+                    [content]="productEntityCsHtml"
+                />
+                <p><strong>get</strong> -- accessor allow to read on a private field</p>
+                <p><strong>set</strong> -- accessor allow to write on a private field</p>
+                <h3>Services and Interfaces</h3>
+                <p>
+                <strong>Services</strong> are classes that contain the business logic of the application. 
+                <strong>Interfaces</strong> define the contract (what methods a service must implement), 
+                allowing for better abstraction, testability, and loose coupling.
+                </p>
+                <p>First we define an Interface</p>
+                <app-script-widget 
+                    title="IProductService.cs"
+                    [content]="iProductServiceCsHtml"
+                />
+                <p>Then we implement it at Service class</p>
+                <app-script-widget 
+                    title="ProductService.cs"
+                    [content]="productServiceCsHtml"
+                />
+                <p>Then register service on 'Program.cs'</p>
+                <app-script-widget 
+                    title="Program.cs"
+                    [content]="registerServiceHtml"
+                />
+                <p>To use service, inject the Interface.</p>
+                <app-script-widget 
+                    title="ProductController.cs"
+                    [content]="injectServiceHtml"
+                />
+                <h4>Question: Why we inject the Interface, not the Service itself?</h4>
+                <p><strong>Answer:</strong> More flexible where we need to replace the service, loosen coupling, controller depends on contract class, not concrete one</p>
+                <p>Bad practice:</p>
+                <app-script-widget 
+                    title="ProductController.cs"
+                    [content]="productControllerBadPractice"
+                />
+            </div>
+            <div class="interface-async">
+                <h2>Define and implement Interface with asynchronous implementation</h2>
+            </div>
+        </section>
     </div>
 </div>
