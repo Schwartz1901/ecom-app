@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { ScriptWidgetComponent } from "../components/script-widget/script-widget.component";
 import { signal, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ChecklistComponent } from "../components/checklist/checklist.component";
 @Component({
   selector: 'app-week1',
   standalone: true,
-  imports: [ScriptWidgetComponent, FormsModule],
+  imports: [ScriptWidgetComponent, FormsModule, ChecklistComponent],
   templateUrl: './week1.component.html',
   styleUrl: './week1.component.scss'
 })
@@ -89,4 +90,22 @@ export class Week1Component {
   `
   twoWayBindingHtml= `<input [(ngModel)]="username" placeholder="Enter your name" />`
   ///
+  /// This is for Eager and Lazy load example
+  loadHtml = `import { Routes } from '@angular/router';
+import { HomeComponent } from './features/home/home.component';
+
+export const routes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+
+  // Eager-loaded route
+  { path: 'home', component: HomeComponent },
+
+  // Lazy-loaded route
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('./features/admin/admin.module').then(m => m.AdminModule)
+  },
+];
+`
 }

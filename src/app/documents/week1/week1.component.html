@@ -8,6 +8,8 @@
         </div>
     </div>
     <hr class="divider">
+    <app-checklist></app-checklist>
+    <hr class="divider">
     <div class="main-content">
         <section class="env">
             
@@ -133,6 +135,51 @@
                         [content] = "twoWayBindingHtml"
                     />
             </div>
+            <p>Use Angular built-in variable '$event' to pass event object to listener!</p>
+            <div class=application-structure>
+                 <h2>Application Structure</h2>
+                <pre><code>
+                src/
+                ├── app/
+                │   ├── components/         → Reusable UI components (e.g. header, footer)
+                │   ├── features/           → Feature-based pages (e.g. home, cart)
+                │   ├── shared/             → Shared services, pipes, directives
+                │   ├── app.config.ts       → Angular 17+ config using provideRouter
+                │   ├── app.routes.ts       → Route definitions
+                │   └── app.component.ts    → Root component
+                │
+                ├── assets/                 → Static assets (images, fonts, etc.)
+                ├── environments/           → Environment configs
+                ├── main.ts                 → App entry point
+                ├── index.html              → HTML shell
+                └── styles.scss             → Global styles
+                </code></pre>
+
+                <h3>Key Concepts</h3>
+                <ul>
+                    <li><strong>Modular Design:</strong> Features organized by folder</li>
+                    <li><strong>Standalone Components:</strong> Directly imported (no NgModules)</li>
+                    <li><strong>Routing:</strong> Configured via <code>app.routes.ts</code> & <code>app.config.ts</code></li>
+                    <li><strong>Shared:</strong> Common UI and utilities live here</li>
+                </ul>
+            </div>
+
+            <div class="spa">
+                <h2>Single Page Application (SPA)</h2>
+                <p>SPA is a web application that <strong>load a single HTML page (index.html)</strong> and <strong>dynamically change the content without reload the whole page</strong> while navigating</p>
+                <p>Uses client-side routing (via Angular Router) to display different components/views without making a full page refresh.</p>
+                <h3>How SPA works:</h3>
+                <p>When the app starts, Angular loads all the required assets (HTML, CSS, JavaScript) once.</p>
+                <p>Navigation between "pages" is handled by Angular's Router Module, which shows/hides components based on the URL.</p>
+                <h3>Eager loading and Lazy loading</h3>
+                <p><strong>Eager loading:</strong>Angular load all modules immediately when the app start</p>
+                <p><strong>Lazy loading:</strong>Angular load modules only when needed</p>
+                <app-script-widget
+                    title="Eager vs Lazy"
+                    [content]="loadHtml"
+                />
+            </div>
+
         </section>
     </div>
 </div>

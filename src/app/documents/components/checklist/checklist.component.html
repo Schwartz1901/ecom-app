@@ -1,0 +1,18 @@
+
+
+<ul>
+  @for (task of tasks(); let i = $index; track i) {
+    <li>
+      <input type="checkbox" [checked]="task.done" (change)="toggle(i)" />
+      <input
+        type="text"
+        [value]="task.text"
+        (input)="updateText(i, $any($event.target).value)"
+        placeholder="Enter task"
+      />
+      <button (click)="remove(i)">🗑</button>
+    </li>
+  }
+</ul>
+
+<button (click)="addTask()">➕ Add Task</button>
