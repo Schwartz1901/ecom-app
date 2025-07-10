@@ -156,7 +156,35 @@
             </div>
             <div class="interface-async">
                 <h2>Define and implement Interface with asynchronous implementation</h2>
-                <p>Ref: <a href="https://learn.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-9.0&tabs=visual-studio#add-the-api-code">Create minimal API</a></p>
+                <p>Ref: <a href="https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-9.0&preserve-view=true&tabs=visual-studio">Create controller base API</a></p>
+                <p>First, define product interface</p>
+                <app-script-widget 
+                    title="IProductService.cs"
+                    [content]="iProductServiceCsHtmlCode"
+                />
+                <p>Then implement the interface with the service</p>
+                <app-script-widget 
+                    title="ProductService.cs"
+                    [content]="productServiceCsHtmlCode"
+                />
+                <p>In 'Program.cs', we register the interface in DI container</p>
+                <app-script-widget 
+                    content="builder.Services.AddScoped<IProductService, ProductService>();"
+                />
+                <p>Basically, this line of code tells that anywhere calls IProductService, it will recieve ProductService </p>
+                <p>Now we can use the service in controllers through injecting its interface</p>
+                <app-script-widget 
+                    title="ProductController.cs"
+                    [content]="productControllerCsHtml"
+                />
+            </div> 
+            <div class="test-result">
+                <h3>Test the API with postman</h3>
+                <p>First, try doing POST request</p>
+                <img src="../../../../public/document_img/week3/postman_POST_test.PNG" alt="POST test with Postman" >
+                <p>Then GET request (Note: Another product was added)</p>
+                <img src="../../../../public/document_img/week3/postman_GET_test.PNG" alt="GET test with Postman">
+                <img src="../../../../public/document_img/week3/postman_GET_result.PNG" alt="GET result">
             </div>
         </section>
     </div>
