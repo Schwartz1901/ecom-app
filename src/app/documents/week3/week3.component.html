@@ -199,7 +199,7 @@
                 <img src="../../../../public/document_img/week3/postman_GET_byId_test.PNG" alt="GET api/Product/id">
                 <p>Try passing id = -1, the validation work and BadRequest response recieve</p>
                 <img src="../../../../public/document_img/week3/postman_GET_invalid_id.PNG" alt="Invalid id">
-                <h4>From Query String ([FromQuery])</h4>
+                <h4>From Query String : [FromQuery]</h4>
                 <p>Get the query from URL segment; ?name=tea, ?isDiscount=...</p>
                 <app-script-widget 
                     title="GET api/Product/search?name={name}"
@@ -207,6 +207,38 @@
                 />
                 <p>test with postman</p>
                 <img src="../../../../public/document_img/week3/postman_GET_fromquery.PNG" alt="From Query" >
+                <h4>From Body - JSON : [FromBody]</h4>
+                <p>Used for POST or PUT, where the request is a JSON object.</p>
+                <p>Best practice: Use Data Transfer Object (DTO) since we do not want to expose the entire entity</p>
+                <p>For example, when adding product, we only want to add new product with name, the ID should be generated automatically.</p>
+                <app-script-widget 
+                    title="ProductDto.cs"
+                    [content]="productDtoCsHtml"
+                />
+                <app-script-widget 
+                    title="POST api/Product/"
+                    [content]="productPostFromBodyHtml"
+                />
+                <p>Now the POST request only need Name field</p>
+                <img src="../../../../public/document_img/week3/postman_POT_frombody.PNG" alt="POST FromBody">
+            </div>
+            <div>
+                <h3>Data Validation</h3>
+                <p>We want to validate data before to check if there is something wrong, or missing, only proceed if the data is valid!</p>
+                <h4>Mark controller with [ApiController] At the beginning</h4>
+                <p>This enables automatic model validation using annotations.</p>
+                <h4>Add Data annotations in ProductDto</h4>
+                <p>Note: For better illustration, some fields of ProductEntity were added</p>
+                <app-script-widget 
+                    title="ProductDto.cs"
+                    [content]="productDtoAnnotationCsHtml"
+                />
+                <p>Test again with postman</p>
+                <img src="../../../../public/document_img/week3/postman_POST_dataAnnotation.PNG" alt="Data validation with annotation">
+                <p>Try sending a body withoug name field, we get a response BadRequest</p>
+                <img src="../../../../public/document_img/week3/postman_POST_dataAnnotation_withoutName.PNG" alt="Data validation no name" >
+                <p>Can also catch details of mixed error</p>
+                <img src="../../../../public/document_img/week3/postman_POST_dataAnnotation_mixErrors.PNG" alt="Catch mixed errors" >
             </div>
         </section>
     </div>

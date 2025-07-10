@@ -197,5 +197,42 @@ public async Task<IActionResult> Search([FromQuery] string name)
     var products = await _productService.SearchAsync(name);
     return Ok(products);
 }`;
+  productDtoCsHtml=`namespace DocumentAPI.Controllers.DTOs
+{
+    public class ProductDto
+    {
+        public string Name { get; set; }
+    }
+}
+`;
+  productPostFromBodyHtml=`public async Task<IActionResult> Create([FromBody]ProductDto product)
+{
+    if (product == null)
+    {
+        return BadRequest("Unknow product!");
+    }
+    var created = await _productService.AddAsync(product);
+
+    return CreatedAtAction(
+        nameof(GetById),
+        new { id = created.Id },
+        created
+    );
+}`;
+  productDtoAnnotationCsHtml=`using System.ComponentModel.DataAnnotations;
+
+namespace DocumentAPI.Controllers.DTOs
+  public class ProductDto
+{
+    [Required(ErrorMessage ="Name is required")]
+    [MinLength(3, ErrorMessage ="Name must be at least 3 characters")]
+    public string Name { get; set; }; // Name is required with at least 3 characters
+
+    public string? Description { get; set; }
+
+    [Range(0, 10000, ErrorMessage = "Price must be between 0 and 10000")]
+    public float Price { get; set; } // Price range from 0 to 10000
+    
+}`;
 }
 
