@@ -178,5 +178,24 @@ namespace DocumentAPI.Controllers
     }
 }
 `;
+  productGetByIdHtml=`[HttpGet("{id}")]
+public async Task<IActionResult> GetById([FromRoute] int id)
+{
+    //Validation
+    if (id <= 0)
+        return BadRequest("ID must be greater than 0");
+    var product = await _productService.GetByIdAsync(id);
+    
+    return Ok(product);
+}`;
+  productFromQueryHtml=`[HttpGet("search")]
+// GET api/Product/search?name={name}
+public async Task<IActionResult> Search([FromQuery] string name)
+{
+    if (string.IsNullOrWhiteSpace(name) || name.Length < 2)
+        return BadRequest("Search keyword must be at least 2 characters.");
+    var products = await _productService.SearchAsync(name);
+    return Ok(products);
+}`;
 }
 

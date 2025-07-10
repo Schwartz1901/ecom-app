@@ -186,6 +186,28 @@
                 <img src="../../../../public/document_img/week3/postman_GET_test.PNG" alt="GET test with Postman">
                 <img src="../../../../public/document_img/week3/postman_GET_result.PNG" alt="GET result">
             </div>
+            <div class="handle-data-tyle">
+                <h2>Handle API parameters with simple data types and validating data</h2>
+                <h3>Handle API Parameters</h3>
+                <h4>Route parameters: [FromRoute]</h4>
+                <p>Used for parameters in URLs</p>
+                <app-script-widget 
+                    title="GET api/Product/id"
+                    [content]="productGetByIdHtml"
+                />
+                <p>Test with postman, passing parameter id=1</p>
+                <img src="../../../../public/document_img/week3/postman_GET_byId_test.PNG" alt="GET api/Product/id">
+                <p>Try passing id = -1, the validation work and BadRequest response recieve</p>
+                <img src="../../../../public/document_img/week3/postman_GET_invalid_id.PNG" alt="Invalid id">
+                <h4>From Query String ([FromQuery])</h4>
+                <p>Get the query from URL segment; ?name=tea, ?isDiscount=...</p>
+                <app-script-widget 
+                    title="GET api/Product/search?name={name}"
+                    [content]="productFromQueryHtml"
+                />
+                <p>test with postman</p>
+                <img src="../../../../public/document_img/week3/postman_GET_fromquery.PNG" alt="From Query" >
+            </div>
         </section>
     </div>
 </div>
