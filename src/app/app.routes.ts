@@ -33,27 +33,28 @@ export const routes: Routes = [
             },
             {
                 path:'5',
-                loadComponent: () => import('./documents/week1/week1.component').then(m=>m.Week1Component)
+                loadComponent: () => import('./documents/week5/week5.component').then(m=>m.Week5Component)
             },
             {
                 path:'6',
-                loadComponent: () => import('./documents/week2/week2.component').then(m=>m.Week2Component)
+                loadComponent: () => import('./documents/week6/week6.component').then(m=>m.Week6Component)
             },
             {
                 path:'7',
-                loadComponent: () => import('./documents/week3/week3.component').then(m=>m.Week3Component)
+                loadComponent: () => import('./documents/week7/week7.component').then(m=>m.Week7Component)
             },
             {
                 path:'8',
-                loadComponent: () => import('./documents/week4/week4.component').then(m=>m.Week4Component)
+                loadComponent: () => import('./documents/week8/week8.component').then(m=>m.Week8Component)
             },
             {
+            
                 path:'9',
-                loadComponent: () => import('./documents/week3/week3.component').then(m=>m.Week3Component)
+                loadComponent: () => import('./documents/week9/week9.component').then(m=>m.Week9Component)
             },
             {
                 path:'10',
-                loadComponent: () => import('./documents/week4/week4.component').then(m=>m.Week4Component)
+                loadComponent: () => import('./documents/week10/week10.component').then(m=>m.Week10Component)
             },
         ]
     },
