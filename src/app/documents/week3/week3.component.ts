@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { ChecklistComponent } from '../components/checklist/checklist.component';
 import { ScriptWidgetComponent } from "../components/script-widget/script-widget.component";
+import { ApiTesterComponent } from '../components/api-tester/api-tester.component';
 
 @Component({
   selector: 'app-week3',
-  imports: [ChecklistComponent, ScriptWidgetComponent],
+  imports: [ChecklistComponent, ScriptWidgetComponent, ApiTesterComponent],
   templateUrl: './week3.component.html',
   styleUrl: './week3.component.scss'
 })

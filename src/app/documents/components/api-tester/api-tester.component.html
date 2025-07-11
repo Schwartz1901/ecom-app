@@ -1,0 +1,25 @@
+<div class="api-tester">
+  <form (submit)="runApi($event)">
+    <label>
+      API Route:
+      <input type="text" [(ngModel)]="apiPath" name="path" required />
+    </label>
+
+    <label>
+      Method:
+      <select [(ngModel)]="apiMethod" name="method">
+        <option *ngFor="let method of methods" [value]="method">{{ method }}</option>
+      </select>
+    </label>
+
+    <label *ngIf="apiMethod === 'POST' || apiMethod === 'PUT'">
+      Body (JSON):
+      <textarea [(ngModel)]="apiBody" name="body" rows="4"></textarea>
+    </label>
+
+    <button type="submit">▶ Run</button>
+  </form>
+
+  <h3>Response:</h3>
+  <pre>{{ apiResult() }}</pre>
+</div>
