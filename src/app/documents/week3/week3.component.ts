@@ -1,15 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ChecklistComponent } from '../components/checklist/checklist.component';
 import { ScriptWidgetComponent } from "../components/script-widget/script-widget.component";
-import { ApiTesterComponent } from '../components/api-tester/api-tester.component';
+
+import { RouteInfo, RouteTableComponent } from '../components/route-table/route-table.component';
+import { SwaggerApiService } from '../../shared/services/swagger-api-service.service';
+
 
 @Component({
   selector: 'app-week3',
-  imports: [ChecklistComponent, ScriptWidgetComponent, ApiTesterComponent],
+  imports: [ChecklistComponent, ScriptWidgetComponent, RouteTableComponent],
   templateUrl: './week3.component.html',
   styleUrl: './week3.component.scss'
 })
 export class Week3Component {
+
+  private swaggerApiService = inject(SwaggerApiService);
+  routes: RouteInfo[] = [];
+  basePath = '/api/Product/'
+  ngOnInit() {
+    this.swaggerApiService.loadRoutesByBasePath(this.basePath).subscribe(routes => this.routes = routes)
+  }
+
   programCsHtml=`var builder = WebApplication.CreateBuilder(args);
 
 // Register services

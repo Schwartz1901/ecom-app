@@ -1,0 +1,37 @@
+<table class="route-table">
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Route</th>
+      <th>Description</th>
+      <th>🔍</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (route of routes; track route.path) {
+      <tr>
+        <td><span class="method" [class]="route.method.toLowerCase()">{{ route.method }}</span></td>
+        <td><code>{{ route.path }}</code></td>
+        <td>{{ route.description || '-' }}</td>
+        <td>
+          <button (click)="toggle(route.path)">
+            {{ isExpanded(route.path) ? '−' : '+' }}
+          </button>
+        </td>
+      </tr>
+      @if (isExpanded(route.path)) {
+        <tr class="expand-row">
+          <td colspan="4">
+            <strong>Sample Request Body:</strong>
+            <pre *ngIf="route.sampleBody; else noBody">{{ route.sampleBody | json }}</pre>
+            <ng-template #noBody><em>None</em></ng-template>
+
+            <strong>Sample Response:</strong>
+            <pre *ngIf="route.sampleResponse; else noRes">{{ route.sampleResponse | json }}</pre>
+            <ng-template #noRes><em>None</em></ng-template>
+          </td>
+        </tr>
+      }
+    }
+  </tbody>
+</table>
