@@ -14,12 +14,12 @@
         <td><code>{{ route.path }}</code></td>
         <td>{{ route.description || '-' }}</td>
         <td>
-          <button (click)="toggle(route.path)">
-            {{ isExpanded(route.path) ? '−' : '+' }}
+          <button (click)="toggle(route.method + ' '  + route.path)">
+            {{ isExpanded(route.method + " " + route.path) ? '−' : '+' }}
           </button>
         </td>
       </tr>
-      @if (isExpanded(route.path)) {
+      @if (isExpanded(route.method + " "  +route.path)) {
         <tr class="expand-row">
           <td colspan="4">
             <strong>Sample Request Body:</strong>

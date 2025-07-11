@@ -14,7 +14,7 @@ export class ApiTesterComponent {
   private http = inject(HttpClient);
 
   // Make it flexible
-  @Input() baseUrl: string = 'http://localhost:7035/api/Product/';
+  @Input() baseUrl: string = 'https://localhost:7035/api/Product/';
   @Input() methods: string[] = ['GET', 'POST', 'PUT', 'DELETE'];
 
   apiPath = this.baseUrl;

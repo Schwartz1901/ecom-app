@@ -244,6 +244,70 @@
                 <h2>Routing table</h2>
                 <app-route-table [routes]="routes" />
             </div>
+            <div class="exception-handling">
+                <h2>Exception Handling in Service layer</h2>
+                <p>Beside data validation step, we can add some exception handlers in service layer</p>
+                <p>The idea is that we want to centralize the validation, and make the code cleaner. So instead of if/else blocks in controller, we let it delegate for services.</p>
+                <div class="example">
+                    <h3>If/else block in controller</h3>
+                    <app-script-widget 
+                        title="POST /api/Product/{id}"
+                        [content]="productPOSTIfElseHtml"
+                    />
+                    <p>We can just leave the controller focus on its job of catching HttpClientRequest.</p>
+                    <app-script-widget
+                        title="POST /api/Product/{id}" 
+                        [content]="productPOSTCleanHtml"
+                    />
+                    <p>Then add our validation within the service method</p>
+                    <app-script-widget 
+                        title="ProductService.cs"
+                        [content]="productServiceValidationHtml"
+                    />
+                    <p>Test it again with Postman, the exception was thrown</p>
+                    <img src="../../../../public/document_img/week3/postman_throwExceptionTest.PNG" alt="Exception" />
+                    <h4>But this look not much more beautiful than the If/Else block and we do not want to throw out a bunch of code.</h4>
+                    <p>We should only return Http response status code, and that is controller's job</p>
+                    <p>This time, we use try/catch block like the following. Each type of exception thrown out will return different status code handled by controller</p>
+                    <app-script-widget 
+                        title="POST api/Product/"
+                        [content]="productPOSTTryCatchHtml"
+                    />
+                    <p>Test again with Postman, we can see that the error look much cleaner</p>
+                    <img src="../../../../public/document_img/week3/postman_POST_TryCatchResult.PNG" alt="Exception handling with try/catch" />
+                    <p>The core idea here: The service throws, the controller catches and translates to appropriate HTTP responses (400, 404, 500, etc.).
+                    <h3>Global Exception Handling</h3>
+                    <p>We can even remove the try/catch block completely by using <strong>Global error handling</strong> in 'Program.cs'</p>
+                    <app-script-widget 
+                        title="Program.cs"
+                        [content]="globalErrorHandler"
+                    />
+                    <p>By using this, we can safely remove the try/catch block in the controller</p>
+                    <p>Test it again with the Postman, the results are the same as before.</p>
+                    <img src="../../../../public/document_img/week3/postman_POST_globalErrorHandler.PNG" alt="Result when usign global handler" />
+                </div>
+            </div>
+            <hr class="divider">
+            <div class="summary">
+                <h1>Summary</h1>
+                <p>In this week, we learn about:</p>
+                <ul>
+                    <li>.NET and ASP.NET</li>
+                    <li>API structure: Controllers - Services - Models</li>
+                    <li>Interface implementation</li>
+                    <li>Asynchronous programming</li>
+                    <li>RESTFul API standard: GET - POST - PUT - DELETE</li>
+                    <li> Create a simple API and testing with postman</li>
+                    <li> Data Validation beforehand and Error Handling</li>
+                    <li>Handle simple businees logic</li>
+                </ul>
+            </div>
+            <div class="api-test">
+                <p>Testing API (for those who do not want to use postman)</p>
+                <app-route-table [routes]="routes" />
+                <app-api-tester />
+            </div>
         </section>
+        
     </div>
 </div>

@@ -4,22 +4,94 @@ import { ScriptWidgetComponent } from "../components/script-widget/script-widget
 
 import { RouteInfo, RouteTableComponent } from '../components/route-table/route-table.component';
 import { SwaggerApiService } from '../../shared/services/swagger-api-service.service';
+import { ApiTesterComponent } from "../components/api-tester/api-tester.component";
 
 
 @Component({
   selector: 'app-week3',
-  imports: [ChecklistComponent, ScriptWidgetComponent, RouteTableComponent],
+  imports: [ChecklistComponent, ScriptWidgetComponent, RouteTableComponent, ApiTesterComponent],
   templateUrl: './week3.component.html',
   styleUrl: './week3.component.scss'
 })
 export class Week3Component {
 
   private swaggerApiService = inject(SwaggerApiService);
-  routes: RouteInfo[] = [];
-  basePath = '/api/Product/'
-  ngOnInit() {
-    this.swaggerApiService.loadRoutesByBasePath(this.basePath).subscribe(routes => this.routes = routes)
-  }
+  routes: RouteInfo[] = [
+    {
+      method: 'GET',
+      path: 'https//localhost:7035/api/Product/',
+      description: "Get products",
+      sampleBody: "",
+      sampleResponse: [{id: 1, name:"string", description: "string", price:1}]
+    },
+    {
+      method: 'POST',
+      path: 'https//localhost:7035/api/Product/',
+      description: "Add a product",
+      sampleBody: {
+                    "name": "string",
+                    "description": "string",
+                    "price": 10000
+                  },
+      sampleResponse: {
+                      "id": 1,
+                      "name": "string",
+                      "description": "string",
+                      "price": 10000
+                    },
+    },
+    {
+      method: 'GET',
+      path: 'https//localhost:7035/api/Product/1',
+      description: "Get product with a specific Id",
+      sampleBody: "",
+      sampleResponse: {
+                      "id": 1,
+                      "name": "string",
+                      "description": "string",
+                      "price": 10000
+                    }
+    },
+    {
+      method: 'GET',
+      path: 'https//localhost:7035/api/Product/search?name=tea',
+      description: "Search for products by name",
+      sampleBody: "",
+      sampleResponse: [
+                        {
+                          "id": 2,
+                          "name": "Herbal tea",
+                          "description": "Tea",
+                          "price": 10000
+                        }
+                      ]
+    },
+    {
+      method: 'PUT',
+      path: 'https//localhost:7035/api/Product/1',
+      description: "Update a product with specific Id",
+      sampleBody: {
+                    "name": "string",
+                    "description": "string",
+                    "price": 10000
+                  },
+      sampleResponse: {
+                        "id": 1,
+                        "name": "string",
+                        "description": "string",
+                        "price": 10000
+                      },
+    },
+    {
+      method: 'DELETE',
+      path: 'https//localhost:7035/api/Product/1',
+      description: "Delete product with specific Id",
+      sampleBody: "",
+      sampleResponse: "Product deleted",
+    },
+
+  ];
+  
 
   programCsHtml=`var builder = WebApplication.CreateBuilder(args);
 
@@ -246,5 +318,99 @@ namespace DocumentAPI.Controllers.DTOs
     public float Price { get; set; } // Price range from 0 to 10000
     
 }`;
+  productPOSTIfElseHtml=`public async Task<IActionResult> Create([FromBody] ProductDto product)
+{
+    if (product == null)
+    {
+        return BadRequest("Unknow product!");
+    }
+    var created = await _productService.AddAsync(product);
+
+    return CreatedAtAction(
+        nameof(GetById),
+        new { id = created.Id },
+        created
+    );
+}`;
+  productPOSTCleanHtml=`var created = await _productService.AddAsync(product);
+
+return CreatedAtAction(
+    nameof(GetById),
+    new { id = created.Id },
+    created
+);`;
+  productServiceValidationHtml=`public async Task<ProductEntity> AddAsync(ProductDto productDto)
+{
+    if (string.IsNullOrWhiteSpace(productDto.Name))
+    {
+        throw new ArgumentException("Product name is required!");
+    }
+    if (productDto.Price < 0)
+    {
+        throw new ArgumentException("Product price must be greater than or equal to 0");
+    }
+    // For testing purpose, to be removed later
+    if (productDto.Price >= 100)
+    {
+        throw new ArgumentException("Too Expensive!!!!");
+    }
+    var newProduct = new ProductEntity
+    {
+        Name = productDto.Name,
+        Description = productDto.Description,
+        Price = productDto.Price,
+    };
+    _context.ProductEntities.Add(newProduct);
+    await _context.SaveChangesAsync();
+    return newProduct;
+}`;
+  productPOSTTryCatchHtml=`public async Task<IActionResult> Create([FromBody] ProductDto product)
+{
+    try
+    {
+
+        var created = await _productService.AddAsync(product);
+
+        return CreatedAtAction(
+            nameof(GetById),
+            new { id = created.Id },
+            created
+        );
+    }
+    catch (ArgumentException ex)
+    {
+        return BadRequest(new { error = ex.Message });
+    }
+    catch (Exception ex)
+    {
+        return StatusCode(500, new { error = "Internal Server Error: " + ex.Message });
+    }
+}`;
+  globalErrorHandler=`app.UseExceptionHandler(appBuilder =>
+{
+    appBuilder.Run(async context =>
+    {
+        var exceptionHandler = context.Features.Get<IExceptionHandlerFeature>();
+        var exception = exceptionHandler?.Error;
+
+        context.Response.ContentType = "application/json";
+        context.Response.StatusCode = exception switch
+        {
+            ArgumentException => StatusCodes.Status400BadRequest,
+            KeyNotFoundException => StatusCodes.Status404NotFound,
+            _ => StatusCodes.Status500InternalServerError
+        };
+
+        var response = new
+        {
+            status = context.Response.StatusCode,
+            message = exception?.Message
+        };
+
+        await context.Response.WriteAsJsonAsync(response);
+    });
+});
+`;
+ 
 }
 
