@@ -27,6 +27,34 @@ export const routes: Routes = [
                 path:'3',
                 loadComponent: () => import('./documents/week3/week3.component').then(m=>m.Week3Component)
             },
+            {
+                path:'4',
+                loadComponent: () => import('./documents/week4/week4.component').then(m=>m.Week4Component)
+            },
+            {
+                path:'5',
+                loadComponent: () => import('./documents/week1/week1.component').then(m=>m.Week1Component)
+            },
+            {
+                path:'6',
+                loadComponent: () => import('./documents/week2/week2.component').then(m=>m.Week2Component)
+            },
+            {
+                path:'7',
+                loadComponent: () => import('./documents/week3/week3.component').then(m=>m.Week3Component)
+            },
+            {
+                path:'8',
+                loadComponent: () => import('./documents/week4/week4.component').then(m=>m.Week4Component)
+            },
+            {
+                path:'9',
+                loadComponent: () => import('./documents/week3/week3.component').then(m=>m.Week3Component)
+            },
+            {
+                path:'10',
+                loadComponent: () => import('./documents/week4/week4.component').then(m=>m.Week4Component)
+            },
         ]
     },
     {
