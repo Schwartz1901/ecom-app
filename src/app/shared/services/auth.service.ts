@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Observable, of, throwError, delay } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, tap } from 'rxjs';
 
 export interface LoginRequest {
   email: string;
@@ -20,59 +21,35 @@ export interface AuthResponse {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  private mockUsers: RegisterRequest[] = [];
+  private http = inject(HttpClient);
+  private baseUrl = 'https://localhost:7040/api/Auth'; // change port if needed
 
   login(email: string, password: string): Observable<AuthResponse> {
-    const user = this.mockUsers.find(u => u.email === email && u.password === password);
-
-    if (user) {
-      const response: AuthResponse = {
-        token: 'mock-token-' + Date.now(),
-        userId: 'user-' + Math.floor(Math.random() * 1000),
-        username: user.username,
-        email: user.email,
-      };
-
-      localStorage.setItem('token', response.token);
-      return of(response).pipe(delay(500));
-    } else {
-      return throwError(() => new Error('Invalid email or password')).pipe(delay(500));
-    }
+    const payload: LoginRequest = { email, password };
+    return this.http.post<AuthResponse>(`${this.baseUrl}/login`, payload).pipe(
+      tap(response => localStorage.setItem('token', response.token))
+    );
   }
 
   register(username: string, email: string, password: string): Observable<AuthResponse> {
-    const exists = this.mockUsers.some(u => u.email === email);
-
-    if (exists) {
-      return throwError(() => new Error('Email already registered')).pipe(delay(500));
-    }
-
-    const newUser: RegisterRequest = { username, email, password };
-    this.mockUsers.push(newUser);
-
-    const response: AuthResponse = {
-      token: 'mock-token-' + Date.now(),
-      userId: 'user-' + Math.floor(Math.random() * 1000),
-      username,
-      email,
-    };
-
-    localStorage.setItem('token', response.token);
-    return of(response).pipe(delay(500));
+    const payload: RegisterRequest = { username, email, password };
+    return this.http.post<AuthResponse>(`${this.baseUrl}/register`, payload).pipe(
+      tap(response => localStorage.setItem('token', response.token))
+    );
   }
 
   logout(): void {
     localStorage.removeItem('token');
   }
 
-  isAuthenticated(): boolean {
-    return !!localStorage.getItem('token');
-  }
-
   getToken(): string | null {
     return localStorage.getItem('token');
+  }
+
+  isAuthenticated(): boolean {
+    return !!this.getToken();
   }
 }
