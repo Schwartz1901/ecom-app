@@ -23,8 +23,8 @@ export class NavbarComponent {
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
       return {
-        userId: payload.nameid || payload.sub,
-        username: payload.username || payload.name || 'User'
+        userId: payload.sub,
+        username: payload.username || 'User'
       };
     } catch {
       return null;
@@ -34,5 +34,6 @@ export class NavbarComponent {
   logout() {
     this.authService.logout();
     this.router.navigate(['/home']);
+  
   }
 }

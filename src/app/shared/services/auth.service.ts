@@ -1,20 +1,10 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, tap, throwError } from 'rxjs';
-
-export interface LoginRequest {
-  email: string;
-  password: string;
-}
-
-export interface RegisterRequest {
-  username: string;
-  email: string;
-  password: string;
-}
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError, Observable, throwError, tap } from 'rxjs';
 
 export interface AuthResponse {
   token: string;
+  refreshToken: string;
   userId: string;
   username: string;
   email: string;
@@ -25,51 +15,68 @@ export class AuthService {
   private http = inject(HttpClient);
   private baseUrl = 'https://localhost:7040/api/Auth';
 
-  // Initialize signal from localStorage
   private tokenSignal = signal<string | null>(localStorage.getItem('token'));
-
-  // Use computed so components like Navbar auto update
   readonly isAuthenticated = computed(() => !!this.tokenSignal());
 
-  // Provide token for interceptors or local use
-  getToken(): string | null {
-    return this.tokenSignal();
-  }
-
-  // Use this setter for login/register instead of setToken manually
-  private saveToken(token: string) {
-    this.tokenSignal.set(token);
-    localStorage.setItem('token', token);
-  }
-
   login(email: string, password: string): Observable<AuthResponse> {
-    const payload: LoginRequest = { email, password };
-    return this.http.post<AuthResponse>(`${this.baseUrl}/login`, payload).pipe(
-      tap(response => this.saveToken(response.token)),
-      catchError(err => {
-        if (err.status === 401) {
-          return throwError(() => new Error('Invalid email or password'));
-        }
-        return throwError(() => new Error('Something went wrong, try again!'));
-      })
+    return this.http.post<AuthResponse>(`${this.baseUrl}/login`, { email, password }).pipe(
+      tap(response => this.storeTokens(response)),
+      catchError(this.handleError)
     );
   }
 
   register(username: string, email: string, password: string): Observable<AuthResponse> {
-    const payload: RegisterRequest = { username, email, password };
-    return this.http.post<AuthResponse>(`${this.baseUrl}/register`, payload).pipe(
-      tap(response => this.saveToken(response.token)),
+    return this.http.post<AuthResponse>(`${this.baseUrl}/register`, { username, email, password }).pipe(
+      tap(response => this.storeTokens(response)),
+      catchError(this.handleError)
+    );
+  }
+
+  refreshToken(): Observable<AuthResponse> {
+    const refreshToken = localStorage.getItem('refreshToken');
+    return this.http.post<AuthResponse>(`${this.baseUrl}/refresh`, { refreshToken }).pipe(
+      tap(response => this.storeTokens(response)),
       catchError(err => {
-        if (err.status === 401) {
-          return throwError(() => new Error('Invalid email or password'));
-        }
-        return throwError(() => new Error('Something went wrong, try again!'));
+        this.logout();
+        return throwError(() => new Error('Session expired. Please login again.'));
       })
     );
   }
 
+  getToken(): string | null {
+    return this.tokenSignal();
+  }
+
+  setToken(token: string) {
+    this.tokenSignal.set(token);
+    localStorage.setItem('token', token);
+  }
+
   logout() {
-    this.tokenSignal.set(null);
-    localStorage.removeItem('token');
+  this.http.post(`${this.baseUrl}/logout`, {}).subscribe({
+    next: () => {
+      this.tokenSignal.set(null);
+      localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
+    },
+    error: () => {
+      // Still clean up even if logout request fails
+      this.tokenSignal.set(null);
+      localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
+    }
+  });
+}
+
+  private storeTokens(response: AuthResponse) {
+    this.setToken(response.token);
+    localStorage.setItem('refreshToken', response.refreshToken);
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 401) {
+      return throwError(() => new Error('Invalid credentials'));
+    }
+    return throwError(() => new Error('Something went wrong. Try again.'));
   }
 }

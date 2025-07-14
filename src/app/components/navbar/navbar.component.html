@@ -16,19 +16,18 @@
   </ul>
 
   <div class="navbar-actions">
-    @if (currentUser()) {
+    @if (isAuthenticated()) {
+      <!-- User avatar, dropdown, logout button -->
       <div class="user-actions-wrapper">
-        <mat-icon class="shopping-cart" routerLink="/cart">add_shopping_cart</mat-icon>
-        <mat-icon class="notification-icon">notifications</mat-icon>
-
+        <mat-icon routerLink="/cart">add_shopping_cart</mat-icon>
+        <mat-icon>notifications</mat-icon>
         <div class="avatar-container">
-          <div class="avatar-span">
-            <div class="avatar-image">
-              <img src="/tea.png" alt="avt" />
-            </div>
-            <a class="name" [routerLink]="'/user/' + currentUser()?.userId">{{ currentUser()?.username }}</a>
-          </div>
-
+          <span class="avatar-span">
+            <img src="/tea.png" alt="avt" />
+            <a class="name" [routerLink]="'/user/' + currentUser()?.userId">
+              {{ currentUser()?.username }}
+            </a>
+          </span>
           <div class="dropdown">
             <a [routerLink]="'/user/' + currentUser()?.userId">Profile</a>
             <a>Favorites</a>
