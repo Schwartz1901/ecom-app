@@ -1,35 +1,70 @@
-import { Component } from '@angular/core';
-import { RouterLink, Router } from '@angular/router';
-import { inject } from '@angular/core';
-import { UserService } from '../../../shared/services/user.service';
-import { FormsModule } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { FormBuilder, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
+
+import { AuthService } from '../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-register',
-  imports: [RouterLink, FormsModule],
+  standalone: true,
+  imports: [RouterLink, ReactiveFormsModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
+  private fb = inject(FormBuilder);
   private router = inject(Router);
-  private userService = inject(UserService);
-  email = '';
-  password = '';
-  confirmPassword = '';
+  private authService = inject(AuthService);
+
   errorMessage = '';
 
-  register() {
-    if(this.email === '' || this.password === '' || this.confirmPassword === '') {
-      this.errorMessage = "Empty fields!";
+  registerForm = this.fb.group({
+    username: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+    confirmPassword: ['', Validators.required],
+  }, { validators: this.matchPasswords });
+
+  get username() {
+    return this.registerForm.get('username')!;
+  }
+
+  get email() {
+    return this.registerForm.get('email')!;
+  }
+
+  get password() {
+    return this.registerForm.get('password')!;
+  }
+
+  get confirmPassword() {
+    return this.registerForm.get('confirmPassword')!;
+  }
+
+  // Custom validator to ensure password match
+  matchPasswords(group: AbstractControl): ValidationErrors | null {
+    const password = group.get('password')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
+
+    if (password !== confirmPassword) {
+      group.get('confirmPassword')?.setErrors({ mismatch: true });
+      return { mismatch: true };
     }
-    else if (this.password !== this.confirmPassword) {
-      this.errorMessage = "Password mismatch!";
-    } else {
-      this.userService.register(this.email, this.password).subscribe({
-        next: () => this.router.navigate(['login']),
-        error: err => this.errorMessage = err.message,
-      });
+    return null;
+  }
+
+  register() {
+    if (this.registerForm.invalid) {
+      this.registerForm.markAllAsTouched();
+      this.errorMessage = 'Please fix the form errors.';
+      return;
     }
 
+    const { username, email, password } = this.registerForm.value;
+
+    this.authService.register(username!, email!, password!).subscribe({
+      next: () => this.router.navigate(['/login']),
+      error: err => this.errorMessage = err.message || 'Registration failed!',
+    });
   }
 }
