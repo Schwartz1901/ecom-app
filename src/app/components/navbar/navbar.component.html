@@ -1,45 +1,46 @@
 <nav class="navbar">
-  
   <div class="navbar-logo">
     <img src="/logo.png" alt="My App Logo" />
   </div>
+
   <ul class="navbar-links">
     <li>
-        <a routerLink="/home" routerLinkActive = "active" [routerLinkActiveOptions]="{exact: true}">
-            Home
-        </a>
+      <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
     </li>
-    <li><a routerLink="/products" routerLinkActive = "active">Products</a></li>
-    <li><a routerLink="/about" routerLinkActive = "active">About</a></li>
+    <li>
+      <a routerLink="/products" routerLinkActive="active">Products</a>
+    </li>
+    <li>
+      <a routerLink="/about" routerLinkActive="active">About</a>
+    </li>
   </ul>
+
   <div class="navbar-actions">
-    @if(user()) {
-      <div class="user-actions-wrapper"> 
+    @if (currentUser()) {
+      <div class="user-actions-wrapper">
         <mat-icon class="shopping-cart" routerLink="/cart">add_shopping_cart</mat-icon>
         <mat-icon class="notification-icon">notifications</mat-icon>
+
         <div class="avatar-container">
-          <span class="avatar-span">
-            
+          <div class="avatar-span">
             <div class="avatar-image">
-              <img src="/tea.png" alt="avt">
+              <img src="/tea.png" alt="avt" />
             </div>
-            <a class="name" [routerLink]="'/user/' + user()?.userId">{{user()?.username}}</a>
-          </span>
+            <a class="name" [routerLink]="'/user/' + currentUser()?.userId">{{ currentUser()?.username }}</a>
+          </div>
+
           <div class="dropdown">
-            <a [routerLink]="'/user/' + user()?.userId">Profile</a>
+            <a [routerLink]="'/user/' + currentUser()?.userId">Profile</a>
             <a>Favorites</a>
             <a>Billings</a>
             <a>Notifications</a>
             <button class="logout-button" (click)="logout()">Logout</button>
           </div>
         </div>
-        
-
       </div>
     } @else {
       <button routerLink="/login">Login</button>
       <button routerLink="/register">Register</button>
     }
-    
   </div>
 </nav>

@@ -1,26 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { UserService } from '../../shared/services/user.service';
-import { inject } from '@angular/core';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../../shared/services/auth.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink, RouterLinkActive, MatIcon],
+  standalone: true,
+  imports: [RouterLink, RouterLinkActive, MatIconModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
   private router = inject(Router);
-  private userService = inject(UserService);
+  private authService = inject(AuthService);
 
-  user = this.userService.getCurrentUser();
+  isAuthenticated = this.authService.isAuthenticated;
+
+  currentUser = computed(() => {
+    const token = this.authService.getToken();
+    if (!token) return null;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return {
+        userId: payload.nameid || payload.sub,
+        username: payload.username || payload.name || 'User'
+      };
+    } catch {
+      return null;
+    }
+  });
 
   logout() {
-    this.userService.logout().subscribe({
-      next: () => this.router.navigate(['home']),
-      error: err => {}
-    })
-
+    this.authService.logout();
+    this.router.navigate(['/home']);
   }
 }
