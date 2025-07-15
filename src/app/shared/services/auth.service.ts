@@ -53,7 +53,8 @@ export class AuthService {
   }
 
   logout() {
-  this.http.post(`${this.baseUrl}/logout`, {}).subscribe({
+    const refreshToken = localStorage.getItem('refreshToken');
+  this.http.post(`${this.baseUrl}/logout`, {refreshToken}).subscribe({
     next: () => {
       this.tokenSignal.set(null);
       localStorage.removeItem('token');
