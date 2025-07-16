@@ -1,4 +1,4 @@
-import { Component, OnInit, WritableSignal} from '@angular/core';
+import { Component, OnInit, WritableSignal, signal} from '@angular/core';
 import { inject } from '@angular/core';
 import { User, UserService } from '../../../shared/services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,18 +17,23 @@ export class ProfileComponent implements OnInit{
   private route = inject(ActivatedRoute);
   private userService = inject(UserService);
   private fb = inject(FormBuilder)
-  user!: WritableSignal<User | null>;
+  user: User | null = null;
   usernameInput? = '';
   
   addressForm!: FormGroup;
 
   ngOnInit(): void {
     
-    const username = this.route.snapshot.paramMap.get('userId');
-    this.user = this.userService.getCurrentUser();
-
-    this.usernameInput = this.user()?.username;
-
+    // const userId = this.route.snapshot.paramMap.get('userId');
+    
+    this.userService.getUserProfile().subscribe({
+      next: (user) => {
+        
+        this.user = user;
+        console.log('User profile loaded:', this.user);
+      },
+      error: (err) => {console.error('Error loading profile:', err)}
+    });
     this.addressForm = this.fb.group({
       recipient: ['', Validators.required],
       street: ['', Validators.required],

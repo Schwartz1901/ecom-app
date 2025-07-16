@@ -1,6 +1,7 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, Observable, throwError, tap } from 'rxjs';
+import { Router } from '@angular/router';
 
 export interface AuthResponse {
   token: string;
@@ -13,10 +14,14 @@ export interface AuthResponse {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private http = inject(HttpClient);
+  private router = inject(Router);
   private baseUrl = 'https://localhost:7040/api/Auth';
 
   private tokenSignal = signal<string | null>(localStorage.getItem('token'));
-  readonly isAuthenticated = computed(() => !!this.tokenSignal());
+  readonly isAuthenticated = computed(() => {
+    const token = this.tokenSignal();
+    return token != null && !this.isTokenExpired(token);
+  });
 
   login(email: string, password: string): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.baseUrl}/login`, { email, password }).pipe(
@@ -54,20 +59,30 @@ export class AuthService {
 
   logout() {
     const refreshToken = localStorage.getItem('refreshToken');
-  this.http.post(`${this.baseUrl}/logout`, {refreshToken}).subscribe({
-    next: () => {
-      this.tokenSignal.set(null);
-      localStorage.removeItem('token');
-      localStorage.removeItem('refreshToken');
-    },
-    error: () => {
-      // Still clean up even if logout request fails
-      this.tokenSignal.set(null);
-      localStorage.removeItem('token');
-      localStorage.removeItem('refreshToken');
+    this.http.post(`${this.baseUrl}/logout`, { refreshToken }).subscribe({
+      next: () => {
+        this.tokenSignal.set(null);
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
+        this.router.navigate(['/login']);
+      },
+      error: () => {
+        this.tokenSignal.set(null);
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
+        this.router.navigate(['/login']);
+      }
+    });
+  }
+  isTokenExpired(token: string): boolean {
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const now = Math.floor(Date.now() / 1000);
+      return payload.exp < now;
+    } catch {
+      return true;
     }
-  });
-}
+  }
 
   private storeTokens(response: AuthResponse) {
     this.setToken(response.token);

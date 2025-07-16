@@ -1,4 +1,4 @@
-@if(user()) {
+@if(user) {
     <div class="profile-wrapper">
         <div class="left-container">
             <div class="avatar-container">
@@ -6,7 +6,7 @@
                     <img src="/tea.png" alt="avatar">
                 </div>
                 <div class="name">
-                    <p class="name-text">{{user()?.username}}</p>
+                    <p class="name-text">{{user.username}}</p>
                     <p class="sub-name">Lorem ipsum</p>
                     <p class="quote">Lorem ipsum</p>
 
@@ -21,11 +21,11 @@
                 <div class="info-container">
                     <div class="input-block">
                         <label for="name" class="input-label">Name</label>
-                        <span class="name">{{user()?.username}}</span>
+                        <span class="name">{{user.username}}</span>
                     </div>
                     <div class="input-block">
                         <label for="email" class="input-label">Email</label>
-                        <span class="email">{{user()?.email}}</span>
+                        <span class="email">{{user.email}}</span>
                     </div>
                     <div [formGroup]="addressForm" class="address-tab">
 
