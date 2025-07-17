@@ -93,7 +93,7 @@ export const routes: Routes = [
                     import('./features/about/about.component').then(m=>m.AboutComponent)
             },
             {
-                path: 'user/:userId',
+                path: 'user/profile',
                 loadComponent: () => import('./features/user/profile/profile.component').then(m=>m.ProfileComponent),
             },
 

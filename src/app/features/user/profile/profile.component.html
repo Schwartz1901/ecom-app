@@ -1,5 +1,4 @@
-@if(user()) {
-
+@if(user) {
     <div class="profile-wrapper">
         <div class="left-container">
             <div class="avatar-container">
@@ -7,7 +6,7 @@
                     <img src="/tea.png" alt="avatar">
                 </div>
                 <div class="name">
-                    <p class="name-text">{{user()?.username}}</p>
+                    <p class="name-text">{{user.username}}</p>
                     <p class="sub-name">Lorem ipsum</p>
                     <p class="quote">Lorem ipsum</p>
 
@@ -22,17 +21,46 @@
                 <div class="info-container">
                     <div class="input-block">
                         <label for="name" class="input-label">Name</label>
-                        <span class="name">{{user()?.username}}</span>
+                        <span class="name">{{user.username}}</span>
                     </div>
                     <div class="input-block">
                         <label for="email" class="input-label">Email</label>
-                        <span class="email">{{user()?.email}}</span>
+                        <span class="email">{{user.email}}</span>
                     </div>
-                    <div class="input-block">
-                        <label for="address" class="input-label">Address</label>
-                        <input type="text" name="address" id="address" placeholder="Address">
+                    <div [formGroup]="addressForm" class="address-tab">
+
+                        <div class="input-block">
+                            <label for="recipient" class="input-label">Recipient Name</label>
+                            <input id="recipient" formControlName="recipient" placeholder="Full name" type="text" />
+                        </div>
+
+                        <div class="input-block">
+                            <label for="street" class="input-label">Street Address</label>
+                            <input id="street" formControlName="street" placeholder="123 Main St" type="text" />
+                        </div>
+
+                        <div class="input-row">
+                            <div class="input-block half">
+                                <label for="city" class="input-label">City</label>
+                                <input id="city" formControlName="city" placeholder="City" type="text" />
+                            </div>
+                            <div class="input-block half">
+                                <label for="province" class="input-label">Province</label>
+                                <input id="province" formControlName="province" placeholder="Province" type="text" />
+                            </div>
+                        </div>
+
+                        <div class="input-row">
+                            <div class="input-block half">
+                                <label for="postalCode" class="input-label">Postal Code</label>
+                                <input id="postalCode" formControlName="postalCode" placeholder="12345" type="text" />
+                            </div>
+                            <div class="input-block half">
+                                <label for="country" class="input-label">Country</label>
+                                <input id="country" formControlName="country" placeholder="Country" type="text" />
+                            </div>
+                        </div>
                     </div>
-    
                 </div>
                 <div class="favorite-list">
                     <p>This is favorite list</p>

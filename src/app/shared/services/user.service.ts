@@ -1,75 +1,34 @@
-import { Injectable, WritableSignal } from '@angular/core';
+import { Injectable, WritableSignal, inject } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
-export interface User{
-  userId: string;
-  email: string;
-  password: string;
+export interface User {
+  id: string;                   // Guid as string
   username: string;
-  isLoggedIn: boolean;
+  email: string;
+  gender: string;
+  dateOfBirth?: string;         // nullable Date → string (ISO)
+  phoneNumber: string;
+  avatarUrl: string;
+  quote: string;
+  subName: string;
+  createdAt: string;            // DateTime as ISO string
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  
-  private currentUser = signal<User | null>(null);
+  private http = inject(HttpClient);
+  private baseUrl = 'https://localhost:7040/api/User';
 
-  private mockUsers: User[] = [
-    {
-      userId:'1',
-      email: 'user1@mail.com',
-      password: '123456',
-      username: 'testuser1',
-      isLoggedIn: false,
-    }
-  ];
-  login(email: string, password: string) {
-    const user = this.mockUsers.find(u => u.email === email && u.password === password);
-    if (user) {
-      user.isLoggedIn = true;
-      this.currentUser.set(user);
-      return of("Login Successful");
-    } else {
-      return throwError(() => new Error('Invalid Email or Password!'));
-    }
+  getUserProfile(): Observable<User> {
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+    console.log('Fetching user profile with headers:', headers);
+    console.log('Token:', token);
+    return this.http.get<User>(`${this.baseUrl}/profile`, { headers });
   }
-
-  register(email: string, password: string) {
-    const exist = this.mockUsers.find(u => u.email === email && u.password === password);
-    if (exist) {
-      return throwError(()=> new Error('User is already existed!'));
-    } else {
-      this.mockUsers.push({
-        userId: (Math.floor(Math.random() * (10 - 1)) + 1).toString(),
-        email: email,
-        password: password,
-        username: email,
-        isLoggedIn: true});
-      
-      return of('Register successful');
-    }
-  }
-
-  // getUser(username: string | null): WritableSignal<User | null> {
-  //   const user = this.mockUsers.find(u => u.username === username);
-  //   if (user) {
-  //     this.currentUser.set(user);
-  //   }
-  //   return this.currentUser;
-  // }
-
-  getCurrentUser() {
-    return this.currentUser;
-    
-  }
-
-  logout() {
-    this.currentUser.set(null);
-    return of("Logout!");
-  }
-  
 
 }
