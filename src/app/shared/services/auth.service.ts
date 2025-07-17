@@ -42,7 +42,7 @@ export class AuthService {
     return this.http.post<AuthResponse>(`${this.baseUrl}/refresh`, { refreshToken }).pipe(
       tap(response => this.storeTokens(response)),
       catchError(err => {
-        this.logout();
+        
         return throwError(() => new Error('Session expired. Please login again.'));
       })
     );

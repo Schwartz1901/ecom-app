@@ -17,8 +17,17 @@ export class AppComponent {
   ngOnInit() {
   const token = this.authService.getToken();
   if (token && this.authService.isTokenExpired(token)) {
-    console.warn('Token is expired. Logging out.');
-    this.authService.logout();
+    console.warn('Token is expired. Refreshing...');
+    this.authService.refreshToken().subscribe({
+      next: () => {
+        console.info("refresh token successfully")
+      },
+      error: () => {
+        console.warn("Session exprifed, logging out...");
+        this.authService.logout();
+      }
+    })
   }
+  
 }
 }
