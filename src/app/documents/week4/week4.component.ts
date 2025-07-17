@@ -13,11 +13,26 @@ export class Week4Component {
   private http = inject(HttpClient)
   
   hello = signal<string>("Press the button");
+  helloHandle = signal<string>("Press the button");
 
   callHello() {
     this.http.get('https://localhost:7035/api/Product/hello', { responseType: 'text' }).subscribe({
       next: (res) => this.hello.set(res),
       error: (err) => this.hello.set("Error: " + (err?.message || 'Something went wrong'))
+    });
+  }
+  callHelloHandle() {
+    this.http.get('https://localhost:7035/api/Product/hello', { responseType: 'text' }).subscribe({
+      next: (res) => this.helloHandle.set(res),
+      error: (err) => 
+        {
+          if (err.status === 0) {
+            this.helloHandle.set("Unable to connect to server...");
+          }
+          else  {
+            this.helloHandle.set("Unexpected error");
+          }
+        }
     });
   }
 
@@ -50,13 +65,41 @@ bootstrapApplication(AppComponent, {
 var app = builder.Build();
 app.UseCors("AllowLocalhost4200"); // Must come before app.UseAuthorization()`;
 
-  subscribeHtml=`this.http.get('https://localhost:7035/api/Product/').subscribe({
-      next: (data) => {
-        // You do something with the data
-      },
-      error: (err: HttpErrorResponse) => {
-        // You do something with the error
-      }
+  subscribeHtml=`this.authService.login(email!, password!).subscribe({
+      next: () => this.router.navigate(['home']),
+      error: err => this.errorMessage = err.message,
     });`;
+    pipeHtml=` login(email: string, password: string): Observable<AuthResponse> {
+        return this.http.post<AuthResponse>(endpoint/login, { email, password }).pipe(
+          tap(response => this.storeTokens(response)),
+          catchError(this.handleError)
+        );
+      }
+
+  private handleError(error: HttpErrorResponse) {
+    let msg: string = '';
+    if (error.status === 0) {
+      // Network or CORS error
+      msg = 'Unable to connect to the server';
+    }
+    else if (error.status === 400) {
+      // BadRequest
+      msg = 'Bad Reqeust! Please check the input';
+    }
+    else if (error.status === 404) {
+      // NotFound
+      msg = 'Not Found!';
+    }
+    else if (error.status === 500) {
+      // Internal server error
+      msg = 'Something wrong with the server!';
+    }
+    else {
+      // Customized error or some other errors
+      msg = error.error?.message || 'Unexpected error';
+    }
+
+    return throwError(() => new Error(msg));
+  }`;
 
 }

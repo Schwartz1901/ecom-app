@@ -90,9 +90,28 @@ export class AuthService {
   }
 
   private handleError(error: HttpErrorResponse) {
-    if (error.status === 401) {
-      return throwError(() => new Error('Invalid credentials'));
+    let msg: string = '';
+    if (error.status === 0) {
+      // Network or CORS error
+      msg = 'Unable to connect to the server';
     }
-    return throwError(() => new Error('Something went wrong. Try again.'));
+    else if (error.status === 400) {
+      // BadRequest
+      msg = 'Bad Reqeust! Please check the input';
+    }
+    else if (error.status === 404) {
+      // NotFound
+      msg = 'Not Found!';
+    }
+    else if (error.status === 500) {
+      // Internal server error
+      msg = 'Something wrong with the server!';
+    }
+    else {
+      // Customized error or some other errors
+      msg = error.error?.message || 'Unexpected error';
+    }
+
+    return throwError(() => new Error(msg));
   }
 }

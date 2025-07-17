@@ -30,6 +30,15 @@
                 list-style-type: disc;
                 padding-left: 1.5rem;
             }
+            img{
+                display: block;           
+                max-width: 100%;          
+                width: 100vw;             
+                height: auto;             
+                object-fit: contain;      
+                margin: 0 auto;           
+                padding: 1rem;
+            }
         }
     }
 }
