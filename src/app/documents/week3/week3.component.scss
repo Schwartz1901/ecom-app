@@ -32,6 +32,15 @@
                 list-style-type: disc;
                 padding-left: 1.5rem;
             }
+            img{
+                display: block;           
+                max-width: 90%;          
+                width: 90vw;             
+                height: auto;             
+                object-fit: contain;      
+                margin: 0 auto;           
+                padding: 1rem;
+            }
         }
         .asp-net-core{
             .app-structure{

@@ -1,4 +1,4 @@
-import { Component, Input, signal, inject } from '@angular/core';
+import { Component, Input, signal, inject, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -14,9 +14,13 @@ export class ApiTesterComponent {
   private http = inject(HttpClient);
 
   // Make it flexible
-  @Input() baseUrl: string = 'https://localhost:7035/api/Product/';
+  @Input() baseUrl: string = '';
+  @Output() baseUrlChange = new EventEmitter<string>();
   @Input() methods: string[] = ['GET', 'POST', 'PUT', 'DELETE'];
-
+  onInputChange(value: string) {
+    this.baseUrl = value;
+    this.baseUrlChange.emit(value);
+  }
   apiPath = this.baseUrl;
   apiMethod = 'GET';
   apiBody = '';
@@ -41,13 +45,17 @@ export class ApiTesterComponent {
         request = this.http.delete(url);
         break;
       default:
-        this.apiResult.set('❌ Unsupported method');
+        this.apiResult.set('Unsupported method');
         return;
     }
 
     request.subscribe({
       next: res => this.apiResult.set(JSON.stringify(res, null, 2)),
-      error: err => this.apiResult.set(`❌ Error: ${err.message}`),
+      error: err => {
+        this.apiResult.set(
+          `Status: ${err.error.status} \nMessage: ${err.error.message}`);
+        
+      }
     });
   }
 

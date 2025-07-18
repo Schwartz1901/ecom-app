@@ -23,6 +23,7 @@
         width: 100%;
     }
     .main-content {
+        padding: 2px;
         section{
             padding: 0;
             margin: 0;
@@ -32,13 +33,26 @@
             }
             img{
                 display: block;           
-                max-width: 100%;          
-                width: 100vw;             
+                max-width: 90%;          
+                width: 90vw;             
                 height: auto;             
                 object-fit: contain;      
                 margin: 0 auto;           
                 padding: 1rem;
             }
+            .user-card {
+                max-width: 400px;
+                padding: 1rem;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                text-align: center;
+                margin: 20px auto;
+            }
+            .user-card img {
+                width: 150px;
+                border-radius: 50%;
+            }
+                
         }
     }
 }

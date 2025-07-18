@@ -86,7 +86,7 @@
                 [content]="corsPolicyHtml"
             />
         </section>
-        <section>
+        <section class = "HttpClient">
             <h2>HttpClient in backend</h2>
             <p>In Backend, we can use HttpClient to call API endpoints from external party as long as we are allowed to do so</p>
             <p>For example, this is a public API to get random generated user JSON file</p>
@@ -94,8 +94,29 @@
             <p>Sample result</p>
             <img src ="../../../../public/document_img/week4/sample_result.PNG" alt="sample result">
             <img src="../../../../public/document_img/week4/postman_GET_randomUserApi.PNG" alt="sample result">
-            <h3>HttpClient</h3>
+            <h3><a href="https://learn.microsoft.com/en-us/dotnet/fundamentals/networking/http/httpclient-guidelines">HttpClient</a></h3>
             <p>HttpClient is a built-in class in .NET used to send HTTP requests and receive HTTP responses from external services — like calling a REST API from your backend.</p>
+            <h4>Recommended use (by Micrisoft):</h4>
+            <p>To summarize recommended HttpClient use in terms of lifetime management, you should use either long-lived clients and set <strong>PooledConnectionLifetime</strong> (.NET Core and .NET 5+) or short-lived clients created by <strong>IHttpClientFactory</strong>.</p>
+            <h3>Socket Exhaustion problem with HttpClient</h3>
+            <p>When use <code>new HttpClient()</code> directly, for every request (without reusing it), each will internally create a new connection.</p>
+            <p>TCP port will not be release after the connection closed, but stay in TIME_WAIT. Large amount of requests without reusing the connection will soon run out of the available sockets</p>
+            <p><strong>Solution:</strong> reuse HttpClient conenction</p>
+            <p>In this example, we will use IHttpClientFactory</p>
+            <p>Register HttpClient in Program.cs</p>
+            <app-script-widget 
+                content="builder.Services.AddHttpClient();"
+            />
+            <p>Inject into service and using it</p>
+            <app-script-widget 
+                title="ExternalAPIService.cs"
+                [content]="randomUserExternalApiHtml"
+            />
+            <p>Test with postman, calling our endpoint this time</p>
+            <img src="../../../../public/document_img/week4/postman_GET_externalAPIEx.PNG" alt="random user">
+            <app-api-tester [(baseUrl)]="randomUserUrl"/>
+            
+
         </section>
     </div>
 </div>

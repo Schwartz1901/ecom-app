@@ -2,9 +2,12 @@ import { Component, inject, signal } from '@angular/core';
 import { ChecklistComponent } from '../components/checklist/checklist.component';
 import { ScriptWidgetComponent } from "../components/script-widget/script-widget.component";
 import { HttpClient } from '@angular/common/http';
+import { ApiTesterComponent } from "../components/api-tester/api-tester.component";
+
 @Component({
   selector: 'app-week4',
-  imports: [ChecklistComponent, ScriptWidgetComponent],
+  standalone: true,
+  imports: [ChecklistComponent, ScriptWidgetComponent, ApiTesterComponent],
   templateUrl: './week4.component.html',
   styleUrl: './week4.component.scss'
 })
@@ -14,6 +17,8 @@ export class Week4Component {
   
   hello = signal<string>("Press the button");
   helloHandle = signal<string>("Press the button");
+
+  randomUserUrl = 'https://localhost:7035/api/ExternalAPI/randomUser';
 
   callHello() {
     this.http.get('https://localhost:7035/api/Product/hello', { responseType: 'text' }).subscribe({
@@ -102,4 +107,27 @@ app.UseCors("AllowLocalhost4200"); // Must come before app.UseAuthorization()`;
     return throwError(() => new Error(msg));
   }`;
 
+  randomUserExternalApiHtml = `public class ExternalAPIService: IExternalAPIService
+{
+    private HttpClient _httpClient;
+    public ExternalAPIService(IHttpClientFactory httpClientFactory) 
+    { 
+        _httpClient = httpClientFactory.CreateClient();
+    }
+
+    public async Task<Result> GetRandomUserAsync()
+    {
+        var result = await _httpClient.GetFromJsonAsync<RandomUserResponseDto>("https://randomuser.me/api/");
+        if (result == null)
+        {
+            throw new Exception("Get no result form endpoint");
+        }
+        var user = result.Results?.FirstOrDefault();
+        if (user == null)
+        {
+            throw new Exception("Get no user");
+        }
+        return user;
+    }
+}`;
 }
