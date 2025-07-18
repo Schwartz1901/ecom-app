@@ -38,11 +38,10 @@ export class AuthService {
   }
 
   refreshToken(): Observable<AuthResponse> {
-    const refreshToken = localStorage.getItem('refreshToken');
-    return this.http.post<AuthResponse>(`${this.baseUrl}/refresh`, { refreshToken }).pipe(
+  
+    return this.http.post<AuthResponse>(`${this.baseUrl}/refresh`, {  }).pipe(
       tap(response => this.storeTokens(response)),
       catchError(err => {
-        
         return throwError(() => new Error('Session expired. Please login again.'));
       })
     );
@@ -58,22 +57,22 @@ export class AuthService {
   }
 
   logout() {
-    const refreshToken = localStorage.getItem('refreshToken');
-    this.http.post(`${this.baseUrl}/logout`, { refreshToken }).subscribe({
-      next: () => {
-        this.tokenSignal.set(null);
-        localStorage.removeItem('token');
-        localStorage.removeItem('refreshToken');
-        this.router.navigate(['/login']);
-      },
-      error: () => {
-        this.tokenSignal.set(null);
-        localStorage.removeItem('token');
-        localStorage.removeItem('refreshToken');
-        this.router.navigate(['/login']);
-      }
-    });
-  }
+    const refreshToken = localStorage.getItem("refreshToken");
+    this.http.post(`${this.baseUrl}/logout`, {}).subscribe({
+    next: () => {
+      this.tokenSignal.set(null);
+      localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
+      this.router.navigate(['/login']);
+    },
+    error: () => {
+      this.tokenSignal.set(null);
+      localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
+      this.router.navigate(['/login']);
+    }
+  });
+}
   isTokenExpired(token: string): boolean {
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
