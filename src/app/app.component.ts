@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 
 import { LayoutComponent } from "./layout/layout.component";
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { AuthService } from './shared/services/auth.service';
 
 @Component({
@@ -13,6 +13,7 @@ import { AuthService } from './shared/services/auth.service';
 export class AppComponent {
   title = 'ecom-app';
   private authService = inject(AuthService);
+  private router = inject(Router)
 
   ngOnInit() {
   const token = this.authService.getToken();
