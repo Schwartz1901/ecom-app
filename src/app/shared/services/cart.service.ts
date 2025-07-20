@@ -56,7 +56,7 @@ export class CartService {
 
   addFromProduct(product: Product, quantity: number = 1) {
     const item: CartItem = {
-      productId:(product.id).toString(),
+      productId:(product.id!).toString(),
       productName: product.name,
       price: Number(product.price),
       quantity: quantity,

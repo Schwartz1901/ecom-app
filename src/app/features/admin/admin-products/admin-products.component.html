@@ -1,7 +1,9 @@
 <div class="admin-products">
   <div class="header">
     <h2>Product Management</h2>
-    <button class="add-btn" (click)="onAdd()">+ Add Product</button>
+
+    <app-admin-add-product (formClose)="onFormClose()"></app-admin-add-product>
+    
   </div>
 
   <table class="product-table">
@@ -25,8 +27,8 @@
           <!-- <td>{{ product.stock }}</td> -->
           <td>0</td>
           <td>
-            <button class="edit-btn" (click)="onEdit(product.id)">Edit</button>
-            <button class="delete-btn" (click)="onDelete(product.id)">Delete</button>
+            <button class="edit-btn" (click)="onEdit(product.id!)">Edit</button>
+            <button class="delete-btn" (click)="onDelete(product.id!)">Delete</button>
           </td>
         </tr>
       }

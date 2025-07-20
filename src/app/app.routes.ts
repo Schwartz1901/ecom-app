@@ -63,6 +63,10 @@ export const routes: Routes = [
                         path: 'admin-products',
                         loadComponent: () => import('./features/admin/admin-products/admin-products.component').then(m=>m.AdminProductsComponent),
                     },
+                    {
+                        path: 'admin-products/edit/:id',
+                        loadComponent: () => import('./features/admin/admin-products/admin-edit-product/admin-edit-product.component').then(m=>m.AdminEditProductComponent),
+                    },
                     {path: '**', component: PageNotFoundComponent}
                 ]
             },
