@@ -37,7 +37,7 @@ export class AdminProductsComponent implements OnInit {
   onDelete(productId: number): void {
     const confirmed = confirm('Are you sure you want to delete this product?');
     if (confirmed) {
-      // TODO: Hook to ProductService.deleteProduct(productId)
+     
       this.productService.deleteProduct(productId).subscribe(() => this.loadProducts());
 
       console.log(`Pretending to delete product with ID: ${productId}`);
