@@ -3,13 +3,16 @@
 
   <main class="content-area">
     <router-outlet></router-outlet>
-    <button (click)="toggleChat()" class="chat-toggle-btn">Chat with AI</button>
+    <button (click)="toggleChat()" class="chat-toggle-btn">AI Assistant</button>
 
     <div class="drawer" [class.open]="isOpen">
       <app-chatbot></app-chatbot>
     </div>
 
-    <div class="overlay" *ngIf="isOpen" (click)="toggleChat()"></div>
+    @if(isOpen) {
+      <div class="overlay" (click)="toggleChat()"></div>
+    }
+  
     
   </main>
 

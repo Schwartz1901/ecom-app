@@ -44,9 +44,6 @@ export class AdminProductsComponent implements OnInit {
       this.loadProducts(); // refresh list
     }
   }
-
-
-
   onFormClose(): void {
 
     this.loadProducts(); // refresh table after add
