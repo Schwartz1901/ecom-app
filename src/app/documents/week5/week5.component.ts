@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { ChecklistComponent } from '../components/checklist/checklist.component';
 
 @Component({
   selector: 'app-week5',
-  imports: [],
+  imports: [ChecklistComponent],
+  standalone: true,
   templateUrl: './week5.component.html',
   styleUrl: './week5.component.scss'
 })
