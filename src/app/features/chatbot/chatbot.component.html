@@ -1,0 +1,19 @@
+<div class="chat-container">
+  <div class="chat-messages">
+    @for (msg of messages; track msg) {
+      <div [ngClass]="msg.from">
+        @if (msg.from === 'user') {
+          <strong>You:</strong>
+        } @else {
+          <strong>Bot:</strong>
+        }
+        {{ msg.text }}
+      </div>
+    }
+  </div>
+
+  <div class="chat-input">
+    <textarea [(ngModel)]="input" placeholder="Type your message..."></textarea>
+    <button (click)="sendMessage()">Send</button>
+  </div>
+</div>

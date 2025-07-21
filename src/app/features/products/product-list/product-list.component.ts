@@ -15,10 +15,20 @@ export class ProductListComponent {
   constructor(private productService: ProductService) {}
   products: Product[] = []
   ngOnInit(): void {
-    this.products = this.productService.getProducts();
+    this.productService.getProducts().subscribe({
+      next: (products) => {
+        this.products = products;
+        this.extractCategories();
+        this.filteredProducts.set(products);
+       
+      },
+      error: (err) => {
+        console.error('Failed to load products', err);
+      }
+    });
     this.applyFilters();
   }
-  categories: string[] = ['Tea', 'Bodycare', 'Supplements', 'Remedies'];
+  categories: string[] = [];
   selectedCategories: Set<string> = new Set();
 
   sortBy: string = 'default';
@@ -27,6 +37,10 @@ export class ProductListComponent {
   currentPage = signal(1);
   pageSize = 4;
 
+  private extractCategories(): void {
+  const all = this.products.flatMap(p => p.catagory); // merge all catagory arrays
+  this.categories = [...new Set(all)].sort(); // remove duplicates and sort
+  }
 
   onFilterChange(event: Event) {
     const input = event.target as HTMLInputElement;

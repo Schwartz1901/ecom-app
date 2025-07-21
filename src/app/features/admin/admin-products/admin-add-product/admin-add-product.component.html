@@ -1,0 +1,12 @@
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+  <label>Name: <input formControlName="name" /></label>
+  <label>Categories (comma-separated): <input formControlName="catagory" /></label>
+  <label>Price: <input formControlName="price" type="number" /></label>
+  <label>Discount Price: <input formControlName="discountPrice" type="number" /></label>
+  <label>Is Discount: <input formControlName="isDiscount" type="checkbox" /></label>
+  <label>Image URL: <input formControlName="imageUrl" /></label>
+  <label>Image Alt: <input formControlName="imageAlt" /></label>
+  <label>Description: <textarea formControlName="description"></textarea></label>
+
+  <button type="submit" [disabled]="productForm.invalid">Add Product</button>
+</form>

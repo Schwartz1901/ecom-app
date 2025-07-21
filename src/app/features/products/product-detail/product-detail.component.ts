@@ -25,7 +25,15 @@ export class ProductDetailComponent implements OnInit {
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (!isNaN(id)) {
-      this.product = this.productService.getProductById(id);
+      this.productService.getProductById(id).subscribe({
+        next: (product) => {
+          this.product = product;
+        },
+        error: () => {
+          console.error('Product not found');
+          this.product = undefined; // Handle product not found
+        }
+      });
     }
   }
 
