@@ -1,6 +1,6 @@
 .admin-page {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   font-family: 'Segoe UI', sans-serif;
 
   .sidebar {
@@ -61,9 +61,10 @@
 
     .content-area {
       padding: 2rem;
-      overflow-y: auto;
+      overflow-y: visible;
       background-color: #f8fafc;
-      flex: 1;
+      
+      
     }
   }
 }

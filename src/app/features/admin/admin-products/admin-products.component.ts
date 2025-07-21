@@ -45,14 +45,10 @@ export class AdminProductsComponent implements OnInit {
     }
   }
 
-  showAddForm = false;
 
-  onAdd(): void {
-    this.showAddForm = true;
-  }
 
   onFormClose(): void {
-    this.showAddForm = false;
+
     this.loadProducts(); // refresh table after add
   }
 }

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-chatbot',
@@ -15,34 +15,32 @@ export class ChatbotComponent {
 
   input: string = '';
   messages: { from: 'user' | 'bot', text: string }[] = [];
+  isLoading = false;
 
   sendMessage() {
-    if (!this.input.trim()) return;
+    const trimmed = this.input.trim();
+    if (!trimmed) return;
 
-    const userMsg = this.input;
-    this.messages.push({ from: 'user', text: userMsg });
+    this.messages.push({ from: 'user', text: trimmed });
     this.input = '';
-
-    this.askAI(userMsg);
+    this.askAI(trimmed);
   }
 
   askAI(prompt: string) {
-    const url = 'https://api-inference.huggingface.co/models/google/flan-t5-small';
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer YOUR_HUGGINGFACE_API_TOKEN',
-      'Content-Type': 'application/json'
-    });
+    this.isLoading = true;
 
-    const body = { inputs: prompt };
+    const url = 'https://localhost:7040/api/chatbot/ask'; 
+    const body = { prompt };
 
-    this.http.post<any>(url, body, { headers }).subscribe({
+    this.http.post<{ response: string }>(url, body).subscribe({
       next: (res) => {
-        const output = res[0]?.generated_text || 'No response';
-        this.messages.push({ from: 'bot', text: output });
+        this.messages.push({ from: 'bot', text: res.response });
+        this.isLoading = false;
       },
       error: (err) => {
-        this.messages.push({ from: 'bot', text: '❌ Error from AI API' });
+        this.messages.push({ from: 'bot', text: 'Error from AI API' });
         console.error(err);
+        this.isLoading = false;
       }
     });
   }

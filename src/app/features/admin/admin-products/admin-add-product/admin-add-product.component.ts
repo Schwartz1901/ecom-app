@@ -23,7 +23,7 @@ export class AdminAddProductComponent {
     price: [0, [Validators.required, Validators.min(0)]],
     discountPrice: [0],
     isDiscount: [false],
-    imageUrl: ['', Validators.required],
+    imageUrl: [''],
     imageAlt: [''],
     description: ['']
   });
@@ -47,10 +47,11 @@ export class AdminAddProductComponent {
       this.productService.addProduct(newProduct).subscribe({
         next: () => {
           alert('Product added successfully!'),
-          this.router.navigate(['/admin-products'])
+          this.router.navigate(['admin/admin-products'])
         },
         error: (err) => console.error('Add product failed:', err)
       });
     }
   }
+  
 }
