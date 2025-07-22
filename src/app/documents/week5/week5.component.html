@@ -14,6 +14,203 @@
     </div>
     <hr class="divider">
     <div class="main-content">
-
+        <section class="intro">
+            <h2><a href="https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/microservices">Introduction to Microservices</a></h2>
+            <h3>Microservices architecture</h3>
+            <p>Microservices are a popular architectural style for building applications that are resilient, highly scalable, independently deployable, and able to evolve quickly.</p>
+            <p>A microservices architecture consists a collection of small, autonomous services</p>
+            <p>Each service is self-contained and should implement a single business capability within a bounded context</p>
+            <p>A bounded context is a natural division within a business and provides an explicit boundary within which a domain model exists.</p>
+            <img src="https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/images/microservices-logical.svg" alt="Micro service">
+            <h3>Microservices</h3>
+            <p>Microservices are small, independent, and loosely coupled components that a single small team of developers can write and maintain. </p>
+            <p>Each service is managed as a separate codebase, which allows a small team to handle it efficiently. Because services can be deployed independently, teams can update existing services without rebuilding or redeploying the entire application. </p>
+            <p>Unlike traditional models that have a centralized data layer, microservices are responsible for persisting their own data or external state. They communicate through well-defined APIs, which keeps internal implementations hidden from other services.</p>
+            <p> This architecture also supports polyglot programming, which means that services don't need to share the same technology stack, libraries, or frameworks.</p>
+            <h3>Keys</h3>
+            <ul>
+                <li>Microservices are a architecture consists of small and independent services</li>
+                <li>Services communicate through well-defined APIs</li>
+                <li>Each service is <strong>self-contained</strong>: handle a specific business capacity</li>
+                <li>Each service is <strong>independently deployable</strong>: Can be deployed, developed and scaled seperately</li>
+                <li>Each service is <strong>autonomous</strong>: Own its data logic</li>
+            </ul>
+            <h3>Why microservices are used:</h3>
+            <ul>
+                <li>Each service can be scaled independenly -> Scalability</li>
+                <li>Service can be developed and deploy independenly</li>
+                <li>Minimizing system-wide failure</li>
+                <li>Various tech stacks -> Flexibility</li>
+            </ul>
+            <h3>Principles of Microservice</h3>
+            <p>Source:</p>
+            <p><a href="https://developers.redhat.com/articles/2022/01/11/5-design-principles-microservices#five_design_principles_for_microservices">5 Design principles</a></p>
+            <p><a href="https://dev.to/adityabhuyan/key-principles-of-microservice-architecture-a-detailed-guide-128g">Key principles of Microservice architecture</a></p>
+            <h4>Single Responsibitlity</h4>
+            <p>"A microservice should do one thing and one thing only."</p>
+            <p>For example, if the microservice is intended to support authentication, it should do authentication only.</p>
+            <p>This means that its interface should expose only access points that are relevant to authentication. And internally, the microservice should have authentication behavior only. </p>
+            <p>For example, there should be no side behavior such as providing employee contact information in the authentication response.</p>
+            <p>Having a single concern makes the microservice easier to maintain and scale.</p>
+            <h4>Discrete microservices boundaries</h4>
+            <p>A microservice must have clear boundaries separating it from its environment</p>
+            <p>all logic and data relevant to a microservice's single concern must be encapsulated into a single deployment unit.</p>
+            <p>Deployment units: .NET DLL, JAR file, Node.js Packages...</p>
+            <p>Also, a discrete microservice is hosted in a distinct source control repository and is subject to its own CI/CD process.</p>
+            <p>The microservice becomes part of a larger application after deployment</p>
+            <p>THe microservice is isolated from all others during development to testing</p>
+            <h4>Transportable</h4>
+            <p>A transportable microservice can be moved from one runtime environment to another with little effort.</p>
+            <p>The container image can be targeted to any destination from that image repository, so a variety of applications can use the image.</p>
+            <p>No "Work on my machine, why not yours?" situation. Working the same on dev, test, deployed</p>
+            <p>This transportable feature also makes microservices easier to use in an automated or declarative deployment process.</p>
+            <h4>Carry-it-own-data</h4>
+            <p>A microservice should have its own data storage mechanism that is isolated from all other microservices.</p>
+            <p>The only way data can be shared with other microservice is by way of a public interface that the microservice publishes.</p>
+            <h4>Inheritly ephemeral</h4>
+            <p>A microservice is ephemeral means that it can be created, destroyed, and replenished on-demand on a target easily, quickly, and with no side effects</p>
+            <p>T he standard operating expectation is that microservices come and go all the time</p>
+            <p>Two basic implication:</p>
+            <p> - Implementing graceful startup and shutdown behavior within the microservice.</p>
+            <p> - Rely on runtime configuration settings to define external dependencies</p>
+            <h4>Some others</h4>
+            <ul>
+                <li>Observability: Built-in support for logging, monitoring, tracing, and metrics.</li>
+                <li>Resilience and Fault Isolation: The principle of fault isolation ensures that a failure in one service does not bring down the entire system</li>
+                <li>API-First Design: Ensure that services can interact with each other seamlessly</li>
+                <li>CI/CD: Have automated processes for building, testing, and deploying services</li>
+            </ul>
+        </section>
+        <br>
+        <section class="compare-to-monolith">
+            <h2>Comparative Analysis with Monolith architecture</h2>
+            <p><strong>Reviwew:</strong> A Monolith is a single unified applicatio that all features (UI, business logic, database access) are in one codebase.</p>
+            <img src="https://media.geeksforgeeks.org/wp-content/uploads/20240219192035/Monolithic-Architecture.webp" alt="Monolith example">
+            <h3>Comparision between Monolith and Microservice</h3>
+            <div class="diff-table">
+                <table border="1">
+                    <thead>
+                        <tr>
+                        <th>Aspects</th>
+                        <th>Monolith</th>
+                        <th>Microservices</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <td>Architecture</td>
+                        <td>Single-tier architecture</td>
+                        <td>Multi-tier architecture</td>
+                        </tr>
+                        <tr>
+                        <td>Size</td>
+                        <td>Large, all components tightly coupled</td>
+                        <td>Small, loosely coupled components</td>
+                        </tr>
+                        <tr>
+                        <td>Deployment</td>
+                        <td>Deployed as a single unit</td>
+                        <td>Each can be deployed independently</td>
+                        </tr>
+                        <tr>
+                        <td>Scalability</td>
+                        <td>Horizontal scalling can be challenging</td>
+                        <td>Easier to scale</td>
+                        </tr>
+                        <tr>
+                        <td>Development</td>
+                        <td>Initially simplier</td>
+                        <td>Complex due to manage multiple services</td>
+                        </tr>
+                        <tr>
+                        <td>Techstack</td>
+                        <td>Limited within project</td>
+                        <td>Can use various technologies and languages</td>
+                        </tr>
+                        <tr>
+                        <td>Fault tolerance</td>
+                        <td>Entire application may fail if a part fails</td>
+                        <td>A part may fail without affecting others</td>
+                        </tr>
+                        <tr>
+                        <td>Maintenance</td>
+                        <td>Easier due to its simplicity</td>
+                        <td>Require more effors due to managing multiple services</td>
+                        </tr>
+                        <tr>
+                        <td>Flexibility</td>
+                        <td>Less flexible, components are tightly coupled</td>
+                        <td>More flexible, components can be developed, deploy and upgraded individually</td>
+                        </tr>
+                        <tr>
+                        <td>Communication</td>
+                        <td>Communication between each components is faster</td>
+                        <td>Depends on network condition</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        
+        </section>
+        <section class="key-concepts">
+            <h2> Key Concepts: Service autonomy, Scalability, Resilience</h2>
+            <h3> <a href="https://www.codingknownsense.com/microservices-design-principle-autonomy/">Service Autonomy</a></h3>
+            <p>Autonomy in microservices refers to the degree of independence and self-sufficiency that each individual microservice possesses within a microservices architecture.</p>
+            <p>Some characteristic:</p>
+            <ul>
+                <li>Has it own database and codebase. No shared code implemtation or data</li>
+                <li>Can be built, test, deployed independently</li>
+                <li>Can be deployed on different environments and scaled seperately</li>
+                <li>Owns its business logic and rules within a bounded domain</li>
+            </ul>
+            To archive the autonomy, follow these key design practices
+            <h4>Loose coupling</h4>
+            <p>One of the key design approaches for this is loose coupling where we make sure each one of our microservices is independent from other services because they have limited knowledge about the inner workings, i.e. the code, within other services.</p>
+            <img src="https://www.codingknownsense.com/wp-content/uploads/2023/09/image-27-1024x639.png" alt="Service autonomy">
+            <p>The easiest way of achieving this is by having our microservices physically separate from each other by having them communicate with each other using the network and by using proven open network communication protocols like HTTP.</p>
+            <p>To further loosen the coupling, make sure that the amount of HTTP calls that required in order to fetch data or carry out functionalities is minimum</p>
+            <p>Each service has it own database and that is not shared with other services. The only way to get that data is to talk with the service itself</p>
+            <h4>Contracts and Interfaces</h4>
+            <p>Calls between services have stable request and response and remain stable even the service is changing</p>
+            <img src="https://www.codingknownsense.com/wp-content/uploads/2023/09/image-30-768x505.png" alt="autonomous: contracts and interfaces">
+            <p>Making sure that we expose the minimal amount of data, and only data that actually required from outside. Keep inner data internally</p>
+            <h4>Backward compactability</h4>
+            <p>If we have breaking changes (means changes in services required changes in somewhere else), make sure the clients use that changed service are not affected</p>
+            <p>Keep providing and supporting the old versions so that the clients do not have to actually change until they want to</p>
+            <p>have a versioning strategy (ex: Semmatic versioning (3-digit versioning), ...)</p>
+            <img src="https://www.codingknownsense.com/wp-content/uploads/2023/09/image-33-768x454.png" alt="autonomous: backward compactability">
+            <p>Quite achivable with APIs-based microservice where we can have multiple duplicated endpoints seperated by version number</p>
+            <h4>Stateless</h4>
+            <p>Microservice instances do not have any in-memory data</p>
+            <p>Be able to replace any microservice at anytime without worrying about what are in the memory of the instance</p>
+            <h4>Conceptual microservice</h4>
+            <p>Microservice is not only a single application, but can also be a combination of multiple applications</p>
+            <img src="https://www.codingknownsense.com/wp-content/uploads/2023/09/image-34-1024x586.png" alt="conceptual-microservice">
+            <p>Conceptual microservice should be independently changeable and deployable</p>
+            <p>It should have its own database that’s only accessible by the apps within that conceptual microservice, and it’s a database that’s not directly shared with anything else.</p>
+            <br>
+            <h3><a href="https://medium.com/@priyamjpatel/how-microservices-architecture-contributes-to-scalability-280c43562847">Scalability</a></h3>
+            <h4>Definition:</h4>
+            <p>Ability of a microservices-based system to handle increased workload efficiently by either adding resources or optimizing existing ones</p>
+            <p> - Vertical: Add more resources (such as CPU, memory, or storage) allocated to an individual microservice instance</p>
+            <p> - Horizontal: Add more instances of a microservice to distribute the load. When a specific microservice experiences increased demand, deploy additional instances to share the load.</p>
+            <h4>Strategies to make Microservices scallable</h4>
+            <p><strong>Load balancing:</strong></p>
+            <p>Distribute incoming traffic evenly among multiple instances of the same microservice.</p>
+            <img src="https://media.geeksforgeeks.org/wp-content/uploads/20240603140952/Load-balancing-in-Microservices-Architecture.webp" alt="load balancer">
+            <p>Popular load balancing solutions include NGINX, HAProxy, and cloud-based load balancers offered by AWS, Azure, and Google Cloud.</p>
+            <p><strong>Auto-scaling</strong></p>
+            <p>Use provider tools to automatically scale microservices up or down based on predefined triggers to ensure match the workload</p>
+            <p><strong>Containerization</strong></p>
+            <p>Use Containerization tools like Docker and container orchestrations platforms like Kubernets</p>
+            <p>Container help package and deploy microservices consistently across different environments easier</p>
+            <p><strong>Database sharding</strong></p>
+            <p>Partition data horiziontally across multiple database instances. Enhance database performance.</p>
+            <p><strong>Mornitoring, Caching, Statelessness</strong></p>
+            <br>
+            <h3><a href="https://www.codingknownsense.com/microservices-design-principle-resiliency/">Resiliency</a></h3>
+            <h4>Definition: </h4>
+            <p>Is making our software reliable and available and ensuring that if we do have any failures within our back‑end microservices, each service fails fast and there’s alternate functionality so that the user doesn’t face any disruption.</p>
+        </section>
     </div>
 </div>
