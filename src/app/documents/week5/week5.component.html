@@ -209,8 +209,119 @@
             <p><strong>Mornitoring, Caching, Statelessness</strong></p>
             <br>
             <h3><a href="https://www.codingknownsense.com/microservices-design-principle-resiliency/">Resiliency</a></h3>
+            <p><a href="https://learn.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/">Microsoft doc</a> for more technical</p>
             <h4>Definition: </h4>
             <p>Is making our software reliable and available and ensuring that if we do have any failures within our back‑end microservices, each service fails fast and there’s alternate functionality so that the user doesn’t face any disruption.</p>
+            <h4>Design for failure</h4>
+            <p>Design the microservices with the expectation that cascading failures happen and our microservices have to handle it as smoothly as possible</p>
+            <p>Avoid letting user face any disruption when error happends by providing alternative functionalities</p>
+            <p>Assumme that the thrid-party API is inconsistent and could possiply have connectivity issues. We should place a shield between external API and our microservices</p>
+            <h4>Resiliency patterns</h4>
+            <p><strong>Circuit breaker pattern</strong></p>
+            <p>Main idea: Allow a service or application to keep a count on how many failures it receives from a downstream component</p>
+            <p>After a certain number of retries, it stops trying to connect and allow service's code to fail quickly so that we can response back to clients</p>
+            <p>At the same time, we can provide alternative functionalities</p>
+            <p>After a time, the pattern will try that component again to see if it is recovered</p>
+            <p>Usecase:</p>
+            <ul>
+                <li>Dealing with external service</li>
+                <li>Handling latency</li>
+                <li>Need better fault tolerance</li>
+            </ul>
+            <p><strong>Retry pattern</strong></p>
+            <p>Used to handle transient failures by automatically reattempting failed operations</p>
+            <p>Retrying the operation a predefined number of times, with delays in between each attempt.</p>
+            <p>Usecase:</p>
+            <ul>
+                <li>Network glitches or a brief unavailable time of service</li>
+                <li>Reduce mannual intervention in handling routing or recoverable errors</li>
+                <li>Used witk load balancing to distribute requests more evenly</li>
+            </ul>
+            <p><strong>Timeout pattern</strong></p>
+            <p>Setting a time limit for a services operation to complete.</p>
+            <p>If the operation exceeds this limit, it’s considered a timeout, and the system can respond accordingly.</p>
+            <p>Usecase:</p>
+            <ul>
+                <li>When need to guarantee on the maximum time the service have to response within. Ensure slow service will not impact the system overall performance</li>
+                <li>Need to manage resource for other services rather than a slow one</li>
+            </ul>
+            <p><strong>Caching</strong></p>
+            <p>Strore and retrieve frequently used data in a high-speed, temporary storage location</p>
+            <p>Usecase</p>
+            <ul>
+                <li>Reduce latency and minimize the load</li>
+                <li>When we have high data access frequency</li>
+                <li></li>
+            </ul>
+            <h4>Active backup</h4>
+            <p>Another key strategy in order to achieve the resiliency design principle is to have active backups of everything</p>
+            <p>Key point: <strong>Active</strong> - The backup components are actively receiving a load of the traffic</p>
+            <p>Not passive backup: the backup components just sit and wait for errors to be used</p>
+            <h4>Network health</h4>
+            <p>We should have a central monitoring system that monitors the network for connection outages, for latency issues, and for timeouts so that we can use all this information and all these metrics and stats for capacity planning.</p>
+            <h4>Validate connection and data</h4>
+            <p>validate data: Format, ...</p>
+            <p>connection: Authen, Authorize, priviledges,...</p>
+            <h4>Proactive maintenance</h4>
+            <p>Central loggin, central mornitoring,...</p>
         </section>
+        <br>
+        <section class="service-to-service-communication">
+            <h1><a href="https://learn.microsoft.com/en-us/dotnet/architecture/microservices/architect-microservice-container-applications/communication-in-microservice-architecture">Service-to-Service communication: Synchronous and Asynchronous</a></h1>
+            <p><a href="https://learn.microsoft.com/en-us/dotnet/architecture/microservices/architect-microservice-container-applications/communication-in-microservice-architecture">Microsoft doc</a></p>
+            <p><a href="https://dev.to/devcorner/service-to-service-communication-in-microservice-architectures-a-detailed-guide-4jck">Dev Community Doc</a></p>
+            <p>In a microservices architecture, service-to-service communication is how one microservice talks to another — typically over HTTP, gRPC, or messaging queues.</p>
+            <p>types of communications can be classified in two axes</p>
+            <p>First axis is Synchronous vs Asynchronous</p>
+            <p>The second is Single receiver and Multiple receivers
+            The most common type is single-receiver communication with a synchronous protocol like HTTP/HTTPS when invoking a regular Web API HTTP service. Microservices also typically use messaging protocols for asynchronous communication between microservices.>
+            <h2><a href="https://www.codingknownsense.com/technologies-for-microservices/synchronous-communication/">Synchronous communication</a></h2>
+            <p>Making request and waiting for response</p>
+            <p>The protocol (HTTP/HTTPS) is synchronous and the client code can only continue its task when it receives the HTTP server response.</p>
+            <h3>REST API</h3>
+            <p>The services expose API endpoint, communicate using HTTP methods like GET, POST, PUT, DELETE</p>
+            <p>Exchange payload like JSON or XML</p>
+            <p>Request/response communication is especially well suited for querying data for a real-time </p>
+            <img src="https://learn.microsoft.com/en-us/dotnet/architecture/microservices/architect-microservice-container-applications/media/communication-in-microservice-architecture/request-response-comms-live-queries-updates.png" alt="HTTP Communication">
+            <h3>gRPC</h3>
+            <p><a href="https://www.atatus.com/blog/what-is-grpc-framework/">What is RCP</a></p>
+            <p>gRPC is a high-performance, language-agnostic remote procedure call (RPC) framework.</p>
+            <p>It supports synchronous communication by allowing one microservice to call a method on another microservice as if it were a local function call.</p>
+            <p>gRPC is efficient, supports streaming, and provides features like authentication and load balancing.</p>
+            <h2><a href="https://learn.microsoft.com/en-us/dotnet/architecture/microservices/architect-microservice-container-applications/asynchronous-message-based-communication">Asynchronous - Message base communication</a></h2>
+            <p>The client code or message sender usually doesn't wait for a response.</p>
+            <p>When using messaging, processes communicate by exchanging messages asynchronously. A client makes a command or a request to a service by sending it a message. If the service needs to reply, it sends a different message back to the client. Since it's a message-based communication, the client assumes that the reply won't be received immediately, and that there might be no response at all.</p>
+            <p>use only asynchronous messaging between the internal services, and to use synchronous communication (such as HTTP) only from the client apps to the front-end services (API Gateways plus the first level of microservices).</p>
+            <p>There are two kinds of asynchronous messaging communication: single receiver message-based communication, and multiple receivers message-based communication. </p>
+            <h3>Single-receiver message-based communication</h3>
+            <img src="https://learn.microsoft.com/en-us/dotnet/architecture/microservices/architect-microservice-container-applications/media/asynchronous-message-based-communication/single-receiver-message-based-communication.png" alt="">
+            <h3>Multiple-receivers message-based communication</h3>
+            <p>As a more flexible approach, you might also want to use a publish/subscribe mechanism so that your communication from the sender will be available to additional subscriber microservices or to external applications. Thus, it helps you to follow the open/closed principle in the sending service. That way, additional subscribers can be added in the future without the need to modify the sender service.</p>
+        </section>
+        <section class="DDD">
+            <h1><a href="https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/ddd-oriented-microservice">Domain-Driven Design (DDD)</a></h1>
+            <p>Problems = domains</p>
+            <p>Describe each independent problems as Area Bounded Contexts, each Bounded Context correlates to a microservice</p>
+            <p>DDD approaches should be applied only if you are implementing complex microservices with significant business rules. </p>
+            <h2>Keep the microservice context boundaries relatively small</h2>
+            <p>Two goals:</p>
+            <p>First, aim to create the microservices as small as possiole. Create boundary around things that need cohesion</p>
+            <p>Second, Avoid chatty communiation between services</p>
+            <P>should balance them by decomposing the system into as many small microservices as you can until you see communication boundaries growing quickly with each additional attempt to separate a new Bounded Context</P>
+            <p>If two microservices need to collaborate a lot with each other, they should probably be the same microservice.</p>
+            <h2>Layers in DDD </h2>
+            <img src="https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/media/ddd-oriented-microservice/domain-driven-design-microservice.png" alt="">
+            <p>There are 3 layers: Application layer is Ordering.API, Domain layer is Ordering.Domain and the Infrastructure layer is Ordering.Infrastructure.</p>
+            <p>Design a system so that each layer can only communicate with certain other layers</p>
+            <p>For instance, the domain model layer should not take a dependency on any other layer</p>
+            <h2>The domain model layer</h2>
+            <p>
+                Responsible for representing concepts of the business, information about the business situation, and business rules. State that reflects the business situation is controlled and used here, 
+                even though the technical details of storing it are delegated to the infrastructure. 
+                This layer is the heart of business software.</p>
+        </section>
+    </div>
+    <div class="related">
+        <p><a href="https://deviq.com/antipatterns/iceberg-class">DevIq</a></p>
     </div>
 </div>
