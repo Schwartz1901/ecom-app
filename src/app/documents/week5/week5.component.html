@@ -318,7 +318,102 @@
             <p>
                 Responsible for representing concepts of the business, information about the business situation, and business rules. State that reflects the business situation is controlled and used here, 
                 even though the technical details of storing it are delegated to the infrastructure. 
-                This layer is the heart of business software.</p>
+                This layer is the heart of business software.
+            </p>
+            <p>This layer must completely ignore data persistence details</p>
+            <p>Domain model entity classes should be POCOs (Plain Old CLR Object)</p>
+            <p>Domain Entity should not have any direct dependency (like deriving from a base class) or have data access framework like EntityFramework</p>
+            <h2>The Application Layer</h2>
+            <p>This layer define the jobs that application need to do</p>
+            <p>Does not contain business rules or knowledge</p>
+            <p>Coorodinate tasks and delegate works for collaborations of domain objects in the next layer</p>
+            <p>Does not have state to relfect the business situation, but can have state to reflect the progress</p>
+            <p>A microservice's application layer in .NET is commonly coded as an ASP.NET Core Web API project.
+                The ASP.NET Core Web API that represents the application layer must not contain business rules or domain knowledge (especially domain rules for transactions or updates)
+            </p>
+            <p>Basically, the application logic is where you implement all use cases that depend on a given front end. For example, the implementation related to a Web API service.</p>
+            <p>Domain logic in the domain model layer, its invariants, the data model, and related business rules must be completely independent from the presentation and application layers.</p>
+            <p>Most of all, the domain model layer must not directly depend on any infrastructure framework.</p>
+            <h2>The Infrastructure Layer</h2>
+            <p>Present how data in Domain Layer being managed in other presistent storage (Database,...)</p>
+            <p>Example: Using EntityFrameword, implement DbContext</p>
+            <p>The infrastructure layer must not "contaminate" the domain model layer</p>
+            <p>Dependency in the DDD applciation</p>
+            <img src="https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/media/ddd-oriented-microservice/ddd-service-layer-dependencies.png" alt="DDD Application Dependncies">
+            <p>Dependencies in a DDD Service, the Application layer depends on Domain and Infrastructure, and Infrastructure depends on Domain, but Domain doesn't depend on any layer.</p>
+            <p><strong>Question: How DDD helps define microservices boundaries</strong></p>
+            <p><strong>Answer:</strong></p>
+            <p>A Bounded Context in DDD is equivalence to a Microservice boudary</p>
+            <p>Each microservice should own one bounded context, including own data model, business logic and language (Ubiquitous)</p>
+            <p>DDD encourages putting business rules into entities and aggregates, rather than in service methods. More autonomous microservices, better consistency enforcement and less duplication of business rules</p>
+            <p>Aggregate Roots define Transaction Boundaries, so you design services that can complete transactions independently and no need for distributed transactions</p>
+        </section>
+        <section class="database-management">
+            <h1>Database management</h1>
+            <table border="1" cellpadding="8" cellspacing="0">
+                <thead>
+                    <tr>
+                    <th>Aspect</th>
+                    <th>Database Per Service Pattern</th>
+                    <th>Shared Database Pattern</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <td><strong>Definition</strong></td>
+                    <td>Each microservice has its own private database</td>
+                    <td>Multiple microservices share a single database</td>
+                    </tr>
+                    <tr>
+                    <td><strong>Coupling</strong></td>
+                    <td>Loose coupling between services</td>
+                    <td>Tight coupling between services</td>
+                    </tr>
+                    <tr>
+                    <td><strong>Schema Management</strong></td>
+                    <td>Independent schema evolution for each service</td>
+                    <td>Shared schema, changes affect all services</td>
+                    </tr>
+                    <tr>
+                    <td><strong>Scalability</strong></td>
+                    <td>Easier to scale services independently</td>
+                    <td>Difficult to scale services independently</td>
+                    </tr>
+                    <tr>
+                    <td><strong>Performance</strong></td>
+                    <td>Optimized performance, no contention</td>
+                    <td>Risk of data contention and performance bottlenecks</td>
+                    </tr>
+                    <tr>
+                    <td><strong>Fault Isolation</strong></td>
+                    <td>Improved fault isolation</td>
+                    <td>Failure in the database affects all services</td>
+                    </tr>
+                    <tr>
+                    <td><strong>Technological Choice</strong></td>
+                    <td>Each service can choose its own database technology</td>
+                    <td>Limited, as all services must use the same database technology</td>
+                    </tr>
+                    <tr>
+                    <td><strong>Data Consistency</strong></td>
+                    <td>Challenges in maintaining data consistency across services</td>
+                    <td>Easier to enforce data consistency across services</td>
+                    </tr>
+                    <tr>
+                    <td><strong>Complexity</strong></td>
+                    <td>More complex to manage multiple databases</td>
+                    <td>Simpler to manage a single database</td>
+                    </tr>
+                    <tr>
+                    <td><strong>Use Case</strong></td>
+                    <td>Suitable for complex, modular systems with diverse needs</td>
+                    <td>Suitable for simpler systems with tightly related services</td>
+                    </tr>
+                </tbody>
+                </table>
+
+
+
         </section>
     </div>
     <div class="related">
