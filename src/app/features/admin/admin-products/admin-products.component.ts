@@ -5,19 +5,31 @@ import { ProductService } from '../../../shared/services/product.service';
 import { CommonModule } from '@angular/common';
 
 import { AdminAddProductComponent } from './admin-add-product/admin-add-product.component';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-products',
   standalone: true,
-  imports: [CommonModule, AdminAddProductComponent],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './admin-products.component.html',
   styleUrls: ['./admin-products.component.scss'] 
 })
 export class AdminProductsComponent implements OnInit {
   products: Product[] = [];
-
+  private fb = inject(FormBuilder);
   private productService = inject(ProductService);
   private router = inject(Router);
+
+  productForm = this.fb.group({
+    name: ['', Validators.required],
+    categories: ['', Validators.required],
+    price: [0, [Validators.required, Validators.min(0)]],
+    discountPrice: [0],
+    isDiscount: [false],
+    imageUrl: [''],
+    imageAlt: [''],
+    description: ['']
+  });
 
   ngOnInit(): void {
     this.loadProducts();
@@ -44,8 +56,36 @@ export class AdminProductsComponent implements OnInit {
       this.loadProducts(); // refresh list
     }
   }
-  onFormClose(): void {
+  onSubmit(): void {
+    if (this.productForm.valid) {
+      const formValue = this.productForm.value;
 
-    this.loadProducts(); // refresh table after add
+      const newProduct: Product = {
+        id: undefined,
+        name: formValue.name ?? '',
+        categories: (formValue.categories ?? '').split(',').map(c => c.trim()),
+        price: formValue.price ?? 0,
+        discountPrice: formValue.discountPrice ?? 0,
+        isDiscount: formValue.isDiscount ?? false,
+        imageUrl: formValue.imageUrl ?? '',
+        imageAlt: formValue.imageAlt ?? '',
+        description: formValue.description ?? ''
+      };
+
+      this.productService.addProduct(newProduct).subscribe({
+        next: () => {
+          
+          this.productForm.reset(); // Clear form
+          this.loadProducts(); 
+        },
+        error: (err) => {
+          alert('Product added successfully!');
+          console.error('Add product failed:', err);
+        }
+      });
+    }
+  }
+  onFormClose(): void {
+    this.loadProducts(); 
   }
 }
