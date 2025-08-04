@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class ProductService {
 
   private http = inject(HttpClient);
-  private baseUrl = 'https://localhost:7040/api/Product';
+  private baseUrl = 'https://localhost:7123/product';
 
   getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.baseUrl);

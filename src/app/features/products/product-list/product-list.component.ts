@@ -17,7 +17,11 @@ export class ProductListComponent {
   ngOnInit(): void {
     this.productService.getProducts().subscribe({
       next: (products) => {
-        this.products = products;
+         this.products = products.map(p => ({
+        ...p,
+        categories: p.categories ?? [] 
+      }));
+
         this.extractCategories();
         this.filteredProducts.set(products);
        
@@ -35,10 +39,10 @@ export class ProductListComponent {
 
   filteredProducts = signal<Product[]>([]);
   currentPage = signal(1);
-  pageSize = 4;
+  pageSize = 12;
 
   private extractCategories(): void {
-  const all = this.products.flatMap(p => p.catagory); // merge all catagory arrays
+  const all = this.products.flatMap(p => p.categories); // merge all catagory arrays
   this.categories = [...new Set(all)].sort(); // remove duplicates and sort
   }
 
@@ -65,7 +69,7 @@ export class ProductListComponent {
 
     if (this.selectedCategories.size > 0) {
       result = result.filter(p =>
-        Array.from(this.selectedCategories).some(cat => p.catagory.includes(cat))
+        Array.from(this.selectedCategories).some(cat => p.categories.includes(cat))
       );
     }
 

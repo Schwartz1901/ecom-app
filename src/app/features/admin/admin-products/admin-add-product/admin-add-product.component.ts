@@ -19,7 +19,7 @@ export class AdminAddProductComponent {
 
   productForm = this.fb.group({
     name: ['', Validators.required],
-    catagory: ['', Validators.required],
+    categories: ['', Validators.required],
     price: [0, [Validators.required, Validators.min(0)]],
     discountPrice: [0],
     isDiscount: [false],
@@ -35,7 +35,7 @@ export class AdminAddProductComponent {
       const newProduct: Product = {
         id: undefined,
         name: formValue.name ?? '',
-        catagory: (formValue.catagory ?? '').split(',').map(c => c.trim()),
+        categories: (formValue.categories ?? '').split(',').map(c => c.trim()),
         price: formValue.price ?? 0,
         discountPrice: formValue.discountPrice ?? 0,
         isDiscount: formValue.isDiscount ?? false,
