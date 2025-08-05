@@ -17,6 +17,6 @@ export class ProductCardComponent {
   @Input() product!: Product;
 
   addToCart(product: Product) {
-    this.cartService.addFromProduct(product, 1)
+    this.cartService.addItem(product.id!, 1)
   }
 }

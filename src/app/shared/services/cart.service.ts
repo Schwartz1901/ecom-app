@@ -17,40 +17,51 @@ export class CartService {
   getCart = () => this.cart();
   getCartSignal = () => this.cart;
 
-  addItem(item: CartItem) {
-    const current = this.cart();
-    const userId = current.userId;
+  addItem(productId: string, quantity: number = 1): void {
+  const payload = { productId, quantity };
 
-    this.http.post(`${this.baseUrl}/${userId}/items`, item).subscribe({
-      next: () => {
-        // Update local state after server confirms
-        const index = current.items.findIndex(i => i.productId === item.productId);
-        if (index >= 0) {
-          current.items[index].quantity += item.quantity;
-        } else {
-          current.items.push(item);
-        }
-        this.cart.set({ ...current });
-      },
-      error: (err) => {
-        console.error('Failed to add item to cart:', err);
+  this.http.post<CartItem>(`${this.baseUrl}/items`, payload).subscribe({
+    next: (updatedItem) => {
+      const current = this.cart();
+      const index = current.items.findIndex(i => i.productId === updatedItem.productId);
+
+      if (index >= 0) {
+        current.items[index] = updatedItem; // Replace with latest data
+      } else {
+        current.items.push(updatedItem);
       }
-    });
-  }
+
+      this.cart.set({ ...current });
+    },
+    error: (err) => {
+      console.error('Failed to add item to cart:', err);
+    }
+  });
+}
   removeItem(productId: string) {
-    const current = this.cart();
-    const filtered = current.items.filter(item => item.productId !== productId);
-    this.cart.set({...current, items: filtered})
+    this.http.delete(`${this.baseUrl}/items/${productId}`).subscribe({
+      next: () => {
+        const current = this.cart();
+        const filtered = current.items.filter(item => item.productId !== productId);
+        this.cart.set({ ...current, items: filtered });
+      },
+      error: err => console.error('Failed to remove item:', err)
+    });
   }
 
   updateQuantity(productId: string, quantity: number) {
-    const current = this.cart();
-    const index = current.items.findIndex(i => i.productId === productId);
-    if (index >= 0) {
-      current.items[index].quantity = quantity;
-      this.cart.set({...current});
-    }
-  }
+  this.http.put(`${this.baseUrl}/items/${productId}`, { quantity }).subscribe({
+    next: () => {
+      const current = this.cart();
+      const index = current.items.findIndex(i => i.productId === productId);
+      if (index >= 0) {
+        current.items[index].quantity = quantity;
+        this.cart.set({ ...current });
+      }
+    },
+    error: err => console.error('Failed to update quantity:', err)
+  });
+}
 
   clearCart() {
     const current = this.cart();
@@ -63,15 +74,5 @@ export class CartService {
     return this.cart().items.reduce((total, item) => total + item.price * item.quantity, 0);
   }
 
-  addFromProduct(product: Product, quantity: number = 1) {
-    const item: CartItem = {
-      productId:(product.id!).toString(),
-      productName: product.name,
-      price: Number(product.price),
-      quantity: quantity,
-      imageUrl: product.imageUrl
-    };
-    this.addItem(item);
-}
 
 }
