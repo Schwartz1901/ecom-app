@@ -15,7 +15,7 @@ export interface AuthResponse {
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
-  private baseUrl = 'https://localhost:7040/api/Auth';
+  private baseUrl = 'https://localhost:7123/auth';
 
   private tokenSignal = signal<string | null>(localStorage.getItem('token'));
   readonly isAuthenticated = computed(() => {
