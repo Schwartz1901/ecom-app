@@ -2,11 +2,13 @@ import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 
 import { Cart, CartItem } from '../models/cart.model';
 import { Product } from '../models/product.model';
-
+import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {  
+  private http = inject(HttpClient);
+  private baseUrl = 'https://localhost:7123/cart';
   private cart : WritableSignal<Cart> = signal<Cart>({
     userId: 'guest',
     items: [],
@@ -17,16 +19,23 @@ export class CartService {
 
   addItem(item: CartItem) {
     const current = this.cart();
-     const index = current.items.findIndex(i => i.productId === item.productId);
+    const userId = current.userId;
 
-    if (index >= 0) {
-      // Update quantity
-      current.items[index].quantity += item.quantity;
-    } else {
-      current.items.push(item);
-    }
-
-     this.cart.set({ ...current });
+    this.http.post(`${this.baseUrl}/${userId}/items`, item).subscribe({
+      next: () => {
+        // Update local state after server confirms
+        const index = current.items.findIndex(i => i.productId === item.productId);
+        if (index >= 0) {
+          current.items[index].quantity += item.quantity;
+        } else {
+          current.items.push(item);
+        }
+        this.cart.set({ ...current });
+      },
+      error: (err) => {
+        console.error('Failed to add item to cart:', err);
+      }
+    });
   }
   removeItem(productId: string) {
     const current = this.cart();
@@ -64,5 +73,5 @@ export class CartService {
     };
     this.addItem(item);
 }
-  constructor() { }
+
 }
