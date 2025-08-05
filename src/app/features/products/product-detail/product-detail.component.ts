@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [PageNotFoundComponent, FormsModule, CommonModule],
   templateUrl: './product-detail.component.html',
-  styleUrls: ['./product-detail.component.scss'] // ✅ Corrected typo: styleUrl ➝ styleUrls
+  styleUrls: ['./product-detail.component.scss'] 
 })
 export class ProductDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -23,20 +23,22 @@ export class ProductDetailComponent implements OnInit {
   quantity: number = 1;
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (!isNaN(id)) {
-      this.productService.getProductById(id).subscribe({
-        next: (product) => {
-          this.product = product;
-        },
-        error: () => {
-          console.error('Product not found');
-          this.product = undefined; // Handle product not found
-        }
-      });
-    }
+  const id = this.route.snapshot.paramMap.get('id');
+  if (!id) {
+    console.error('No product ID in route');
+    return;
   }
 
+  this.productService.getProductById(id).subscribe({
+    next: (product) => {
+      this.product = product;
+    },
+    error: (err) => {
+      console.error('Failed to load product', err);
+      this.product = undefined;
+    }
+  });
+}
   increase(): void {
     if (this.quantity < 99) this.quantity++;
   }

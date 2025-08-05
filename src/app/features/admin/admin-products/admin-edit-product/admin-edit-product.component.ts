@@ -14,7 +14,7 @@ import { Product } from '../../../../shared/models/product.model';
 })
 export class AdminEditProductComponent implements OnInit {
   productForm!: FormGroup;
-  productId!: number;
+  productId!: string | null;
 
   
     private fb = inject(FormBuilder);
@@ -24,10 +24,10 @@ export class AdminEditProductComponent implements OnInit {
   
 
   ngOnInit(): void {
-    this.productId = Number(this.route.snapshot.paramMap.get('id'));
+    this.productId = this.route.snapshot.paramMap.get('id');
     this.initForm();
 
-    this.productService.getProductById(this.productId).subscribe({
+    this.productService.getProductById(this.productId!).subscribe({
       next: (product) => this.productForm.patchValue(product),
       error: (err) => console.error('Failed to load product:', err)
     });

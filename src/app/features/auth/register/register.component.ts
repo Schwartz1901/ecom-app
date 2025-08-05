@@ -63,7 +63,7 @@ export class RegisterComponent {
     const { username, email, password } = this.registerForm.value;
 
     this.authService.register(username!, email!, password!).subscribe({
-      next: () => this.router.navigate(['/login']),
+      next: () => this.router.navigate(['home']),
       error: err => this.errorMessage = err.error?.message || 'Registration failed!',
     });
   }

@@ -25,7 +25,7 @@ export class AppComponent {
       },
       error: () => {
         console.warn("Session exprifed, logging out...");
-        this.authService.logout();
+        this.authService.logout(localStorage.getItem("token"));
       }
     })
   }

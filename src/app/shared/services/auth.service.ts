@@ -56,20 +56,25 @@ export class AuthService {
     localStorage.setItem('token', token);
   }
 
-  logout() {
+  logout(token: string | null) {
     const refreshToken = localStorage.getItem("refreshToken");
-    this.http.post(`${this.baseUrl}/logout`, {}).subscribe({
+    const payloads = JSON.parse(atob(token!.split('.')[1]));
+    const jit = payloads.jit;
+    this.http.post(`${this.baseUrl}/logout`, {
+      refreshToken: refreshToken,
+      id: jit
+    }).subscribe({
     next: () => {
       this.tokenSignal.set(null);
       localStorage.removeItem('token');
       localStorage.removeItem('refreshToken');
-      this.router.navigate(['/login']);
+      this.router.navigate(['/home']);
     },
     error: () => {
       this.tokenSignal.set(null);
       localStorage.removeItem('token');
       localStorage.removeItem('refreshToken');
-      this.router.navigate(['/login']);
+      this.router.navigate(['/home']);
     }
   });
 }
@@ -92,6 +97,10 @@ export class AuthService {
     if (error.status === 401) {
       return throwError(() => new Error('Invalid credentials'));
     }
-    return throwError(() => new Error('Something went wrong. Try again.'));
+    return throwError(() => {
+      new Error('Something went wrong. Try again. ');
+      console.log(error)
+      
+    });
   }
 }

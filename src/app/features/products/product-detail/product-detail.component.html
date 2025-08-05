@@ -12,7 +12,7 @@
 
     <div class="right">
       <h2 class="product-name">{{ product.name }}</h2>
-      <p class="tag">{{ product.catagory.join(', ') }}</p>
+      <p class="tag">{{ product.categories.join(', ') }}</p>
 
       @if(product.isDiscount) {
         <div class="product-price">
