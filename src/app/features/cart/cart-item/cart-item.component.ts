@@ -15,14 +15,16 @@ export class CartItemComponent {
    updateQuantity(event: Event) {
     const value = parseInt((event.target as HTMLInputElement).value, 10);
     if (value > 0) {
-      this.cartService.updateQuantity(this.item.productId, value);
+      this.cartService.updateQuantity(this.item.id, value);
     }
   }
   removeItem() {
-    this.cartService.removeItem(this.item.productId);
+    
+    this.cartService.removeItem(this.item.id);
   }
 
   getSubtotal(): number {
-    return this.item.price * this.item.quantity;
+    let unitPrice = this.item.isDiscount ? this.item.discountPrice : this.item.price
+    return unitPrice * this.item.quantity;
   }
 }

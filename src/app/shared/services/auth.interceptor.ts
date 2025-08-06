@@ -18,9 +18,9 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.authService.getToken();
-
+    console.log(token);
     let authReq = req;
-    if (token) {
+    if (token!) {
       authReq = this.addTokenHeader(req, token);
     }
     const isAuthEndpoint = req.url.includes('/Auth/login') ||
@@ -62,7 +62,7 @@ export class AuthInterceptor implements HttpInterceptor {
         }),
         catchError(err => {
           this.isRefreshing = false;
-          this.authService.logout(localStorage.getItem("token")); // Clear tokens and redirect if needed
+          // this.authService.logout(localStorage.getItem("token")); // Clear tokens and redirect if needed
           return throwError(() => err);
         })
       );

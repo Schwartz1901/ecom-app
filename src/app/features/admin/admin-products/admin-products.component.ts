@@ -42,11 +42,11 @@ export class AdminProductsComponent implements OnInit {
     });
   }
 
-  onEdit(productId: number): void {
+  onEdit(productId: string): void {
     this.router.navigate(['admin/admin-products/edit/', productId]);
   }
 
-  onDelete(productId: number): void {
+  onDelete(productId: string): void {
     const confirmed = confirm('Are you sure you want to delete this product?');
     if (confirmed) {
      

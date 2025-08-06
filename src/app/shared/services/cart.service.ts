@@ -10,28 +10,31 @@ export class CartService {
   private http = inject(HttpClient);
   private baseUrl = 'https://localhost:7123/cart';
   private cart : WritableSignal<Cart> = signal<Cart>({
-    userId: 'guest',
-    items: [],
+    cartPrice: 0,
+    cartItems: [],
   });
 
   getCart = () => this.cart();
   getCartSignal = () => this.cart;
+  fetchCartById() {
+    this.http.get<Cart>(`${this.baseUrl}`).subscribe({
+      next: (cartData) => {
+        this.cart.set(cartData);
+        console.log('[CartService] Updating cart:', cartData);
+        console.log(this.cart());
+      },
+      error: (err) => console.error(err)
+    })
+  }
+
 
   addItem(productId: string, quantity: number = 1): void {
   const payload = { productId, quantity };
 
   this.http.post<CartItem>(`${this.baseUrl}/items`, payload).subscribe({
     next: (updatedItem) => {
-      const current = this.cart();
-      const index = current.items.findIndex(i => i.productId === updatedItem.productId);
-
-      if (index >= 0) {
-        current.items[index] = updatedItem; // Replace with latest data
-      } else {
-        current.items.push(updatedItem);
-      }
-
-      this.cart.set({ ...current });
+     
+      
     },
     error: (err) => {
       console.error('Failed to add item to cart:', err);
@@ -42,8 +45,9 @@ export class CartService {
     this.http.delete(`${this.baseUrl}/items/${productId}`).subscribe({
       next: () => {
         const current = this.cart();
-        const filtered = current.items.filter(item => item.productId !== productId);
-        this.cart.set({ ...current, items: filtered });
+        const filtered = current.cartItems.filter(cartItems => cartItems.id !== productId);
+        this.cart.set({ ...current, cartItems: filtered });
+        this.fetchCartById();
       },
       error: err => console.error('Failed to remove item:', err)
     });
@@ -53,9 +57,9 @@ export class CartService {
   this.http.put(`${this.baseUrl}/items/${productId}`, { quantity }).subscribe({
     next: () => {
       const current = this.cart();
-      const index = current.items.findIndex(i => i.productId === productId);
+      const index = current.cartItems.findIndex(i => i.id === productId);
       if (index >= 0) {
-        current.items[index].quantity = quantity;
+        current.cartItems[index].quantity = quantity;
         this.cart.set({ ...current });
       }
     },
@@ -65,13 +69,13 @@ export class CartService {
 
   clearCart() {
     const current = this.cart();
-    this.cart.set({...current, items: []});
+    this.cart.set({...current, cartItems: []});
   }
   getItemSubtotal(item: CartItem): number {
     return item.price * item.quantity;
   }
   getTotalPrice(): number {
-    return this.cart().items.reduce((total, item) => total + item.price * item.quantity, 0);
+    return this.cart().cartPrice;
   }
 
 

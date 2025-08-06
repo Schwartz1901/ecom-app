@@ -12,8 +12,11 @@ import { CheckoutComponent } from "./checkout/checkout.component";
 })
 export class CartComponent {
   protected cartService = inject(CartService);
-
-  cart$ = this.cartService.getCartSignal();
+   cart$ = this.cartService.getCartSignal();
+  ngOnInit() :void {
+    this.cartService.fetchCartById()
+ 
+  }
 
   remove(productId: string) {
     this.cartService.removeItem(productId);
