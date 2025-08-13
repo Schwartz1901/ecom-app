@@ -6,11 +6,13 @@ import { CommonModule } from '@angular/common';
 
 import { AdminAddProductComponent } from './admin-add-product/admin-add-product.component';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { FileUploadComponent } from "../../../components/file-upload/file-upload.component";
 
 @Component({
   selector: 'app-admin-products',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FileUploadComponent],
   templateUrl: './admin-products.component.html',
   styleUrls: ['./admin-products.component.scss'] 
 })
@@ -88,4 +90,11 @@ export class AdminProductsComponent implements OnInit {
   onFormClose(): void {
     this.loadProducts(); 
   }
+  selectedFile: File | null = null;
+uploading = false;
+imageUrl = '';
+error = '';
+
+
+
 }

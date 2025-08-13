@@ -1,0 +1,23 @@
+<div class="upload-box">
+  <label class="label" for="fileInput">Select image</label>
+  <input id="fileInput" type="file"
+         accept="image/png,image/jpeg,image/webp"
+         (change)="onFileSelected($event)" />
+
+  <div class="meta" *ngIf="fileName">{{ fileName }}</div>
+
+  <button type="button" (click)="upload()" [disabled]="!file || uploading()">
+    {{ uploading() ? 'Uploading…' : 'Upload' }}
+  </button>
+
+  <div class="progress" *ngIf="uploading()">
+    <progress [value]="progress()" max="100"></progress>
+    <span>{{ progress() }}%</span>
+  </div>
+
+  <p class="error" *ngIf="error()">{{ error() }}</p>
+  
+  <div class="preview" *ngIf="imageUrl()">
+    <img [src]="imageUrl()!" alt="Uploaded image" />
+  </div>
+</div>

@@ -1,4 +1,5 @@
 <div class="admin-products">
+ 
   <div class="header">
     <h2>Product Management</h2>
     <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
@@ -7,6 +8,7 @@
       <label>Price: <input formControlName="price" type="number" /></label>
       <label>Discount Price: <input formControlName="discountPrice" type="number" /></label>
       <label>Is Discount: <input formControlName="isDiscount" type="checkbox" /></label>
+      <app-file-upload></app-file-upload>
       <label>Image URL: <input formControlName="imageUrl" /></label>
       <label>Image Alt: <input formControlName="imageAlt" /></label>
       <label>Description: <textarea formControlName="description"></textarea></label>
