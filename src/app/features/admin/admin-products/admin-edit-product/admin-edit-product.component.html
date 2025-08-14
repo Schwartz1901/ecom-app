@@ -1,14 +1,95 @@
-<h2>Edit Product</h2>
+<h2 class="title">Edit Product</h2>
 
-<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
-  <label>Name: <input formControlName="name" /></label>
-  <label>Categories (comma-separated): <input formControlName="catagory" /></label>
-  <label>Price: <input formControlName="price" type="number" /></label>
-  <label>Discount Price: <input formControlName="discountPrice" type="number" /></label>
-  <label>Is Discount: <input formControlName="isDiscount" type="checkbox" /></label>
-  <label>Image URL: <input formControlName="imageUrl" /></label>
-  <label>Image Alt: <input formControlName="imageAlt" /></label>
-  <label>Description: <textarea formControlName="description"></textarea></label>
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form" novalidate>
+  <div class="grid">
+    <!-- Name -->
+    <label class="field">
+      <span>Name</span>
+      <input formControlName="name" type="text" autocomplete="off" />
+      @if (fc.name.touched && fc.name.invalid) {
+        <small class="error">Name is required (max 120 chars).</small>
+      }
+    </label>
 
-  <button type="submit" [disabled]="productForm.invalid">Update Product</button>
+    <!-- Categories (comma-separated) -->
+    <label class="field">
+      <span>Categories</span>
+      <input formControlName="catagory" type="text" placeholder="e.g. shirts,summer" />
+      <small class="hint">Separate with commas.</small>
+    </label>
+
+    <!-- Price -->
+    <label class="field">
+      <span>Price</span>
+      <input formControlName="price" type="number" inputmode="decimal" step="0.01" min="0" />
+      @if (fc.price.touched && fc.price.invalid) {
+        <small class="error">Price must be a non-negative number.</small>
+      }
+    </label>
+
+    <!-- Is Discount -->
+    <label class="field inline">
+      <input formControlName="isDiscount" type="checkbox" />
+      <span>Has discount</span>
+    </label>
+
+    <!-- Discount Price (only when discounted) -->
+    @if (productForm.controls.isDiscount.value) {
+      <label class="field">
+        <span>Discount Price</span>
+        <input formControlName="discountPrice" type="number" inputmode="decimal" step="0.01" min="0" />
+        @if (productForm.hasError('discountInvalid')) {
+          <small class="error">Discount must be > 0 and < price.</small>
+        }
+      </label>
+    }
+
+    <!-- Image: choose now, upload on submit -->
+    <div class="field col-span-2">
+      <span>Image</span>
+
+      <div class="image-row">
+        <img *ngIf="imageUrl()" [src]="imageUrl()!" alt="Product image" class="preview" />
+        <div class="image-actions">
+          <input type="file" accept="image/*" (change)="onFilePicked($event)" />
+          <div class="row">
+            <button type="button" class="btn ghost" (click)="clearPickedImage()" [disabled]="!imageUrl()">Remove</button>
+            <button type="button" class="btn ghost" (click)="openViewer()" [disabled]="!imageUrl()">Review</button>
+          </div>
+          <!-- Optional flag to remove existing server image on save -->
+          <label class="mini" *ngIf="serverHasImage()">
+            <input type="checkbox" [checked]="removeImage()" (change)="toggleRemoveImage($event)" />
+            <span>Remove existing image on save</span>
+          </label>
+        </div>
+      </div>
+
+      @if (picking()) { <small>Image selected (not uploaded yet).</small> }
+      @if (pickError()) { <small class="error">{{ pickError() }}</small> }
+    </div>
+
+    <!-- Description -->
+    <label class="field col-span-2">
+      <span>Description</span>
+      <textarea formControlName="description" rows="5"></textarea>
+      @if (fc.description.touched && fc.description.invalid) {
+        <small class="error">Description is required (max 1024 chars).</small>
+      }
+    </label>
+  </div>
+
+  <div class="actions">
+    <button type="submit" class="btn" [disabled]="productForm.invalid || saving()">Update Product</button>
+    <button type="button" class="btn ghost" (click)="resetForm()">Reset</button>
+  </div>
 </form>
+
+<!-- Simple full-screen review -->
+<div class="viewer-backdrop" *ngIf="viewerOpen()">
+  <div class="viewer-toolbar">
+    <button type="button" (click)="closeViewer()">Close</button>
+  </div>
+  <div class="viewer-stage">
+    <img [src]="imageUrl()!" alt="Product image review" />
+  </div>
+</div>
