@@ -1,50 +1,164 @@
 <div class="admin-products">
- 
-  <div class="header">
+  <header class="page-header">
     <h2>Product Management</h2>
-    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
-      <label>Name: <input formControlName="name" /></label>
-      <label>Categories (comma-separated): <input formControlName="categories" /></label>
-      <label>Price: <input formControlName="price" type="number" /></label>
-      <label>Discount Price: <input formControlName="discountPrice" type="number" /></label>
-      <label>Is Discount: <input formControlName="isDiscount" type="checkbox" /></label>
-      <app-file-upload></app-file-upload>
-      <label>Image URL: <input formControlName="imageUrl" /></label>
-      <label>Image Alt: <input formControlName="imageAlt" /></label>
-      <label>Description: <textarea formControlName="description"></textarea></label>
+  </header>
 
-      <button type="submit" [disabled]="productForm.invalid">Add Product</button>
+  <!-- ===== Create / Edit Form ===== -->
+  <section class="form-card">
+    <form
+      [formGroup]="productForm"
+      (ngSubmit)="onSubmit()"
+      class="product-form"
+      enctype="multipart/form-data"
+      novalidate
+      autocomplete="off"
+    >
+      <!-- Name -->
+      <div class="field">
+        <label for="name">Name</label>
+        <input
+          id="name"
+          formControlName="name"
+          [attr.aria-invalid]="productForm.get('name')?.invalid && productForm.get('name')?.touched"
+          [attr.aria-describedby]="'nameErr'"
+        />
+        <small id="nameErr" class="error"
+               *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched">
+          Name is required
+        </small>
+      </div>
+
+      <!-- Categories -->
+      <div class="field">
+        <label for="categories">Categories (comma-separated)</label>
+        <input id="categories" formControlName="categories" />
+      </div>
+
+      <!-- Price -->
+      <div class="field">
+        <label for="price">Price</label>
+        <input id="price" formControlName="price" type="number" />
+      </div>
+
+      <!-- Discount toggle -->
+      <div class="field">
+        <label for="isDiscount">Discount</label>
+
+        <label class="toggle">
+          <input
+            id="isDiscount"
+            type="checkbox"
+            formControlName="isDiscount"
+            aria-label="Enable discount"
+          />
+          <span class="track"><span class="thumb"></span></span>
+          <span class="toggle-text">
+            {{ productForm.get('isDiscount')?.value ? 'On' : 'Off' }}
+          </span>
+        </label>
+
+        <small class="hint">Enable to set a discounted price.</small>
+      </div>
+
+      <!-- Discount Price -->
+      <div class="field">
+        <label for="discountPrice">Discount Price</label>
+        <input
+          id="discountPrice"
+          formControlName="discountPrice"
+          type="number"
+          [disabled]="!productForm.get('isDiscount')?.value"
+          [class.readonly]="!productForm.get('isDiscount')?.value"
+        />
+        <small class="error"
+               *ngIf="productForm.hasError('discountPriceInvalid') && productForm.get('discountPrice')?.touched">
+          Discount price must be lower than Price.
+        </small>
+      </div>
+
+      <!-- Image Upload -->
+      <div class="field span-2">
+        <label for="image">Product Image</label>
+
+        <div class="upload-card" [class.invalid]="fileError">
+          <!-- Hidden native input + template ref -->
+          <input
+            id="image"
+            #fileInput
+            type="file"
+            accept="image/png, image/jpeg, image/webp"
+            (change)="onFileSelected($event)"
+            hidden
+          />
+
+          <div class="upload-row">
+            <button type="button" class="btn" (click)="fileInput.click()">Choose image</button>
+            <small class="hint">PNG/JPG/WebP up to 5MB</small>
+            <small class="error" *ngIf="fileError">{{ fileError }}</small>
+            <small class="muted" *ngIf="selectedFile && !fileError">{{ selectedFile.name }}</small>
+          </div>
+
+          <div class="preview" *ngIf="previewUrl">
+            <img [src]="previewUrl" alt="preview" />
+            <button
+              type="button"
+              class="btn ghost"
+              (click)="clearImage(); fileInput.value = ''"
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="field span-2">
+        <label for="description">Description</label>
+        <textarea id="description" formControlName="description" rows="4"></textarea>
+      </div>
+
+      <!-- Submit -->
+      <div class="form-actions span-2">
+        <button type="submit" [disabled]="productForm.invalid || uploading">
+          {{ uploading ? 'Uploading...' : 'Add Product' }}
+        </button>
+      </div>
     </form>
-    
-  </div>
+  </section>
 
-  <table class="product-table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Image</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Stock</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-     @for (product of products; track product.id) {
+  <!-- ===== Products Table ===== -->
+  <section class="table-card">
+    <table class="product-table">
+      <thead>
         <tr>
-          <td>{{ product.id }}</td>
-          <td><img [src]="product.imageUrl" alt="product" /></td>
-          <td>{{ product.name }}</td>
-          <td>${{ product.price | number: '1.2-2' }}</td>
-          <!-- <td>{{ product.stock }}</td> -->
-          <td>0</td>
-          <td>
-            <button class="edit-btn" (click)="onEdit(product.id!)">Edit</button>
-            <button class="delete-btn" (click)="onDelete(product.id!)">Delete</button>
-          </td>
+          <th>ID</th>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th class="actions">Actions</th>
         </tr>
-      }
-
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        @for (product of products; track product.id) {
+          <tr>
+            <td class="mono">{{ product.id }}</td>
+            <td>
+              <img
+                [src]="product.imageUrl"
+                [alt]="product.imageAlt || 'product image'"
+              />
+            </td>
+            <td class="name">{{ product.name }}</td>
+            <td class="price">${{ product.price | number: '1.2-2' }}</td>
+            <td>0</td>
+            <td class="actions">
+              <button class="btn ghost" (click)="onEdit(product.id!)">Edit</button>
+              <button class="btn danger" (click)="onDelete(product.id!)">Delete</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
 </div>
