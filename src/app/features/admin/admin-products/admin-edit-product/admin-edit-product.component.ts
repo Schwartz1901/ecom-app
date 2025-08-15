@@ -9,7 +9,7 @@ import { ProductService } from '../../../../shared/services/product.service';
 
 type ProductFormModel = {
   name: FormControl<string>;
-  catagory: FormControl<string>;       // server spelling as requested
+  categories: FormControl<string>;      // ✅ corrected spelling
   price: FormControl<number>;
   isDiscount: FormControl<boolean>;
   discountPrice: FormControl<number | null>;
@@ -77,7 +77,7 @@ export class AdminEditProductComponent implements OnInit, OnDestroy {
       next: (p: any) => {
         this.productForm.patchValue({
           name: p.name ?? '',
-          catagory: p.catagory ?? '',
+          categories: p.categories ?? '',
           price: p.price ?? 0,
           isDiscount: p.isDiscount ?? false,
           discountPrice: p.discountPrice ?? null,
@@ -101,7 +101,7 @@ export class AdminEditProductComponent implements OnInit, OnDestroy {
   private initForm() {
     this.productForm = this.fb.group<ProductFormModel>({
       name: this.fb.control('', { nonNullable: true, validators: [Validators.required, Validators.maxLength(120)] }),
-      catagory: this.fb.control('', { nonNullable: true }),
+      categories: this.fb.control('', { nonNullable: true }),
       price: this.fb.control(0, { nonNullable: true, validators: [Validators.required, Validators.min(0)] }),
       isDiscount: this.fb.control(false, { nonNullable: true }),
       discountPrice: this.fb.control<number | null>(null),
@@ -170,7 +170,7 @@ export class AdminEditProductComponent implements OnInit, OnDestroy {
 
     const fd = new FormData();
     fd.append('name', this.fc.name.value);
-    fd.append('catagory', this.fc.catagory.value);
+    fd.append('categories', this.fc.categories.value);
     fd.append('price', String(this.fc.price.value));
     fd.append('isDiscount', String(this.fc.isDiscount.value));
     if (this.fc.isDiscount.value && this.fc.discountPrice.value != null) {
@@ -194,7 +194,7 @@ export class AdminEditProductComponent implements OnInit, OnDestroy {
   resetForm() {
     this.productForm.reset({
       name: '',
-      catagory: '',
+      categories: '',  
       price: 0,
       isDiscount: false,
       discountPrice: null,

@@ -14,7 +14,7 @@
     <!-- Categories (comma-separated) -->
     <label class="field">
       <span>Categories</span>
-      <input formControlName="catagory" type="text" placeholder="e.g. shirts,summer" />
+      <input formControlName="categories" type="text" placeholder="e.g. shirts,summer" />
       <small class="hint">Separate with commas.</small>
     </label>
 
@@ -34,12 +34,12 @@
     </label>
 
     <!-- Discount Price (only when discounted) -->
-    @if (productForm.controls.isDiscount.value) {
+    @if (fc.isDiscount.value) {
       <label class="field">
         <span>Discount Price</span>
         <input formControlName="discountPrice" type="number" inputmode="decimal" step="0.01" min="0" />
         @if (productForm.hasError('discountInvalid')) {
-          <small class="error">Discount must be > 0 and < price.</small>
+          <small class="error">Discount must be > 0 and &lt; price.</small>
         }
       </label>
     }
@@ -49,18 +49,25 @@
       <span>Image</span>
 
       <div class="image-row">
-        <img *ngIf="imageUrl()" [src]="imageUrl()!" alt="Product image" class="preview" />
+        @if (imageUrl()) {
+          <img [src]="imageUrl()!" alt="Product image" class="preview" />
+        } @else {
+          <div class="preview placeholder">No image</div>
+        }
+
         <div class="image-actions">
           <input type="file" accept="image/*" (change)="onFilePicked($event)" />
           <div class="row">
-            <button type="button" class="btn ghost" (click)="clearPickedImage()" [disabled]="!imageUrl()">Remove</button>
-            <button type="button" class="btn ghost" (click)="openViewer()" [disabled]="!imageUrl()">Review</button>
+            <button type="button" class="btn" (click)="clearPickedImage()" [disabled]="!imageUrl()">Remove</button>
+            <button type="button" class="btn" (click)="openViewer()" [disabled]="!imageUrl()">Review</button>
           </div>
           <!-- Optional flag to remove existing server image on save -->
-          <label class="mini" *ngIf="serverHasImage()">
-            <input type="checkbox" [checked]="removeImage()" (change)="toggleRemoveImage($event)" />
-            <span>Remove existing image on save</span>
-          </label>
+          @if (serverHasImage()) {
+            <label class="mini">
+              <input type="checkbox" [checked]="removeImage()" (change)="toggleRemoveImage($event)" />
+              <span>Remove existing image on save</span>
+            </label>
+          }
         </div>
       </div>
 
@@ -85,11 +92,13 @@
 </form>
 
 <!-- Simple full-screen review -->
-<div class="viewer-backdrop" *ngIf="viewerOpen()">
-  <div class="viewer-toolbar">
-    <button type="button" (click)="closeViewer()">Close</button>
+@if (viewerOpen()) {
+  <div class="viewer-backdrop">
+    <div class="viewer-toolbar">
+      <button type="button" (click)="closeViewer()">Close</button>
+    </div>
+    <div class="viewer-stage">
+      <img [src]="imageUrl()!" alt="Product image review" />
+    </div>
   </div>
-  <div class="viewer-stage">
-    <img [src]="imageUrl()!" alt="Product image review" />
-  </div>
-</div>
+}

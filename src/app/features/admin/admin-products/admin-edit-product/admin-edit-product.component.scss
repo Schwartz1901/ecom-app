@@ -1,25 +1,199 @@
-.form { display: grid; gap: 1rem; }
-.grid {
-  display: grid; gap: 1rem;
-  grid-template-columns: 1fr 1fr;
-  .col-span-2 { grid-column: span 2; }
+.form {
+  display: grid;
+  gap: 1rem;
 }
-.field { display: flex; flex-direction: column; gap: .35rem; }
-.field.inline { flex-direction: row; align-items: center; gap: .5rem; }
-.error { color: #b91c1c; }
-.hint { color: #6b7280; }
 
-.image-row { display: flex; gap: 1rem; align-items: flex-start; }
-.preview { width: 140px; height: 140px; object-fit: cover; border-radius: .5rem; border: 1px solid #e5e7eb; }
-.image-actions { display: grid; gap: .5rem; }
-.row { display: flex; gap: .5rem; }
+.grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+}
 
-.actions { display: flex; gap: .5rem; }
-.btn { padding: .45rem .8rem; border: 1px solid #e5e7eb; border-radius: .5rem; }
-.btn.ghost { background: transparent; }
-.btn.ghost.danger { border-color: #fecaca; color: #b91c1c; }
+.col-span-2 {
+  grid-column: span 2;
+}
 
-.viewer-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.85); z-index: 1000; display: flex; flex-direction: column; }
-.viewer-toolbar { display: flex; gap: .5rem; padding: .5rem .75rem; background: rgba(20,20,20,.8); color: #fff; }
-.viewer-stage { flex: 1; display: grid; place-items: center; }
-.viewer-stage img { max-width: 90vw; max-height: 80vh; object-fit: contain; }
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+
+  &.inline {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  span {
+    font-weight: 500;
+  }
+
+  input[type='text'],
+  input[type='number'],
+  textarea {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    padding: 0.45rem 0.65rem;
+    font-size: 0.95rem;
+    background: #fff;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+    &:focus-visible {
+      outline: none;
+      border-color: #93c5fd;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+}
+
+.error {
+  color: #b91c1c;
+  font-size: 0.85rem;
+}
+
+.hint {
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+/* Image row */
+.image-row {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.preview {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  background: #fafafa;
+
+  &.placeholder {
+    display: grid;
+    place-items: center;
+    color: #9ca3af;
+    font-size: 0.85rem;
+  }
+}
+
+.image-actions {
+  display: grid;
+  gap: 0.5rem;
+
+  input[type='file'] {
+    font-size: 0.85rem;
+  }
+}
+
+.row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Buttons */
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn {
+  padding: 0.45rem 0.8rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background: #f8fafc;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &.ghost {
+    background: transparent;
+
+    &:hover {
+      background: #f9fafb;
+    }
+
+    &.danger {
+      border-color: #fecaca;
+      color: #b91c1c;
+
+      &:hover {
+        background: #fef2f2;
+      }
+    }
+  }
+}
+
+/* Viewer overlay */
+.viewer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  animation: fade-in 0.15s ease-out;
+}
+
+.viewer-toolbar {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(20, 20, 20, 0.8);
+  color: #fff;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.viewer-stage {
+  flex: 1;
+  display: grid;
+  place-items: center;
+
+  img {
+    max-width: 90vw;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  }
+}
+
+/* Animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive tweaks */
+@media (max-width: 720px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .col-span-2 {
+    grid-column: auto;
+  }
+  .image-row {
+    flex-direction: column;
+  }
+}
