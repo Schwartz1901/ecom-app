@@ -9,7 +9,7 @@ import { ProductService } from '../../../../shared/services/product.service';
 
 type ProductFormModel = {
   name: FormControl<string>;
-  categories: FormControl<string>;      // ✅ corrected spelling
+  categories: FormControl<string>;     
   price: FormControl<number>;
   isDiscount: FormControl<boolean>;
   discountPrice: FormControl<number | null>;
@@ -85,7 +85,7 @@ export class AdminEditProductComponent implements OnInit, OnDestroy {
         });
 
         // keep server image for preview until user picks a new one
-        this._serverImageUrl.set(p.imageUrl ?? null); // SAS URL from API
+        this._serverImageUrl.set(p.imageUrl ?? null); 
         this._localPreviewUrl.set(null);
         this.pickedFile = null;
         this.removeImage.set(false);

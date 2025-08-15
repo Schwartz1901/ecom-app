@@ -21,7 +21,7 @@ export interface User {
 })
 export class UserService {
   private http = inject(HttpClient);
-  private baseUrl = 'https://localhost:7040/api/User';
+  private baseUrl = 'https://localhost:7123/user';
 
   getUserProfile(): Observable<User> {
     const token = localStorage.getItem('token');

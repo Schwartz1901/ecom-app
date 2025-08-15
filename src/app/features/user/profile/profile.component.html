@@ -1,76 +1,158 @@
-@if(user) {
-    <div class="profile-wrapper">
-        <div class="left-container">
-            <div class="avatar-container">
-                <div class="avatar-image">
-                    <img src="/tea.png" alt="avatar">
-                </div>
-                <div class="name">
-                    <p class="name-text">{{user.username}}</p>
-                    <p class="sub-name">Lorem ipsum</p>
-                    <p class="quote">Lorem ipsum</p>
-
-                </div>
-            </div>
-            <div class="connections">
-                <p>Connections</p>
-            </div>
+@if (user) {
+  <div class="profile-wrapper">
+    <div class="left-container">
+      <div class="avatar-container">
+        <div class="avatar-image">
+          <img src="/tea.png" alt="avatar" />
         </div>
-        <div class="right-container">
-            <div class="upper">
-                <div class="info-container">
-                    <div class="input-block">
-                        <label for="name" class="input-label">Name</label>
-                        <span class="name">{{user.username}}</span>
-                    </div>
-                    <div class="input-block">
-                        <label for="email" class="input-label">Email</label>
-                        <span class="email">{{user.email}}</span>
-                    </div>
-                    <div [formGroup]="addressForm" class="address-tab">
-
-                        <div class="input-block">
-                            <label for="recipient" class="input-label">Recipient Name</label>
-                            <input id="recipient" formControlName="recipient" placeholder="Full name" type="text" />
-                        </div>
-
-                        <div class="input-block">
-                            <label for="street" class="input-label">Street Address</label>
-                            <input id="street" formControlName="street" placeholder="123 Main St" type="text" />
-                        </div>
-
-                        <div class="input-row">
-                            <div class="input-block half">
-                                <label for="city" class="input-label">City</label>
-                                <input id="city" formControlName="city" placeholder="City" type="text" />
-                            </div>
-                            <div class="input-block half">
-                                <label for="province" class="input-label">Province</label>
-                                <input id="province" formControlName="province" placeholder="Province" type="text" />
-                            </div>
-                        </div>
-
-                        <div class="input-row">
-                            <div class="input-block half">
-                                <label for="postalCode" class="input-label">Postal Code</label>
-                                <input id="postalCode" formControlName="postalCode" placeholder="12345" type="text" />
-                            </div>
-                            <div class="input-block half">
-                                <label for="country" class="input-label">Country</label>
-                                <input id="country" formControlName="country" placeholder="Country" type="text" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="favorite-list">
-                    <p>This is favorite list</p>
-                </div>
-            </div>
-            <div class="history">
-                <p>This is orders history</p>
-            </div>
+        <div class="name">
+          <p class="name-text">{{ user.username }}</p>
+          <p class="sub-name">Lorem ipsum</p>
+          <p class="quote">Lorem ipsum</p>
         </div>
+      </div>
+      <div class="connections">
+        <p>Connections</p>
+      </div>
     </div>
+
+    <div class="right-container">
+      <div class="upper">
+        <div class="info-container">
+          <div class="input-block">
+            <label for="name" class="input-label">Name</label>
+            <span class="name">{{ user.username }}</span>
+          </div>
+          <div class="input-block">
+            <label for="email" class="input-label">Email</label>
+            <span class="email">{{ user.email }}</span>
+          </div>
+
+          <div [formGroup]="addressForm" class="address-tab">
+            <div class="input-block">
+              <label for="recipient" class="input-label">Recipient Name</label>
+              <input id="recipient" formControlName="recipient" placeholder="Full name" type="text" />
+            </div>
+
+            <div class="input-block">
+              <label for="street" class="input-label">Street Address</label>
+              <input id="street" formControlName="street" placeholder="123 Main St" type="text" />
+            </div>
+
+            <div class="input-row">
+              <div class="input-block half">
+                <label for="city" class="input-label">City</label>
+                <input id="city" formControlName="city" placeholder="City" type="text" />
+              </div>
+              <div class="input-block half">
+                <label for="province" class="input-label">Province</label>
+                <input id="province" formControlName="province" placeholder="Province" type="text" />
+              </div>
+            </div>
+
+            <div class="input-row">
+              <div class="input-block half">
+                <label for="postalCode" class="input-label">Postal Code</label>
+                <input id="postalCode" formControlName="postalCode" placeholder="12345" type="text" />
+              </div>
+              <div class="input-block half">
+                <label for="country" class="input-label">Country</label>
+                <input id="country" formControlName="country" placeholder="Country" type="text" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="favorite-list">
+          <p>This is favorite list</p>
+        </div>
+      </div>
+
+      <div class="history">
+        <div class="history-header">
+          <h3>Order History</h3>
+          <!-- optional toolbar -->
+          <!--
+          <div class="history-tools">
+            <input type="search" placeholder="Search order # or item…" />
+          </div>
+          -->
+        </div>
+
+        @if (orders.length === 0) {
+          <div class="empty-history">
+            <p>No orders yet.</p>
+            <p class="hint">When you place orders, they’ll appear here with status and totals.</p>
+          </div>
+        } @else {
+          <ul class="orders">
+            @for (o of orders; track $index) {
+              <li class="order-card">
+                <details>
+                  <summary class="order-summary">
+                    <span class="order-no">#{{ o.orderNumber ?? o.id }}</span>
+                    <span class="order-date">{{ o.createdAt | date: 'mediumDate' }}</span>
+                    <span class="order-status chip" [ngClass]="(o.status || 'unknown') | lowercase">
+                      {{ o.status || 'Unknown' }}
+                    </span>
+                    <span class="order-total">{{ o.total | currency }}</span>
+                    <span class="caret" aria-hidden="true">▾</span>
+                  </summary>
+
+                  <div class="order-body">
+                    <!-- Items -->
+                    <div class="order-items">
+                      @for (it of o.items; track it.productId) {
+                        <div class="item">
+                          <img
+                            [src]="it.imageUrl"
+                            [alt]="it.imageAlt || it.name"
+                            class="thumb"
+                            referrerpolicy="no-referrer"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                          <div class="meta">
+                            <div class="name">{{ it.name }}</div>
+                            <div class="qty">x{{ it.quantity }}</div>
+                          </div>
+
+                          <div class="prices">
+                            @if (it.isDiscount) {
+                              <span class="old">{{ it.price | currency }}</span>
+                              <span class="new">{{ it.discountPrice | currency }}</span>
+                            } @else {
+                              <span class="single">{{ it.price | currency }}</span>
+                            }
+                          </div>
+                        </div>
+                      }
+                    </div>
+
+                    <!-- Totals -->
+                    <div class="order-totals">
+                      <div><span>Subtotal</span><span>{{ (o.subtotal ?? (o.total - (o.shippingFee ?? 0))) | currency }}</span></div>
+                      <div><span>Shipping</span><span>{{ (o.shippingFee ?? 0) | currency }}</span></div>
+                      <div class="grand"><span>Total</span><span>{{ o.total | currency }}</span></div>
+                    </div>
+
+                    <!-- Optional actions -->
+                    <!--
+                    <div class="order-actions">
+                      <a [routerLink]="['/orders', o.id]" class="btn">View details</a>
+                      <button type="button" class="btn ghost" (click)="downloadInvoice(o.id)">Invoice</button>
+                      <button type="button" class="btn" (click)="reorder(o.id)">Re-order</button>
+                    </div>
+                    -->
+                  </div>
+                </details>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+    </div>
+  </div>
 } @else {
-    <app-page-not-found></app-page-not-found>
+  <app-page-not-found></app-page-not-found>
 }
