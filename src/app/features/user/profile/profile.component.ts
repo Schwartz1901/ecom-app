@@ -4,7 +4,7 @@ import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } 
 import { PageNotFoundComponent } from '../../../components/page-not-found/page-not-found.component';
 import { User, UserService } from '../../../shared/services/user.service';
 
-// ⬇️ Adjust these paths to your project layout
+// Adjust these paths to your project layout
 import { OrderService } from '../../../shared/services/order.service';
 import { OrderDto, OrderItemDto, AddressDto } from '../../../shared/models/order.model';
 
@@ -80,6 +80,7 @@ export class ProfileComponent implements OnInit {
     this.ordersService.getHistory().subscribe({
       next: (list: OrderDto[]) => {
         this.orders = list.map(this.mapOrderDtoToView);
+        console.log(this.orders)
       },
       error: (err) => {
         console.error('Failed to load orders:', err);
@@ -93,6 +94,7 @@ export class ProfileComponent implements OnInit {
     const subtotal = items.reduce((sum, it) => sum + it.price * it.quantity, 0);
 
     return {
+      id: dto.id,
       createdAt: new Date(dto.orderDate),
       status: dto.orderStatus,
       total: dto.total,

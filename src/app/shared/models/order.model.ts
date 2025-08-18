@@ -19,6 +19,7 @@ export interface OrderItemDto {
 }
 
 export interface OrderDto {
+  id: string;
   orderStatus: string;
   description: string;
   orderDate: string;   // DateTime -> ISO string; parse to Date in the UI if needed
